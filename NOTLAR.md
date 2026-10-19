@@ -29,8 +29,8 @@ Kod hazır = depoda; ✔ = birim testi / sahte simülasyonla doğrulandı;
 | 1.6 Launch | `executor.launch.py`, `parser.launch.py`, `all.launch.py` | Kod hazır |
 | 2.1 Normalizasyon | Türkçe I/İ, yazıyla sayı, ekli sayı ("elliye"), birimler, km→m | ✔ 49 örnek |
 | 2.2 Hızlı yol | acil kelimeler + fullmatch kalıpları | ✔ 32 basit / 12 karmaşık, < 5 ms |
-| 2.3 llama-server | `llama_cpp_kur.sh`, `model_indir.sh`, `llama_server.sh`, `llm_curl_test.sh` | Makinede |
-| 2.4 Prompt + şema | `schema.py`, `prompt.py` (few-shot), `llm_client.py`, `degerlendir.py`, 50 cümle | ✔ sahte sunucu; **baseline makinede** |
+| 2.3 llama-server | `llama_cpp_kur.sh`, `model_indir.sh`, `llama_server.sh`, `llm_curl_test.sh` | ✔ bulutta (CPU) çalıştırıldı |
+| 2.4 Prompt + şema | `schema.py`, `prompt.py` (few-shot), `llm_client.py`, `degerlendir.py`, 50 cümle | ✔ gerçek modelle baseline ölçüldü (aşağıda) |
 | 2.5 parser_node | /voice/text → /drone/command, ısınma, zaman damgaları, önbellek | ✔ sahte sim |
 
 ## Tasarım kararları (MIMARI.txt'ten sapmalar / ayrıntılar)
@@ -53,15 +53,28 @@ Kod hazır = depoda; ✔ = birim testi / sahte simülasyonla doğrulandı;
 
 ## Ölçümler
 
-### Faz 2 baseline (Görev 2.4) — makinede doldurulacak
+### Faz 2 baseline (Görev 2.4) — 2026-10-19
 
-`degerlendir --tablo NOTLAR_sonuclar.md` tabloyu otomatik doldurur. Hızlı yol tek başına
-(LLM'siz) 50 cümlelik sette: tam eşleşme %58, yanlış kabul %0, ort < 0.1 ms
-(kalan cümleler LLM'e gider).
+Ortam: bulut sunucusu, **GPU yok, 4 CPU çekirdeği**, llama.cpp (CPU), `-c 2048 -t 4`,
+few-shot sistem prompt'u + JSON şema kısıtı. Gecikmeler kendi makinende (özellikle GPU ile)
+çok daha düşük olacak; doğruluk rakamları donanımdan bağımsızdır.
+Ham tablo: [NOTLAR_sonuclar.md](NOTLAR_sonuclar.md). Üretim hızı: 0.6B ≈ 36 token/sn (CPU).
 
-| model | mod | tam eşleşme % | yanlış kabul % | LLM ort ms | LLM p95 ms | tok/s |
+| model | mod | tam eşleşme % | komut % | yanlış kabul % | LLM ort ms | LLM p95 ms |
 |---|---|---|---|---|---|---|
-| Qwen3 0.6B Q4_K_M | sadece_llm | | | | | |
-| Qwen3 0.6B Q4_K_M | tam_hat | | | | | |
-| Qwen3 1.7B Q4_K_M | sadece_llm | | | | | |
-| Qwen3 1.7B Q4_K_M | tam_hat | | | | | |
+| Qwen3 0.6B Q4_K_M | sadece_llm | 80.0 | 86.0 | 14.3 | ~1030 | ~1640 |
+| Qwen3 0.6B Q4_K_M | tam_hat | 86.0 | 92.0 | 14.3 | ~1075 | ~1840 |
+| Qwen3 1.7B Q4_K_M | sadece_llm | 84.0 | 88.0 | 0.0 | ~1970 | ~3480 |
+| Qwen3 1.7B Q4_K_M | tam_hat | 90.0 | 94.0 | 0.0 | ~2185 | ~3830 |
+
+"tam_hat" = normalize + acil + hızlı yol + LLM (50 cümlenin 22'si LLM'e hiç gitmedi).
+Hızlı yol tek başına: tam eşleşme %58, yanlış kabul %0, < 0.1 ms.
+
+Gözlemler (Faz 4 veri üretimi için):
+- 0.6B alakasız cümleye komut uyduruyor ("saat kaç" -> bekle 60 sn): yanlış kabul %14.
+  1.7B'de %0. Negatif örnekler veri setinde şart.
+- İki modelde de ortak hatalar: "yüksekliği 200 m'ye ayarla" -> hiz_ayarla;
+  "60 m irtifaya yüksel" göreli/mutlak karışıyor; "geri(ye)" -> alcal;
+  çok adımda sayı bir sonraki adıma kayıyor ("sağa dön sonra 20 m" -> 20°).
+- 0.6B sayıyı bozabiliyor ("50" -> 500). Normalizasyon doğru, hata modelde.
+- Sonuç: fine-tune'suz hiçbir model %97 hedefine yakın değil -> Faz 4 gerekli.
