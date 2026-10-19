@@ -1,0 +1,30 @@
+# colcon
+ros2_ws/build/
+ros2_ws/install/
+ros2_ws/log/
+# ros2_ws'e git ile eklenen dis paketler (scripts/kurulum_faz0.sh klonlar)
+ros2_ws/src/px4_msgs/
+ros2_ws/src/px4_ros_com/
+
+# modeller ve buyuk dosyalar
+models/
+*.gguf
+*.safetensors
+*.part
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+
+# gizli bilgiler (API anahtarlari ortam degiskeninde tutulur)
+.env
+*.key
+secrets*
+
+# editor / sistem
+.vscode/
+.idea/
+*.swp
+.DS_Store

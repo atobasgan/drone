@@ -1,0 +1,11 @@
+# command_parser parametreleri
+command_parser:
+  ros__parameters:
+    llm_acik: true
+    llm_url: http://127.0.0.1:8080   # scripts/llama_server.sh
+    llm_model: yerel
+    llm_zaman_asimi_s: 5.0
+    llm_max_tokens: 64
+    kisa_prompt: false               # Faz 4'te fine-tune'lu modelle true
+    hizli_yol_acik: true
+    onbellek_boyutu: 256

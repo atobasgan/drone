@@ -1,0 +1,3 @@
+class Empty: pass
+class String:
+    def __init__(self, data=''): self.data = data

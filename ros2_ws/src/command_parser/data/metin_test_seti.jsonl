@@ -1,0 +1,51 @@
+# Gorev 2.4: elle yazilmis 50 cumle (20 basit, 23 karmasik, 7 negatif). Sema bicimi: command_parser/schema.py
+{"metin": "kalk", "beklenen": {"adimlar": [{"komut": "kalk"}]}}
+{"metin": "Kalkış yap", "beklenen": {"adimlar": [{"komut": "kalk"}]}}
+{"metin": "on metreye kalk", "beklenen": {"adimlar": [{"komut": "kalk", "irtifa_m": 10}]}}
+{"metin": "in", "beklenen": {"adimlar": [{"komut": "in"}]}}
+{"metin": "iniş yap lütfen", "beklenen": {"adimlar": [{"komut": "in"}]}}
+{"metin": "Beş yüz metre yüksel!", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 500}]}}
+{"metin": "20 metre yukarı çık", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 20}]}}
+{"metin": "yirmi metre alçal", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 20}]}}
+{"metin": "yüz metreye çık", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 100}]}}
+{"metin": "irtifayı elli metreye getir", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 50}]}}
+{"metin": "kuzeye 50 metre git", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "kuzey", "metre": 50}]}}
+{"metin": "doğuya yüz metre git", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "dogu", "metre": 100}]}}
+{"metin": "ileri 30 metre", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "ileri", "metre": 30}]}}
+{"metin": "15 metre geri git", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "geri", "metre": 15}]}}
+{"metin": "sağa doksan derece dön", "beklenen": {"adimlar": [{"komut": "don", "yon": "sag", "derece": 90}]}}
+{"metin": "sola dön", "beklenen": {"adimlar": [{"komut": "don", "yon": "sol", "derece": 90}]}}
+{"metin": "eve dön", "beklenen": {"adimlar": [{"komut": "eve_don"}]}}
+{"metin": "beş saniye bekle", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 5}]}}
+{"metin": "dur", "beklenen": {"adimlar": [{"komut": "dur"}]}}
+{"metin": "acil", "beklenen": {"adimlar": [{"komut": "dur"}]}}
+{"metin": "önce 20 metre yüksel sonra kuzeye 50 metre git", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 20}, {"komut": "git_yon", "yon": "kuzey", "metre": 50}]}}
+{"metin": "kalk ve otuz metre ileri git", "beklenen": {"adimlar": [{"komut": "kalk"}, {"komut": "git_yon", "yon": "ileri", "metre": 30}]}}
+{"metin": "biraz yükselsene, kırk metre kadar", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 40}]}}
+{"metin": "ya şey bi elli metre yükselsene", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 50}]}}
+{"metin": "yüksekliği iki yüz metreye ayarla", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 200}]}}
+{"metin": "batı tarafına doğru seksen metre uç", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "bati", "metre": 80}]}}
+{"metin": "güney yönünde yüz elli metre ilerle", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "guney", "metre": 150}]}}
+{"metin": "kendi etrafında sağa kırk beş derece dön", "beklenen": {"adimlar": [{"komut": "don", "yon": "sag", "derece": 45}]}}
+{"metin": "sol tarafa doğru 30 derece çevril", "beklenen": {"adimlar": [{"komut": "don", "yon": "sol", "derece": 30}]}}
+{"metin": "on saniye bekle ardından eve dön", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 10}, {"komut": "eve_don"}]}}
+{"metin": "hızını beş metre saniye yap", "beklenen": {"adimlar": [{"komut": "hiz_ayarla", "mps": 5}]}}
+{"metin": "yere in artık", "beklenen": {"adimlar": [{"komut": "in"}]}}
+{"metin": "geldiğin yere geri dön", "beklenen": {"adimlar": [{"komut": "eve_don"}]}}
+{"metin": "havalan, sonra sağa dön, sonra 20 metre ileri git", "beklenen": {"adimlar": [{"komut": "kalk"}, {"komut": "don", "yon": "sag", "derece": 90}, {"komut": "git_yon", "yon": "ileri", "metre": 20}]}}
+{"metin": "kuzeye 100 metre git ve orada in", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "kuzey", "metre": 100}, {"komut": "in"}]}}
+{"metin": "yüz metre yükselip doğuya iki yüz metre git", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 100}, {"komut": "git_yon", "yon": "dogu", "metre": 200}]}}
+{"metin": "30 metre aşağı insene", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 30}]}}
+{"metin": "en yakın hastaneye git", "beklenen": {"adimlar": [{"komut": "yakin_yere_git", "tur": "hastane"}]}}
+{"metin": "bana en yakın eczaneyi bul ve oraya uç", "beklenen": {"adimlar": [{"komut": "yakin_yere_git", "tur": "eczane"}]}}
+{"metin": "bir buçuk metre alçal", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 1.5}]}}
+{"metin": "altmış metre irtifaya yüksel", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 60}]}}
+{"metin": "geriye doğru 25 metre gel", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "geri", "metre": 25}]}}
+{"metin": "önce 50 metreye çık sonra batıya 70 metre git", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 50}, {"komut": "git_yon", "yon": "bati", "metre": 70}]}}
+{"metin": "bugün hava nasıl", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}}
+{"metin": "yemek ne zaman", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}}
+{"metin": "bana bir şarkı söyle", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}}
+{"metin": "şey yani ee", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}}
+{"metin": "annem beni aradı mı", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}}
+{"metin": "saat kaç", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}}
+{"metin": "bu drone çok güzel olmuş", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}}

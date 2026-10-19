@@ -1,0 +1,44 @@
+# Servisler: sim (PX4 SITL + Gazebo), agent (MicroXRCEAgent), llm (llama-server), dev (ROS 2 node'lari)
+# Hepsi host agini kullanir: UDP 8888 (agent), 8080 (llama-server), QGC icin 14550.
+#
+#   docker compose -f docker/docker-compose.yml up sim agent llm
+#   docker compose -f docker/docker-compose.yml run --rm dev
+#     (icinde) ./scripts/derle.sh && ros2 launch drone_bringup all.launch.py
+x-ortak: &ortak
+  build:
+    context: ..
+    dockerfile: docker/Dockerfile
+  image: llm_drone:dev
+  network_mode: host
+  ipc: host
+  volumes:
+    - ..:/workspace/llm_drone
+    - /tmp/.X11-unix:/tmp/.X11-unix
+  environment:
+    - DISPLAY=${DISPLAY:-:0}
+    - PX4_HOME_LAT=${PX4_HOME_LAT:-39.9208}
+    - PX4_HOME_LON=${PX4_HOME_LON:-32.8541}
+    - PX4_HOME_ALT=${PX4_HOME_ALT:-850}
+    - HEADLESS=${HEADLESS:-}
+
+services:
+  sim:
+    <<: *ortak
+    command: bash -c "cd /opt/PX4-Autopilot && make px4_sitl gz_x500"
+
+  agent:
+    <<: *ortak
+    command: MicroXRCEAgent udp4 -p 8888
+
+  llm:
+    <<: *ortak
+    command: >
+      bash -c "/opt/llama.cpp/build/bin/llama-server
+      -m /workspace/llm_drone/models/${MODEL:-qwen3-0.6b-q4_k_m.gguf}
+      --host 127.0.0.1 --port 8080 -c 2048 -ngl ${NGL:-0} -np 1 --jinja"
+
+  dev:
+    <<: *ortak
+    stdin_open: true
+    tty: true
+    command: bash

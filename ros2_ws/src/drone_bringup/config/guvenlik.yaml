@@ -1,0 +1,21 @@
+# mission_executor parametreleri. Limitleri koda gomme, burada tut (MIMARI 13.8).
+mission_executor:
+  ros__parameters:
+    # --- guvenlik limitleri (safety.py) ---
+    max_irtifa: 600.0              # m, yerden. Gercek ucusta SHGM kurallarina gore dusur!
+    min_irtifa: 2.0                # m, havadayken alcalinabilecek en alt nokta ("in" haric)
+    max_adim_mesafe: 1000.0        # m, tek komutta en fazla 3B yer degistirme
+    geofence_yaricap: 1500.0       # m, kalkis noktasindan yatay uzaklik
+    min_batarya: 0.25              # 0..1; altinda yalnizca in / eve_don / dur
+    max_bekle_saniye: 300.0
+    max_hiz: 15.0                  # m/s, hiz_ayarla ust siniri
+    varsayilan_kalkis_irtifa: 10.0 # m, "kalk" irtifa verilmezse
+
+    # --- yurutucu ---
+    frekans_hz: 20.0               # setpoint akisi (PX4 en az 2 Hz ister)
+    offboard_isinma_tik: 20        # offboard/arm oncesi setpoint sayisi (~1 sn)
+    varis_esigi_m: 0.5             # "bitti" icin hedefe mesafe
+    varis_hiz_esigi_mps: 0.3       # "bitti" icin hiz
+    yaw_esigi_derece: 5.0
+    hiz_mps: 0.0                   # 0 = PX4'un kendi hiz limitleri (MPC_*_VEL_MAX)
+    px4_on_ek: /fmu
