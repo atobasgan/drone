@@ -31,16 +31,18 @@ class PX4Arayuz:
     olabilir; bu sinif ROS grafigine bakip dogru adi kendisi bulur.
     """
 
-    def __init__(self, node, on_ek='/fmu'):
+    def __init__(self, node, on_ek='/fmu', komut_yayinlari=True):
+        """komut_yayinlari=False: yalnizca telemetri okur (ornegin mobile_bridge)."""
         self.node = node
         self.on_ek = on_ek.rstrip('/')
 
-        self._mod_pub = node.create_publisher(
-            OffboardControlMode, f'{self.on_ek}/in/offboard_control_mode', PX4_QOS)
-        self._hedef_pub = node.create_publisher(
-            TrajectorySetpoint, f'{self.on_ek}/in/trajectory_setpoint', PX4_QOS)
-        self._komut_pub = node.create_publisher(
-            VehicleCommand, f'{self.on_ek}/in/vehicle_command', PX4_QOS)
+        if komut_yayinlari:
+            self._mod_pub = node.create_publisher(
+                OffboardControlMode, f'{self.on_ek}/in/offboard_control_mode', PX4_QOS)
+            self._hedef_pub = node.create_publisher(
+                TrajectorySetpoint, f'{self.on_ek}/in/trajectory_setpoint', PX4_QOS)
+            self._komut_pub = node.create_publisher(
+                VehicleCommand, f'{self.on_ek}/in/vehicle_command', PX4_QOS)
 
         self.yerel = None      # VehicleLocalPosition
         self.global_ = None    # VehicleGlobalPosition

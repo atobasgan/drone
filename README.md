@@ -8,6 +8,8 @@ Gazebo Jetty + ROS 2 Lyrical + PX4 (SITL) + yerel küçük LLM.
 | [YOL_HARITASI.txt](YOL_HARITASI.txt) | hangi sırayla: fazlar ve görev listesi |
 | [KAVRAMLAR.txt](KAVRAMLAR.txt) | gereken kavramlar |
 | [LLM_API_SENARYOSU.txt](LLM_API_SENARYOSU.txt) | LLM bize hazır verilirse: API + few-shot ile Faz 2 |
+| [MOBIL_TELSIZ_UYGULAMASI.txt](MOBIL_TELSIZ_UYGULAMASI.txt) | mobil telsiz tasarımı (araştırma) |
+| [MOBIL_TELSIZ_ACIKLAMA.txt](MOBIL_TELSIZ_ACIKLAMA.txt) | mobil telsiz: ne yapıldı, nasıl, JSON akışı, LLM ile ilişkisi |
 | [NOTLAR.md](NOTLAR.md) | sürümler, ölçümler, görev durumu |
 
 ## Durum

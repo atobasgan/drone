@@ -10,3 +10,8 @@ class CommandList:
         self.__dict__.update(kw)
 class Feedback:
     def __init__(self, durum='', mesaj=''): self.durum, self.mesaj = durum, mesaj
+class AudioUtterance:
+    def __init__(self, **kw):
+        self.t_konusma_basladi=Time(); self.t_konusma_bitti=Time(); self.id=0; self.kaynak=''
+        self.ornekleme_hz=0; self.ornekler=[]
+        self.__dict__.update(kw)

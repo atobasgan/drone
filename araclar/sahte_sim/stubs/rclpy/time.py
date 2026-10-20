@@ -1,5 +1,5 @@
 class Time:
-    def __init__(self, nanoseconds=0): self.nanoseconds = nanoseconds
+    def __init__(self, nanoseconds=0, seconds=0): self.nanoseconds = nanoseconds + int(seconds * 1e9)
     def __sub__(self, o): return Time(self.nanoseconds - o.nanoseconds)
     def to_msg(self):
         from builtin_interfaces.msg import Time as T

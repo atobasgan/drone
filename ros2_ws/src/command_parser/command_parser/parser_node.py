@@ -10,7 +10,7 @@ import rclpy
 from rclpy.callback_groups import MutuallyExclusiveCallbackGroup, ReentrantCallbackGroup
 from rclpy.executors import MultiThreadedExecutor
 from rclpy.node import Node
-from std_msgs.msg import String
+from std_msgs.msg import Empty, String
 
 from .fast_path import acil_mi
 from .komut_cozucu import KomutCozucu
@@ -60,6 +60,12 @@ class ParserNode(Node):
         self.create_subscription(String, '/voice/text', self._metin_cb, 10,
                                  callback_group=ReentrantCallbackGroup())
 
+        # ACIL DUR nesli: bir cumle cozulurken (LLM birkac saniye surebilir) acil dur
+        # gelirse, o cumlenin sonucu dur'dan SONRA yurutulmesin diye cope atilir.
+        self._acil_nesli = 0
+        self.create_subscription(Empty, '/drone/emergency_stop', self._acil_cb, 10,
+                                 callback_group=ReentrantCallbackGroup())
+
         if llm is not None:
             self._isinma_timer = self.create_timer(
                 0.1, self._isit, callback_group=MutuallyExclusiveCallbackGroup())
@@ -78,8 +84,12 @@ class ParserNode(Node):
         else:
             self.get_logger().warn(f'LLM ısınma başarısız: {sonuc.hata}')
 
+    def _acil_cb(self, _msg):
+        self._acil_nesli += 1
+
     def _metin_cb(self, msg):
         t_metin = self.get_clock().now()
+        nesil = self._acil_nesli
         # Acil kelimeler kilidi (LLM'i) beklemez.
         if acil_mi(normalize(msg.data)):
             cozum = self.cozucu.coz(msg.data)
@@ -87,6 +97,14 @@ class ParserNode(Node):
             with self._kilit:
                 cozum = self.cozucu.coz(msg.data)
         t_hazir = self.get_clock().now()
+
+        if cozum.kaynak == 'acil':
+            self._acil_nesli += 1          # sesli "dur" da bekleyen sonuclari iptal eder
+        elif nesil != self._acil_nesli:
+            self.get_logger().warn(f'"{msg.data}" çözülürken ACİL DUR geldi; sonuç atıldı')
+            self.feedback_pub.publish(Feedback(
+                durum='iptal', mesaj=f'ACİL DUR geldiği için "{cozum.metin}" iptal edildi'))
+            return
 
         if not cozum.komut_var:
             self.get_logger().info(

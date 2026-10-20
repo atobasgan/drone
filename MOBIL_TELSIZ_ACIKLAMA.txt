@@ -1,0 +1,607 @@
+================================================================================
+  MOBİL TELSİZ — NE YAPILDI, NASIL YAPILDI
+  Türkçe Sesli Komutla Drone Kontrolü
+  Dal: mobil-telsiz   (tasarım: MOBIL_TELSIZ_UYGULAMASI.txt)
+  Tarih: 20 Ekim 2026
+================================================================================
+
+İÇİNDEKİLER
+  1.  Özet
+  2.  feature_mobil dalının değerlendirmesi
+  3.  Yeni yapı: büyük resim
+  4.  Ses telefonda nasıl alınıyor?
+  5.  Ses nasıl yazıya çevriliyor? (iki mod + ölçümler)
+  6.  JSON mu üretiyor? Bir komutun baştan sona yolculuğu
+  7.  LLM ileride bu yapıda nasıl kullanılacak?
+  8.  Telefon <-> yer istasyonu protokolü
+  9.  Güvenlik ve emniyet kuralları
+  10. Eklenen ek özellikler
+  11. Nasıl çalıştırılır?
+  12. Testler ve doğrulama (ne doğrulandı, ne doğrulanmadı)
+  13. Ölçümler
+  14. Dosya listesi ve mevcut koda yapılan değişiklikler
+  15. Sınırlamalar ve sonraki adımlar
+
+
+================================================================================
+1. ÖZET
+================================================================================
+
+Telefon bir telsiz gibi kullanılıyor: büyük tuşa bas, konuş, bırak. Telefon
+sesi alıyor ve yer istasyonuna gönderiyor. Komutu ANLAMA işini telefon değil,
+projenin Faz 2'de yazılmış hattı yapıyor: normalize -> acil kelime -> hızlı yol
+-> LLM -> güvenlik katmanı -> görev yürütücü -> PX4. Telefon sonucu ekranda
+kart olarak gösteriyor, Türkçe sesli cevap veriyor ve titreşiyor.
+
+Yapılanlar:
+  - mobil/                       Flutter uygulaması (Android + iOS), sıfırdan
+  - ros2_ws/src/mobile_bridge/   yeni ROS 2 paketi: telefon <-> ROS köprüsü
+  - drone_bringup                telsiz.launch.py + config/telsiz.yaml
+  - drone_interfaces             AudioUtterance.msg (Faz 3 stt_node için)
+  - command_parser               ACİL DUR geldiğinde bekleyen LLM sonucunu iptal
+  - deneme sunucusu              uygulamayı ROS/PX4 OLMADAN deneme
+  - testler                      Python 37 + Dart 29 + uyum testi + 2 simülasyon
+
+Temel karar: Telefon "kulak ve ağız", yer istasyonu "beyin". Komut mantığının
+tek bir yerde (command_parser + mission_executor) kalması güvenliği,
+ölçülebilirliği ve ileride LLM'i değiştirmeyi kolaylaştırır (Bölüm 7).
+
+
+================================================================================
+2. feature_mobil DALININ DEĞERLENDİRMESİ
+================================================================================
+
+feature_mobil dalında YigitKilinc'in yazdığı Flutter uygulaması (~6.500 satır)
+ve Python köprüsü satır satır okundu. Dal OLDUĞU GİBİ duruyor, hiçbir dosyasına
+dokunulmadı. Yeni çalışma main'den açılan ayrı bir dalda (mobil-telsiz).
+
+2.1 İyi olan ve yeni sürüme taşınan fikirler
+  - Bas-konuş tuşu ve dinlerken nabız animasyonu
+  - Her zaman görünen kırmızı acil durdurma tuşu
+  - Türkçe TTS ile sesli geri bildirim, titreşim
+  - Telemetri göstergesi, komut geçmişi, koyu tema
+  - Katmanlı mimari niyeti (veri / iş mantığı / arayüz ayrımı)
+  - "Sıfır bağımlılıklı köprü" fikri: kurulum kolaylığı
+
+2.2 Sorunlar (neden yeniden yazıldı)
+
+  A) Başka bir projeyi hedefliyor — bizim sistemi tamamen atlıyor
+     README ve kod "sim-drone (Gazebo Harmonic + ROS 2 Jazzy)" projesine göre
+     yazılmış: komutları /drone/cmd_vel'e geometry_msgs/Twist (HIZ komutu)
+     olarak gönderiyor. Bizim projede ise:
+       - ROS 2 Lyrical + Gazebo Jetty + PX4 offboard,
+       - komutlar /voice/text -> command_parser -> /drone/command,
+       - MESAFE/KONUM komutları ("20 metre yüksel" = hedef irtifa +20 m),
+       - güvenlik katmanı (irtifa, mesafe, geofence, batarya limitleri).
+     Telefon cmd_vel'e doğrudan yazarsa normalize, hızlı yol, LLM, güvenlik
+     katmanı ve yürütücünün HEPSİ devre dışı kalır.
+
+  B) Komut anlamı tehlikeli ve sayısız
+     "ileri" = ileri 0.5 m/s ve "dur" denene kadar SONSUZA kadar gider; her
+     "ileri" hızı biraz daha artırır (birikimli). "20 metre yüksel" cümlesindeki
+     20 kaybolur, sadece +0.5 m/s olur. Telefondaki regex'ler projenin
+     fast_path.py'siyle uyuşmayan ikinci bir kural seti; "geri dön" ve "sağa
+     git/dön" gibi durumlarda yanlış eşleşmeye açık. Ayrıca metinde "dur"
+     geçen her cümle (ör. "durum") hover'a çevriliyor.
+
+  C) Derlenmiyor
+     - lib/data/models/drone_command_model.dart ve drone_telemetry_model.dart
+       import ediliyor ama dosyalar YOK.
+     - İki farklı DroneCommand sınıfı var (core/constants ve domain/entities),
+       alan adları farklı (type / commandType).
+     - VoiceRepositoryImpl, SpeechService.startListening'e onResult/onError
+       parametreleri veriyor; o metotta bu parametreler yok.
+     - DroneCommandMap sınıfı ve RosConstants.cmdVelType / odometryType /
+       imuType sabitleri tanımlı değil.
+     - android/ ve ios/ altında yalnızca izin dosyaları var; Gradle ve Xcode
+       proje dosyaları yok, yani "flutter run" çalışmaz.
+
+  D) Bas-konuş gecikmesi
+     Tuş GestureDetector.onLongPressStart kullanıyor; Flutter bunu ancak
+     ~500 ms basılı tutunca tetikler -> komutun ilk kelimesi kaybolur.
+     Ayrıca speech_to_text'e pauseFor 3 sn verilmiş: kısa sessizlikte dinleme
+     kendiliğinden biter.
+
+  E) Köprü (mobile_ws_bridge.py)
+     - Her komutta "gz topic ..." KABUK komutu başlatıyor (subprocess,
+       shell=True): her mesajda süreç açma maliyeti, ROS'a da hiç uğramıyor.
+     - WebSocket çerçeveleri tek recv() ile okunuyor; parçalı gelen paketler,
+       parçalanmış çerçeveler ve ping/pong işlenmiyor.
+     - Kimlik doğrulama yok: aynı ağdaki herkes drone'a komut verebilir.
+     - Hiçbir veri geri göndermiyor: uygulamanın abone olduğu odometri/IMU
+       hiç gelmez; uygulamanın "kalp atışı" (/rosapi/get_time çağrısı) bu
+       köprüde karşılıksız.
+  F) Diğer
+     - Quaternion -> Euler dönüşümü yanlış (atan2/asin yerine doğrusal ifade).
+     - VoiceBloc, olay işleyicisi bittikten sonra geri çağırımda emit ediyor
+       (flutter_bloc bunu hata olarak fırlatır).
+     - Yeniden bağlanınca abonelikler mesaj tipi olmadan yenileniyor.
+
+Sonuç: Fikirler değerli; kod bu projeye bağlanamayacağı ve derlenmediği için
+üzerinde düzeltme yapmak yerine aynı fikirlerle, projenin mimarisine uygun ve
+test edilmiş yeni bir sürüm yazıldı.
+
+
+================================================================================
+3. YENİ YAPI: BÜYÜK RESİM
+================================================================================
+
+  ┌──────────────── TELEFON (Flutter, mobil/) ────────────────┐
+  │ Bas-konuş tuşu ── mikrofon 16 kHz PCM ── 20 ms parçalar   │
+  │      │   (ön kayıt 300 ms + son kayıt 150 ms)             │
+  │      ├─ YER STT modu   : ham ses gönderilir               │
+  │      └─ TELEFON STT    : telefon tanır, METİN gönderilir  │
+  │ ACİL DUR ──────────────────────────────────────────┐      │
+  │ Kartlar / telemetri / Türkçe TTS / titreşim  <──┐  │      │
+  └─────────────────────────────────────────────────┼──┼──────┘
+                    tek WebSocket (ws://IP:8765/telsiz, token)
+  ┌───────────── YER İSTASYONU (ROS 2) ─────────────┼──┼──────┐
+  │ mobile_bridge (YENİ)                            │  v      │
+  │   cekirdek.py  oturum, yetki, konuşma birleştirme,       │
+  │                eşleştirme, kalp atışı                    │
+  │   sunucu.py    asyncio WebSocket                         │
+  │   stt_motoru   faster-whisper (istege bağlı)             │
+  │      │ /voice/text (String) ─────────> command_parser    │
+  │      │ /voice/utterance (AudioUtterance) -> Faz 3 stt_node│
+  │      │ /drone/emergency_stop (Empty) ─> executor+parser  │
+  │      │ <── /drone/command  (LLM/hızlı yol JSON'u)        │
+  │      │ <── /drone/feedback (yürütüyor/reddedildi...)     │
+  │      │ <── /fmu/out/*      (PX4 telemetrisi, 2 Hz)        │
+  │ command_parser   (Faz 2, aynen)  normalize/hızlı yol/LLM  │
+  │ mission_executor (Faz 1, aynen)  güvenlik + PX4 offboard  │
+  └───────────────────────────────────────────────────────────┘
+
+Önemli: Telefondaki hızlı tuşlar ("kalk", "eve dön"...) ve klavye girişi de
+METİN olarak gider ve aynı hattan geçer. Telefon hiçbir komutu kendisi
+YORUMLAMAZ; tek istisna ACİL DUR'dur (o da yorum değil, doğrudan durdurma).
+
+
+================================================================================
+4. SES TELEFONDA NASIL ALINIYOR?
+================================================================================
+
+Paket: record 7.1.2 (mobil/lib/ses/mikrofon.dart)
+  - Biçim: 16 kHz, mono, PCM16 little-endian (Whisper'ın beklediği biçim;
+    yeniden örnekleme yer istasyonunda gerekmez).
+  - Android ses kaynağı: AudioSource.VOICE_RECOGNITION (konuşma tanıma için
+    ayarlanmış, düz frekans yanıtlı kaynak). Gürültü bastırma ayardan
+    açılıp kapatılabiliyor (sahada ölçerek karar verilmeli).
+
+Parçalama (pcm_parcalayici.dart)
+  Mikrofon değişken boyutlu veri verir. Bunlar sabit 20 ms = 640 baytlık
+  parçalara bölünür. Neden: tuş bırakıldığında yolda kalan ses en fazla
+  bir parça kadar olur; yer istasyonu konuşmanın neredeyse tamamını tuş
+  bırakılmadan önce almıştır.
+
+Ön kayıt (halka_tampon.dart)
+  İnsanlar tuşa basarken konuşmaya başlar; ilk hece kesilir. "Yer STT"
+  modunda mikrofon açık kalır ve SON 300 ms bir halka tamponda tutulur.
+  Tuşa basılınca bu 300 ms de gönderilir. Ses telefondan YALNIZCA tuş
+  basılıyken çıkar (testle doğrulandı: tuşa basılmadan 1 sn ses beslendi,
+  sunucuya 0 bayt gitti; basınca tam 9600 bayt = 300 ms ön kayıt gitti).
+
+Son kayıt
+  Tuş bırakıldıktan sonra 150 ms daha kayıt (ayarlanabilir 0-400 ms): son
+  hece kesilmesin.
+
+Bas-konuş tuşu (bilesenler/ptt_dugmesi.dart)
+  Listener (onPointerDown/Up) kullanılır: DOKUNDUĞUN ANDA kayıt başlar.
+  250 ms'den kısa basışlar (cebe sürtünme) iptal edilir. En uzun konuşma
+  süresi yer istasyonundan gelir (varsayılan 15 sn), aşılırsa kayıt kendiliğinden
+  biter. Tuş basılıyken halka kalınlığı mikrofon seviyesini gösterir.
+
+
+================================================================================
+5. SES NASIL YAZIYA ÇEVRİLİYOR? (İKİ MOD + ÖLÇÜMLER)
+================================================================================
+
+5.1 Yer STT modu (önerilen) — faster-whisper, yer istasyonunda
+  Telefon ham sesi gönderir; mobile_bridge/stt_motoru.py:
+    WhisperModel(model, device, compute_type)
+    transcribe(ses, language="tr", beam_size=1,
+               initial_prompt=DRONE_SOZLUGU,          <- "yüksel, alçal, metre..."
+               condition_on_previous_text=False, without_timestamps=True)
+  STT ayrı bir thread'de çalışır; WebSocket ve ACİL DUR'u bekletmez.
+  Ses ayrıca /voice/utterance'a yayınlanır: Faz 3'te ayrı bir stt_node
+  yazıldığında köprüdeki motor kapatılıp (stt_motoru: yok) iş ona devredilir.
+
+  Ölçüm (bu bulut sunucusu: 4 çekirdek CPU, GPU YOK; Piper Türkçe TTS ile
+  üretilmiş 6 komut sesi; tam ölçüm Bölüm 13):
+
+    model   hesaplama  ort. süre   6 cümlede doğru
+    ------  ---------  ----------  ---------------------------------------
+    base    int8          605 ms   3/6  ("Kald.", "Yilinimete yüksel")
+    base    float32       888 ms   3/6
+    small   float32      2480 ms   6/6
+    small   int8         1654 ms   6/6   <- CPU için varsayılan yapıldı
+
+  Sonuç: Türkçe için "base" yetersiz; "small" + int8 doğruluk kaybı olmadan
+  %33 daha hızlı. GPU'lu makinede large-v3-turbo + float16 önerilir (MIMARI
+  3.6: kısa komutta ~150-300 ms beklenir; bu makinede ölçülemedi).
+
+5.2 Telefon STT modu — telefonun kendi tanıyıcısı
+  Paket: speech_to_text 7.5.0 (Android SpeechRecognizer / iOS SFSpeechRecognizer)
+    localeId "tr_TR", partialResults (konuşurken ekranda canlı metin),
+    pauseFor 15 sn (bitişi tuş belirler, sessizlikte kesilmez),
+    contextualPhrases = drone sözlüğü (Whisper'daki initial_prompt'un
+    karşılığı; destekleyen platformlarda tanıyıcıyı bu kelimelere yatkınlaştırır),
+    onDevice (ayardan): internetsiz tanıma iste.
+  Telefon tanıdığı METNİ gönderir ({"tip":"metin",...}); normalize ve geri
+  kalan her şey yine yer istasyonunda.
+  Uyarı: Telefonda Türkçe internetsiz tanıma cihaza bağlıdır
+  (MOBIL_TELSIZ_UYGULAMASI.txt 7.2). Kendi cihazında denenmeli.
+
+5.3 Otomatik mod (varsayılan)
+  Bağlanınca yer istasyonu "hos_geldin" mesajında yer_stt: true/false söyler.
+  Varsa yer STT, yoksa telefon STT kullanılır. Ekranda hangi modun etkin
+  olduğu bas-konuş tuşunun yanında yazar.
+
+5.4 STT hataları nasıl tolere ediliyor?
+  Whisper noktalama ve büyük harf koyar ("Önce 20 metre yüksel, sonra ...")
+  -> normalize.py bunları temizler. Gerçek örnek: Whisper "sağa doksan derece
+  dön"ü "Sağ 90 derece dön." duydu; hızlı yol (kesin kalıp) eşleşmedi, cümle
+  LLM'e gitti ve LLM doğru komutu üretti ({"komut":"don","yon":"sag",...}).
+  Bu tür gerçek STT hataları Faz 4 veri setine eklenecek (Bölüm 7.3).
+
+
+================================================================================
+6. JSON MU ÜRETİYOR? BİR KOMUTUN BAŞTAN SONA YOLCULUĞU
+================================================================================
+
+Evet. Sistemin "sözleşmesi" MIMARI.txt Bölüm 4'teki JSON şemasıdır
+(command_parser/schema.py). Hızlı yol da LLM de AYNI biçimde JSON üretir;
+LLM'e bu şema llama-server'da kısıt olarak verildiği için LLM şemaya uymayan
+token üretemez (cevap %100 geçerli JSON). Telefon bu JSON'u kartta AYNEN
+gösterir; böylece operatör sistemin ne anladığını görür.
+
+Aşağıdaki mesajlar bu dalın testlerinde GERÇEKTEN üretilmiş çıktılardır
+(gerçek Türkçe ses -> faster-whisper small int8 -> Qwen3 0.6B LLM).
+
+  [1] Telefon -> köprü (WebSocket)
+      {"tip":"ptt_basla","id":199}
+      <ikili> [199][0][640 bayt PCM] [199][1][640 bayt] ... (20 ms'lik parçalar)
+      {"tip":"ptt_bitti","id":199,"parca_sayisi":181}
+
+  [2] Köprü -> telefon (ses alındı)
+      {"tip":"isleniyor","id":199,"sure_ms":3612,"kayip_parca":0}
+
+  [3] Köprü: faster-whisper -> metin -> /voice/text (std_msgs/String)
+      "Önce 20 metre yüksel, sonra kuzeye 50 metre git."
+      Köprü -> telefon:
+      {"tip":"duyuldu","id":199,"metin":"Önce 20 metre yüksel, sonra kuzeye
+       50 metre git.","kaynak":"yer_stt","stt_ms":1614}
+
+  [4] command_parser
+      normalize   : "önce 20 m yüksel sonra kuzeye 50 m git"
+      acil kelime : yok
+      hızlı yol   : eşleşmedi (iki adımlı cümle) -> LLM
+      LLM isteği  : sistem prompt'u (few-shot) + cümle, temperature=0,
+                    response_format = json_schema (KOMUT_SEMASI)
+      LLM çıktısı : {"adimlar":[{"komut":"yuksel","metre":20},
+                                {"komut":"git_yon","yon":"kuzey","metre":50}]}
+      dogrula()   : şema + tip kontrolü geçti
+
+  [5] /drone/command (drone_interfaces/CommandList)
+      adimlar: [DroneCommand(komut=yuksel, metre=20),
+                DroneCommand(komut=git_yon, yon=kuzey, metre=50)]
+      kaynak: "llm", metin: "önce 20 m yüksel ...", t_metin_geldi, t_komut_hazir
+
+  [6] Köprü -> telefon (komut kartı)
+      {"tip":"komut","id":199,"gecikme_ms":3470,"metin":"önce 20 m yüksel
+       sonra kuzeye 50 m git","kaynak":"llm","kuyruga_ekle":false,
+       "adimlar":[{"komut":"yuksel","metre":20.0},
+                  {"komut":"git_yon","yon":"kuzey","metre":50.0}]}
+
+  [7] mission_executor: güvenlik katmanı listeyi baştan sona benzetir
+      (irtifa/mesafe/geofence/batarya), geçerse PX4'e setpoint'ler gider.
+      /drone/feedback -> köprü -> telefon:
+      {"tip":"geri_bildirim","id":199,"durum":"yurutuyor",
+       "mesaj":"20 metre yükseliyorum"}           -> telefon bunu sesli okur
+      {"tip":"geri_bildirim","id":199,"durum":"tamamlandi",...}
+
+  Reddedilen örnek (gerçek test): "beş yüz metre yüksel" ->
+      {"adimlar":[{"komut":"yuksel","metre":500}]}  (hızlı yol)
+      -> güvenlik: "hedef irtifa 530 m, sınır 120 m" -> kart REDDEDİLDİ,
+         telefon "Reddedildi. ..." der, drone kıpırdamaz.
+
+  Telefondaki karta yansıması:
+      ┌──────────────────────────────────────────────────────┐
+      │ 🎤 20 m yüksel → kuzeye 50 m git          [YÜRÜTÜYOR]│
+      │ duyulan    "Önce 20 metre yüksel, sonra…" yer STT 1614 ms│
+      │ normalize  önce 20 m yüksel sonra kuzeye 50 m git    │
+      │ [LLM]                                      3470 ms   │
+      │ { "adimlar": [ {"komut":"yuksel","metre":20.0},      │
+      │                {"komut":"git_yon","yon":"kuzey",…} ] }│
+      │ • 20 metre yükseliyorum                              │
+      └──────────────────────────────────────────────────────┘
+
+Neden telefon JSON'u kendisi üretmiyor? Çünkü JSON'u üreten kural seti
+(hızlı yol) ve model (LLM) yer istasyonunda; telefon kendi kurallarını
+üretseydi iki ayrı, birbirinden habersiz anlama sistemi olurdu (feature_mobil
+dalındaki sorun B). Telefon yalnızca GÖSTERİR.
+
+
+================================================================================
+7. LLM İLERİDE BU YAPIDA NASIL KULLANILACAK?
+================================================================================
+
+7.1 Telefon LLM'den bağımsız
+  LLM yalnızca command_parser'ın içinde, "metin -> JSON" kutusunda durur.
+  Telefon ve köprü sadece metin gönderir, JSON alır. Bu yüzden:
+    - Faz 4'te fine-tune'lu küçük model geldiğinde (kısa prompt, daha hızlı)
+      telefonda HİÇBİR şey değişmez; kartlardaki LLM süresi kısalır.
+    - LLM_API_SENARYOSU.txt'teki gibi hazır bir model API'den verilirse
+      yine sadece command_parser/llm_client.py değişir.
+    - Kart üzerindeki "HIZLI YOL / LLM / ÖNBELLEK / ACİL" rozeti hangi yolun
+      kullanıldığını gösterir; LLM'e ne kadar cümle gittiği sahada görülür.
+
+7.2 LLM sırasında ACİL DUR (bu dalda eklenen kural)
+  LLM bir cümleyi birkaç saniyede çözerken ACİL DUR gelirse, eski kodda LLM
+  sonucu dur'dan SONRA yayınlanıp drone'u tekrar hareket ettirebilirdi.
+  Test sırasında bu gerçekten gözlendi: ACİL DUR 1.1 ms'de işlendi, LLM'in
+  komutu 3.4 sn sonra geldi. Artık parser_node /drone/emergency_stop'u
+  dinliyor; çözüm sürerken acil dur geldiyse (ya da sesli "dur" geldiyse)
+  sonucu ATIYOR ve {"durum":"iptal"} geri bildirimi veriyor; telefon kartı
+  "ACİL DUR geldiği için ... iptal edildi" diye REDDEDİLDİ gösteriyor.
+  (Deneme sunucusunda da aynı kural var ve testle doğrulandı.)
+
+7.3 Telefon Faz 3 ve Faz 4 için veri toplar
+  config/telsiz.yaml'da kayit_klasoru verilirse her bas-konuş konuşması
+  16 kHz WAV olarak kaydedilir ve etiketler.csv'ye yazılır:
+      dosya;stt_metni;beklenen_metin
+      20261020_124212_00199.wav;Önce 20 metre yüksel, sonra kuzeye 50 metre git.;   (örnek satır)
+  "beklenen_metin" sütunu elle doldurulunca:
+    - Faz 3 Görev 3.1: kayıtlı test seti (ses -> JSON doğruluğu) hazır olur,
+    - Faz 4 Görev 4.3: GERÇEK STT hataları ("sağa" -> "Sağ") veri setine
+      girer; model temiz metin değil, gerçek STT çıktısı görerek eğitilir.
+  sahte_telefon --wav aynı kayıtları telefon olmadan tekrar oynatır.
+
+7.4 Gecikme ölçümü (Faz 3 Görev 3.5, Faz 6.1)
+  Her kartta tuş bırakma -> komut JSON'u telefona ulaştı süresi (telefonun
+  kendi saatiyle, saat eşleme gerekmez), STT süresi ve parser süresi var.
+  AudioUtterance mesajı t_konusma_basladi / t_konusma_bitti damgalarını
+  taşır; latency_monitor bunları kullanabilir.
+
+
+================================================================================
+8. TELEFON <-> YER İSTASYONU PROTOKOLÜ (sürüm 1)
+================================================================================
+
+Tek WebSocket: ws://<IP>:8765/telsiz
+  metin çerçevesi : JSON, her mesajda "tip"
+  ikili çerçeve   : [uint32 id][uint32 sıra] (little-endian) + PCM16 mono 16 kHz
+
+Telefon -> köprü
+  merhaba     {surum, token, rol: operator|izleyici, cihaz}
+  ptt_basla   {id}            ptt_bitti {id, parca_sayisi}     ptt_iptal {id}
+  metin       {id, metin, kaynak: telefon_stt|klavye|hizli_tus, guven?}
+  acil_dur    {}              ping {t}
+Köprü -> telefon
+  hos_geldin  {rol, yer_stt, stt_motoru, ses:{bicim,hz,kanal}, en_uzun_konusma_s}
+  isleniyor   {id, sure_ms, kayip_parca}
+  duyuldu     {id, metin, kaynak, stt_ms}
+  komut       {id, metin, kaynak, kuyruga_ekle, adimlar:[...], parser_ms, gecikme_ms}
+  anlasilmadi {id, sebep}
+  geri_bildirim {id|null, durum, mesaj}   (yurutuyor, tamamlandi, reddedildi,
+                                           acil_dur, telsiz_koptu...)
+  telemetri   {hazir, irtifa, hiz, yaw, batarya, arm, havada, mod, enlem, boylam}
+  pong {t}    hata {kod, mesaj}
+
+Eşleştirme: /voice/text bir String olduğu için konuşma id'si ROS'tan geçemez.
+Köprü, metni yayınladığı konuşmaları sırayla tutar; parser cümleleri sırayla
+işlediği için /drone/command'daki ilk sonuç en eski bekleyen konuşmaya aittir
+(15 sn zaman aşımı). Yürütücünün geri bildirimleri son komutun kartına gider.
+
+Python: mobile_bridge/protokol.py · Dart: mobil/lib/protokol/mesajlar.dart
+İki tarafın birebir uyuştuğu scripts/telsiz_uyum_testi.sh ile doğrulanır.
+
+
+================================================================================
+9. GÜVENLİK VE EMNİYET KURALLARI
+================================================================================
+
+  - Mevcut güvenlik katmanı (safety.py) AYNEN geçerli; telefon hiçbir limiti
+    atlatamaz, yalnızca metin/ses sağlar.
+  - Token: TELSIZ_TOKEN ortam değişkeni; yoksa her açılışta rastgele üretilir
+    ve QR koduna yazılır. Sabit zamanlı karşılaştırma (hmac.compare_digest).
+    Yanlış token'da uygulama tekrar denemez.
+  - Tek operatör: ikinci telefon otomatik "izleyici" olur (komut veremez).
+  - ACİL DUR: izleyici dahil her doğrulanmış telefon verebilir; STT/LLM'e
+    uğramaz; parser'daki bekleyen LLM sonucunu da iptal eder (7.2).
+  - Telsiz koparsa: operatörden 3 sn sinyal (ping) gelmezse ya da bağlantı
+    kapanırsa köprü ACİL DUR yayınlar (baglanti_koparsa: dur); drone yerinde
+    asılı kalır. Drone yerdeyse (telemetri) gereksiz dur gönderilmez.
+    Telefon da 4 sn yanıt alamazsa bağlantıyı ölü sayar ve 1-2-4-8 sn
+    aralıklarla yeniden bağlanır.
+  - Konuşurken bağlantı koparsa bas-konuş iptal edilir (yarım komut gitmez).
+  - Çok kısa basış (< 250 ms) yok sayılır; en uzun konuşma 15 sn.
+  - Port yalnızca yerel ağda / VPN'de açılmalı (MOBIL_TELSIZ_UYGULAMASI 13).
+
+
+================================================================================
+10. EKLENEN EK ÖZELLİKLER (kullanışlı olur dediklerim)
+================================================================================
+
+  1. QR ile bağlanma: köprü terminalde adres + token QR'ı basar
+     (pip install qrcode), telefon okutur, tek adım.
+  2. İki tanıma modu + otomatik seçim (yer STT / telefon STT).
+  3. Konuşma kartı: duyulan -> normalize -> JSON -> durum; "yanlış mı duydu,
+     yanlış mı anladı" sahada anında görülür.
+  4. Uçtan uca gecikme her kartta (ms).
+  5. Telemetri şeridi (PX4'ten 2 Hz): irtifa, hız, yön, batarya (%30 altı
+     kırmızı), mod, arm, havada.
+  6. İzleyici modu: ikinci telefon izler, gerekirse ACİL DUR basar.
+  7. Hızlı tuşlar ve klavye ile komut (yine parser + güvenlikten geçer).
+  8. Türkçe sesli yanıt; telsiz gibi: konuşmaya başlayınca TTS susar.
+  9. Kayıt toplama: konuşmalar WAV + etiketler.csv (Faz 3/4 veri seti).
+ 10. ROS'suz deneme sunucusu: uygulamayı sadece Python ile dene
+     (gerçek parser + güvenlik, sanal drone + telemetri).
+ 11. sahte_telefon: telefon olmadan köprüyü dene, WAV kayıtlarını
+     gerçek zamanlı oynat.
+ 12. LLM sırasında ACİL DUR iptali (güvenlik açığının kapatılması).
+ 13. Ekranın kararmaması (wakelock), bağlantı/ping göstergesi, son
+     bağlantıya otomatik bağlanma, ayarların telefonda saklanması.
+
+
+================================================================================
+11. NASIL ÇALIŞTIRILIR?
+================================================================================
+
+11.1 En hızlı deneme: ROS/PX4 olmadan (sadece Python)
+     pip install websockets requests qrcode
+     ./scripts/telsiz_deneme.sh                         # hızlı yol
+     ./scripts/telsiz_deneme.sh --llm http://127.0.0.1:8080          # + LLM
+     pip install faster-whisper
+     ./scripts/telsiz_deneme.sh --stt faster_whisper --stt-hesaplama int8
+     Telefon aynı Wi-Fi'da; uygulamada "QR kodu okut".
+
+11.2 Tam sistem
+     ./scripts/derle.sh                                 # mobile_bridge dahil
+     ./scripts/hepsini_baslat.sh faz1                   # PX4 + Agent + executor
+     (llama-server için: ./scripts/llama_server.sh)
+     export TELSIZ_TOKEN=benim-anahtarim                # istege bagli
+     ros2 launch drone_bringup telsiz.launch.py yurutucu:=false
+     # (executor zaten açıksa yurutucu:=false; değilse parametresiz)
+     Yer STT için config/telsiz.yaml: stt_motoru: faster_whisper
+
+11.3 Telefon olmadan köprüyü denemek
+     ros2 run mobile_bridge sahte_telefon --url 'ws://127.0.0.1:8765/telsiz?token=...' \
+         --metin "önce 20 metre yüksel sonra kuzeye 50 metre git"
+     ros2 run mobile_bridge sahte_telefon --url ... --wav recordings/kayit.wav
+
+11.4 Uygulamayı telefona kurmak
+     Flutter SDK (3.47+) + Android Studio (Android SDK) ya da Xcode.
+     cd mobil && flutter pub get && flutter run          # USB'deki telefona
+     flutter build apk --release                         # APK
+     İzinler: mikrofon, kamera (QR), konuşma tanıma (iOS), yerel ağ (iOS).
+
+
+================================================================================
+12. TESTLER VE DOĞRULAMA
+================================================================================
+
+Hepsi tek komut: ./scripts/testleri_calistir.sh
+
+  Python (ROS'suz)
+    mission_executor   34 test   (değişmedi)
+    command_parser    119 test   (değişmedi, hepsi geçiyor)
+    mobile_bridge      37 test   protokol, çekirdek (yetki, tek operatör,
+                                  sırasız parçalar, kısa/uzun konuşma, kalp
+                                  atışı, eşleştirme, kayıt), gerçek WebSocket
+                                  sunucusu + sahte_telefon, deneme sunucusu
+                                  (gerçek parser + güvenlik, LLM sırasında acil
+                                  dur iptali)
+  Simülasyon (sahte ROS + sanal PX4)
+    sim.py             executor + parser (Faz 1-2 kontrolleri)
+    telsiz_sim.py      GERÇEK bridge_node + parser + executor: telefon
+                       WebSocket'ten "kalk", "yirmi metre yüksel", ACİL DUR;
+                       drone sanal PX4'te 30 m'ye çıktı, telemetri telefona aktı
+  Dart / Flutter
+    flutter analyze    sorun yok
+    flutter test       29 test: saf mantık, kontrolcü (iki mod, ön kayıt
+                       bayt sayısı, sıra numaraları, kart durumları, red,
+                       izleyici, kopma), WebSocket istemcisi (test içinde
+                       GERÇEK sunucu: merhaba, ping, yanlış token, ölü bağlantı
+                       ve yeniden bağlanma), ekran testi (tuşa bas-bırak, kart,
+                       ACİL DUR, hızlı tuş)
+  Uyum testi
+    telsiz_uyum_testi.sh  gerçek Dart istemcisi + kontrolcü <-> gerçek Python
+                          köprüsü: metin, ikili ses çerçeveleri, gerçek hızlı yol
+                          JSON'u, güvenlik reddi, anlaşılmayan cümle, acil dur
+  Gerçek ses (elle, bu oturumda)
+    Piper Türkçe TTS ile 6 komut -> sahte_telefon (gerçek zamanlı akış) ->
+    köprü -> faster-whisper small -> parser (+ Qwen3 0.6B LLM): 6/6 doğru.
+
+DOĞRULANAMAYANLAR (açıkça):
+  - Uygulama gerçek bir telefonda çalıştırılmadı; APK/IPA derlenmedi
+    (bu ortamda Android SDK indirilemedi). Dart kodu analiz ve testlerle,
+    platform izinleri elle hazırlandı. İlk kurulumda mikrofon/kamera izin
+    akışı ve speech_to_text'in Türkçe çalışması cihazda denenmeli.
+  - ROS 2 Lyrical ve PX4 ile gerçek çalıştırma yapılmadı (sahte ROS ile
+    simüle edildi). İlk gerçek denemede: colcon build, telsiz.launch.py,
+    /voice/utterance mesajının derlenmesi kontrol edilmeli.
+  - Gecikme rakamları GPU'suz bir bulut sunucusunda; senin makinende farklı.
+
+
+================================================================================
+13. ÖLÇÜMLER (bu oturum, 4 çekirdek CPU, GPU yok)
+================================================================================
+
+  Gerçek Türkçe ses (Piper TTS) -> faster-whisper small int8 -> parser
+  (tuş bırakıldı -> komut telefona ulaştı):
+
+    söylenen                                   STT çıktısı            yol        süre      STT
+    -----------------------------------------  ---------------------  ---------  --------  -------
+    kalk                                       "Kalk."                hızlı yol  1.35 sn   int8
+    önce yirmi metre yüksel sonra kuzeye ...   tam doğru              LLM        5.09 sn   int8
+    sağa doksan derece dön                     "Sağ 90 derece dön."   LLM        3.70 sn   int8
+    yirmi metre yüksel                         "20 metre yüksel."     hızlı yol  2.17 sn   float32
+    dur                                        "Dur."                 acil       2.09 sn   float32
+    eve dön                                    "Eve dön."             hızlı yol  2.30 sn   float32
+    (float32 satırları int8 geçişinden önce ölçüldü; int8 STT bu cümlelerde
+     ortalama ~%33 daha hızlı -> ~1.4-1.6 sn beklenir)
+
+  Neredeyse tüm süre STT (CPU) ve LLM'de (CPU). Hızlı yol 0.1-0.5 ms,
+  köprü + WebSocket birkaç ms. ACİL DUR tuşu: köprüde 1.1 ms (LLM meşgulken).
+  GPU'lu bir yer istasyonunda STT ~0.15-0.3 sn, LLM 0.05-0.2 sn beklenir
+  (MIMARI 9.1 tahmini); ölçülmeli.
+
+
+================================================================================
+14. DOSYA LİSTESİ VE MEVCUT KODA YAPILAN DEĞİŞİKLİKLER
+================================================================================
+
+YENİ
+  mobil/                                  Flutter uygulaması (~2.150 satır lib,
+                                          ~660 satır test), bkz. mobil/README.md
+  ros2_ws/src/mobile_bridge/
+    mobile_bridge/protokol.py             mesaj tipleri, ikili ses çerçevesi
+    mobile_bridge/cekirdek.py             oturum mantığı (ROS'suz, test edilir)
+    mobile_bridge/sunucu.py               asyncio WebSocket sunucusu
+    mobile_bridge/bridge_node.py          ROS 2 node'u
+    mobile_bridge/stt_motoru.py           faster-whisper sarmalayıcı
+    mobile_bridge/ses.py                  PCM birleştirme, WAV kaydı
+    mobile_bridge/donustur.py             ROS mesajı -> telefon JSON'u
+    mobile_bridge/qr_kod.py               terminalde QR
+    mobile_bridge/sahte_telefon.py        komut satırı test istemcisi
+    mobile_bridge/deneme_sunucusu.py      ROS'suz deneme sunucusu
+    test/                                 37 test
+  drone_interfaces/msg/AudioUtterance.msg
+  drone_bringup/launch/telsiz.launch.py, config/telsiz.yaml
+  scripts/telsiz_deneme.sh, scripts/telsiz_uyum_testi.sh
+  araclar/sahte_sim/telsiz_sim.py
+
+DEĞİŞEN (küçük, geriye uyumlu)
+  command_parser/parser_node.py   /drone/emergency_stop aboneliği; çözüm
+                                  sırasında acil dur geldiyse sonucu at (7.2)
+  drone_interfaces/msg/Feedback.msg  "iptal" durumu açıklaması
+  drone_interfaces/CMakeLists.txt AudioUtterance.msg eklendi
+  mission_executor/px4_interface.py  komut_yayinlari=False (köprü sadece
+                                  telemetri okur, PX4'e yazıcı açmaz)
+  drone_bringup/package.xml       mobile_bridge bağımlılığı
+  scripts/testleri_calistir.sh    yeni testler
+  araclar/sahte_sim/stubs         AudioUtterance, Time(nanoseconds=)
+
+DOKUNULMAYAN
+  feature_mobil dalı (olduğu gibi), Faz 0-2 mantığı, MIMARI/YOL_HARITASI.
+
+
+================================================================================
+15. SINIRLAMALAR VE SONRAKİ ADIMLAR
+================================================================================
+
+  1. Cihazda deneme: Android ve iOS'ta kurulum, izinler, Türkçe telefon STT.
+  2. Arka planda çalışma: ekran kapalıyken dinleme için Android foreground
+     service (mikrofon tipi) ve iOS "audio" arka plan modu henüz yok;
+     şimdilik uygulama ön planda ve ekran açık (wakelock) kullanılmalı.
+  3. Donanım tuşu: ses seviyesi / Bluetooth kulaklık tuşuyla bas-konuş yok
+     (MOBIL_TELSIZ_UYGULAMASI 6.3; platform kanalı gerekir).
+  4. wss:// (TLS): ortak Wi-Fi'da çalışılacaksa eklenmeli.
+  5. Opus sıkıştırma: yalnızca mobil veri / VPN için; yerel Wi-Fi'da gerekmez.
+  6. Faz 3 stt_node: /voice/utterance'ı dinleyip yazıya çevirecek; o zaman
+     köprüde stt_motoru: yok yapılır.
+  7. Riskli komutta onay diyaloğu (MIMARI 3.8): telefon ekranında
+     "Onayla / İptal" — executor tarafında onay mekanizması gerekiyor.
+  8. Telefon üstü Whisper (internetsiz, ses gönderilemiyorken yedek):
+     whisper.cpp / sherpa-onnx ile.
+================================================================================
