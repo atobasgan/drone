@@ -12,18 +12,22 @@ Gazebo Jetty + ROS 2 Lyrical + PX4 (SITL) + yerel küçük LLM.
 
 ## Durum
 
-**Faz 0–2 kodu hazır** (kurulum betikleri, `drone_interfaces`, `mission_executor`,
-`command_parser`, `drone_bringup`). Faz 3 (ses) sırada. Hangi görevin makinede
+**Faz 0–3 kodu hazır** (kurulum betikleri, `drone_interfaces`, `mission_executor`,
+`command_parser`, `voice_input`, `latency_monitor`, `drone_bringup`). Faz 3'te kayıtların
+alınması ve ölçümler sırada; Faz 4 (veri + fine-tune) sonra. Hangi görevin makinede
 doğrulanması gerektiği [NOTLAR.md](NOTLAR.md)'de.
 
 ## Akış
 
 ```
+mikrofon ─> stt_node (VAD + STT) ─/voice/stt (VoiceText: metin + t0, t1)─┐
+                                                                        v
 /voice/text (String) ──> command_parser ──/drone/command (CommandList)──> mission_executor ──/fmu/in/*──> PX4
                          normalize                                       safety (limitler)
                          acil kelime ("dur")                             durum makinesi (20 Hz)
                          hızlı yol (regex, <5 ms)                        <──/fmu/out/*── PX4
                          LLM (llama-server, JSON şema)  /drone/feedback <──
+                                                         /latency/olcum (t0..t5) ──> latency_monitor ──> CSV
 ```
 
 ## Klasörler
@@ -35,7 +39,10 @@ ros2_ws/src/
   drone_interfaces/        DroneCommand, CommandList, Feedback mesajları
   mission_executor/        px4_interface.py, safety.py, planlayici.py, geo.py, executor_node.py
   command_parser/          normalize.py, fast_path.py, schema.py, prompt.py, llm_client.py, parser_node.py
+  voice_input/             vad.py, stt.py, stt_node.py, kayit_al.py, stt_karsilastir.py, ses_testi.py
+  latency_monitor/         monitor_node.py (CSV), ozet.py (ort / p50 / p95)
   drone_bringup/           launch/ + config/guvenlik.yaml, config/parser.yaml
+recordings/                cumleler.jsonl (okunacak 107 cümle), *.wav + etiketler.csv
 araclar/sahte_sim/         ROS'suz uçtan uca test (sahte rclpy + basit araç modeli)
 ```
 
@@ -80,6 +87,37 @@ ros2 run command_parser degerlendir --etiket qwen3-0.6b --sadece-llm --tablo NOT
 ```
 
 `llama-server` kapalıysa parser yalnızca hızlı yolla çalışmaya devam eder.
+
+## Faz 3 — konuşarak uçuş
+
+```bash
+./scripts/ses_kur.sh                      # PortAudio, faster-whisper, Silero VAD, sounddevice
+./scripts/derle.sh
+
+# 3.1 Test kayıtları (ROS gerekmez; her konuşmacı 107 cümle, kaldığı yerden devam eder)
+ros2 run voice_input kayit_al --konusmaci atakan        # depo kökünde çalıştır
+# ROS'suz bir bilgisayarda (pip: numpy sounddevice):
+PYTHONPATH=ros2_ws/src/voice_input:ros2_ws/src/command_parser python3 -m voice_input.kayit_al --konusmaci atakan
+
+# 3.2 STT adaylarını ölç (ROS gerekmez) -> tablo + en sık yanlış duyulan kelimeler
+ros2 run voice_input stt_karsilastir small:int8 medium:int8 --tablo NOTLAR_sonuclar.md --etiket "CPU 4c"
+ros2 run voice_input stt_karsilastir large-v3-turbo:float16@cuda --llm http://127.0.0.1:8080
+
+# 3.3 / 3.4 Mikrofonla uç (stt_node, all.launch.py içinde)
+./scripts/hepsini_baslat.sh
+ros2 topic echo /voice/stt                # "on metre yüksel" -> metin + zaman damgaları
+
+# 3.4 Kayıtlı 100+ dosyayla uçtan uca doğruluk (drone uçmaz)
+ros2 launch drone_bringup ses_test.launch.py
+ros2 run voice_input ses_testi --etiket "small int8 + qwen3-1.7b" --tablo NOTLAR_sonuclar.md
+
+# 3.5 Aşama aşama gecikme (latency_monitor her komutu ~/llm_drone_gecikme/*.csv'ye yazar)
+ros2 launch drone_bringup all.launch.py stt_mod:=ikisi   # yürütücü açık: t4, t5 de ölçülür
+ros2 run voice_input ses_testi --ara 3
+ros2 run latency_monitor ozet ~/llm_drone_gecikme/gecikme_*.csv --tablo NOTLAR_sonuclar.md
+```
+
+STT / VAD ayarları `ros2_ws/src/drone_bringup/config/ses.yaml`'da.
 
 ## Testler (ROS gerektirmez)
 

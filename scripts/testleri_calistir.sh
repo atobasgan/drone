@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
-# ROS gerektirmeyen birim testleri (safety, geo, normalize, hizli yol, sema, LLM istemcisi).
+# ROS gerektirmeyen birim testleri (safety, geo, normalize, hizli yol, sema, LLM istemcisi,
+# VAD, gecikme olcumu).
 set -euo pipefail
 kok="$(cd "$(dirname "$0")/.." && pwd)"
-for paket in mission_executor command_parser; do
+for paket in mission_executor command_parser voice_input latency_monitor; do
   echo "=== $paket ==="
   (cd "$kok/ros2_ws/src/$paket" && python3 -m pytest -q "$@")
 done

@@ -127,6 +127,24 @@ def msg_alanlarina(adim):
     return alanlar
 
 
+def msg_alanlarindan(alanlar):
+    """DroneCommand alanlarini (sozluk) sema bicimine cevirir; msg_alanlarina'nin tersi.
+
+    Sifir / bos istege bagli alanlar atilir ("kalk" irtifasi 0 = varsayilan).
+    """
+    ad = alanlar['komut']
+    if ad not in KOMUTLAR:
+        return {'komut': ad}
+    zorunlu, istege_bagli = KOMUTLAR[ad]
+    adim = {'komut': ad}
+    for alan in zorunlu + istege_bagli:
+        deger = alanlar.get('metre' if alan == 'irtifa_m' else alan)
+        if alan in istege_bagli and not deger:
+            continue
+        adim[alan] = float(deger) if ALANLAR[alan]['type'] == 'number' else deger
+    return adim
+
+
 def kanonik(adimlar):
     """Karsilastirma icin: sirali anahtarlar, yuvarlanmis sayilar."""
     return [

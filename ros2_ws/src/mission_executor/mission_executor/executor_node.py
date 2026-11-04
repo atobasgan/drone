@@ -5,17 +5,19 @@ Tasarim (MIMARI.txt 3.9, KAVRAMLAR 5.2):
     Bu dongu HIC durmaz; yeni komut yalnizca hedef degiskenini gunceller.
   - Komutlar kuyrukta tutulur; biri bitince siradakine gecilir.
   - Her komut ve her liste once safety.Guvenlik'ten gecer.
+  - Her komutun t3/t4/t5 damgalari /latency/olcum'a yayinlanir (Gorev 3.5).
 """
 from collections import deque
 import math
 
-from drone_interfaces.msg import CommandList, Feedback
+from drone_interfaces.msg import CommandList, Feedback, LatencySample
 import rclpy
 from rclpy.node import Node
 from rclpy.time import Time
 from std_msgs.msg import Empty
 
 from . import mesajlar
+from .gecikme import GecikmeIzleyici
 from .geo import aci_sar
 from .planlayici import Poz
 from .px4_interface import PX4Arayuz
@@ -47,6 +49,10 @@ class ExecutorNode(Node):
         self.isinma_tik = int(p('offboard_isinma_tik', 20).value)
         self.hiz_siniri = float(p('hiz_mps', 0.0).value)   # 0 = PX4 limitleri
         on_ek = p('px4_on_ek', '/fmu').value
+        self.gecikme = GecikmeIzleyici(
+            esik_mps=float(p('olcum_hiz_esigi_mps', 0.2).value),
+            zaman_asimi_s=float(p('olcum_zaman_asimi_s', 5.0).value),
+        )
 
         varsayilan = Limitler()
         limitler = Limitler(**{
@@ -60,6 +66,7 @@ class ExecutorNode(Node):
         self.create_subscription(CommandList, '/drone/command', self._komut_cb, 10)
         self.create_subscription(Empty, '/drone/emergency_stop', self._acil_cb, 10)
         self.feedback_pub = self.create_publisher(Feedback, '/drone/feedback', 10)
+        self.gecikme_pub = self.create_publisher(LatencySample, '/latency/olcum', 10)
 
         self.durum = BEKLEMEDE
         self.kuyruk = deque()
@@ -121,13 +128,16 @@ class ExecutorNode(Node):
 
     # ------------------------------------------------------------------ callback
     def _komut_cb(self, msg):
-        if not self.px4.hazir:
-            self._geri_bildir('reddedildi', 'PX4 konum verisi henüz yok')
-            return
         komutlar = [msg_to_komut(a) for a in msg.adimlar]
         if not komutlar:
             return
-        self._gecikme_logla(msg)
+        t3 = self.get_clock().now().nanoseconds
+        hiz = self.px4.hiz_vektoru() if self.px4.hazir else (0.0, 0.0, 0.0)
+        self._olcum_yayinla(self.gecikme.baslat(msg, t3, hiz))
+        if not self.px4.hazir:
+            self._geri_bildir('reddedildi', 'PX4 konum verisi henüz yok')
+            self._olcum_yayinla(self.gecikme.kapat('reddedildi'))
+            return
 
         # "dur" her seyin onune gecer.
         if komutlar[0]['komut'] == 'dur' and len(komutlar) == 1:
@@ -153,8 +163,12 @@ class ExecutorNode(Node):
             self.guvenlik.liste_kontrol_et(kontrol_listesi, durum)
         except Reddedildi as e:
             self._geri_bildir('reddedildi', str(e))
+            self._olcum_yayinla(self.gecikme.kapat('reddedildi'))
             return
 
+        if ekle and (self.aktif or self.kuyruk):
+            # Hedef simdi degismeyecek; t4/t5 bu komut icin anlamsiz.
+            self._olcum_yayinla(self.gecikme.kapat('kuyrukta'))
         if not ekle:
             self._iptal()
         self.kuyruk.extend(kontrol_listesi[atla:])
@@ -166,12 +180,21 @@ class ExecutorNode(Node):
         self._iptal()
         self._geri_bildir('tamamlandi', 'ACİL DUR: kuyruk boşaltıldı, yerinde asılı kalıyorum')
 
-    def _gecikme_logla(self, msg):
-        t = msg.t_komut_hazir
-        if t.sec == 0 and t.nanosec == 0:
+    def _olcum_yayinla(self, o):
+        if o is None:
             return
-        gecikme = (self.get_clock().now() - Time.from_msg(t)).nanoseconds / 1e6
-        self.get_logger().debug(f'parser -> executor: {gecikme:.1f} ms')
+        m = o.msg
+
+        def zaman(ns):
+            return Time(nanoseconds=ns).to_msg()
+
+        self.gecikme_pub.publish(LatencySample(
+            metin=m.metin, kaynak=m.kaynak, ses_kaynagi=m.ses_kaynagi, sonuc=o.sonuc,
+            t0_konusma_bitti=m.t_konusma_bitti, t1_stt_bitti=m.t_stt_bitti,
+            t_metin_geldi=m.t_metin_geldi, t2_komut_hazir=m.t_komut_hazir,
+            t3_yurutucu_aldi=zaman(o.t3), t4_ilk_setpoint=zaman(o.t4),
+            t5_hiz_degisti=zaman(o.t5),
+        ))
 
     # ------------------------------------------------------------------ yurutme
     def _siradaki(self):
@@ -266,9 +289,11 @@ class ExecutorNode(Node):
         sp = self.setpoint
         self.px4.kontrol_modu_yayinla(konum=True)
         self.px4.hedef_yayinla(sp.x, sp.y, sp.z, sp.yaw)
+        simdi_ns = self.get_clock().now().nanoseconds
+        self._olcum_yayinla(self.gecikme.tik(simdi_ns, self.px4.hiz_vektoru()))
 
         # 2) Durum makinesi
-        simdi = self.get_clock().now().nanoseconds / 1e9
+        simdi = simdi_ns / 1e9
 
         if self.durum == KALKIYOR:
             self.isinma += 1

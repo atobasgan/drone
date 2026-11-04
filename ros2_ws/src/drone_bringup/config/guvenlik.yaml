@@ -19,3 +19,7 @@ mission_executor:
     yaw_esigi_derece: 5.0
     hiz_mps: 0.0                   # 0 = PX4'un kendi hiz limitleri (MPC_*_VEL_MAX)
     px4_on_ek: /fmu
+
+    # --- gecikme olcumu (Gorev 3.5, /latency/olcum) ---
+    olcum_hiz_esigi_mps: 0.2       # t5: hiz vektoru bu kadar degisince "drone tepki verdi"
+    olcum_zaman_asimi_s: 5.0       # hareket etmeyen komutta (bekle, hiz_ayarla) t5 bos kalir

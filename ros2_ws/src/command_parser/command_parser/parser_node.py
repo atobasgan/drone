@@ -1,11 +1,15 @@
 """parser_node: /voice/text -> normalize -> acil -> hizli yol -> LLM -> /drone/command
 
+Iki giris var, ayni hatta gider:
+  /voice/text (String)    : terminal, telefon (yazili metin)
+  /voice/stt  (VoiceText) : stt_node (Faz 3); zaman damgalari CommandList'e tasinir
+
     ros2 topic pub --once /voice/text std_msgs/msg/String \
         "{data: 'önce 20 metre yüksel sonra kuzeye 50 metre git'}"
 """
 import threading
 
-from drone_interfaces.msg import CommandList, DroneCommand, Feedback
+from drone_interfaces.msg import CommandList, DroneCommand, Feedback, VoiceText
 import rclpy
 from rclpy.callback_groups import MutuallyExclusiveCallbackGroup, ReentrantCallbackGroup
 from rclpy.executors import MultiThreadedExecutor
@@ -57,8 +61,9 @@ class ParserNode(Node):
         # Acil yol LLM'i beklemesin: metin geri cagirimi tekrar girilebilir,
         # LLM cagrilari ise kilitle sirayla yapilir.
         self._kilit = threading.Lock()
-        self.create_subscription(String, '/voice/text', self._metin_cb, 10,
-                                 callback_group=ReentrantCallbackGroup())
+        grup = ReentrantCallbackGroup()
+        self.create_subscription(String, '/voice/text', self._metin_cb, 10, callback_group=grup)
+        self.create_subscription(VoiceText, '/voice/stt', self._ses_cb, 10, callback_group=grup)
 
         if llm is not None:
             self._isinma_timer = self.create_timer(
@@ -79,23 +84,35 @@ class ParserNode(Node):
             self.get_logger().warn(f'LLM ısınma başarısız: {sonuc.hata}')
 
     def _metin_cb(self, msg):
+        self._isle(msg.data)
+
+    def _ses_cb(self, msg):
+        if not msg.metin.strip():
+            return
+        self._isle(msg.metin, msg)
+
+    def _isle(self, ham, ses=None):
         t_metin = self.get_clock().now()
         # Acil kelimeler kilidi (LLM'i) beklemez.
-        if acil_mi(normalize(msg.data)):
-            cozum = self.cozucu.coz(msg.data)
+        if acil_mi(normalize(ham)):
+            cozum = self.cozucu.coz(ham)
         else:
             with self._kilit:
-                cozum = self.cozucu.coz(msg.data)
+                cozum = self.cozucu.coz(ham)
         t_hazir = self.get_clock().now()
 
         if not cozum.komut_var:
             self.get_logger().info(
-                f'"{msg.data}" -> komut yok [{cozum.kaynak}] {cozum.hata} ({cozum.sure_ms:.1f} ms)')
+                f'"{ham}" -> komut yok [{cozum.kaynak}] {cozum.hata} ({cozum.sure_ms:.1f} ms)')
             self.feedback_pub.publish(Feedback(
                 durum='reddedildi', mesaj=f'anlamadım: "{cozum.metin}" ({cozum.hata})'))
             return
 
         cikti = CommandList()
+        if ses is not None:
+            cikti.t_konusma_bitti = ses.t_konusma_bitti
+            cikti.t_stt_bitti = ses.t_stt_bitti
+            cikti.ses_kaynagi = ses.kaynak
         cikti.t_metin_geldi = t_metin.to_msg()
         cikti.t_komut_hazir = t_hazir.to_msg()
         cikti.adimlar = [adim_to_msg(a) for a in cozum.adimlar]
@@ -106,7 +123,7 @@ class ParserNode(Node):
 
         llm = f', LLM {cozum.llm_ms:.0f} ms' if cozum.kaynak == 'llm' else ''
         self.get_logger().info(
-            f'"{msg.data}" -> "{cozum.metin}" -> {cozum.adimlar} '
+            f'"{ham}" -> "{cozum.metin}" -> {cozum.adimlar} '
             f'[{cozum.kaynak}{", kuyruğa" if cozum.kuyruga_ekle else ""}] '
             f'{cozum.sure_ms:.1f} ms{llm}')
 

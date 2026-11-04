@@ -7,7 +7,7 @@ yaz (YOL_HARITASI.txt "Genel alışkanlıklar").
 
 `./scripts/surumleri_yaz.sh >> NOTLAR.md` çıktısını buraya ekle.
 
-## Görev durumu (Faz 0–2)
+## Görev durumu (Faz 0–3)
 
 Kod hazır = depoda; ✔ = birim testi / sahte simülasyonla doğrulandı;
 **Makinede** = Ubuntu 26.04 + PX4 SITL üzerinde KONTROL maddeleri sen çalıştırınca işaretlenecek.
@@ -32,6 +32,11 @@ Kod hazır = depoda; ✔ = birim testi / sahte simülasyonla doğrulandı;
 | 2.3 llama-server | `llama_cpp_kur.sh`, `model_indir.sh`, `llama_server.sh`, `llm_curl_test.sh` | ✔ bulutta (CPU) çalıştırıldı |
 | 2.4 Prompt + şema | `schema.py`, `prompt.py` (few-shot), `llm_client.py`, `degerlendir.py`, 50 cümle | ✔ gerçek modelle baseline ölçüldü (aşağıda) |
 | 2.5 parser_node | /voice/text → /drone/command, ısınma, zaman damgaları, önbellek | ✔ sahte sim |
+| 3.1 Test kayıtları | `recordings/cumleler.jsonl` (107 cümle, tüm komut türleri, 12 negatif), `kayit_al` | Kayıt bekliyor (100+ WAV, 2-3 kişi) |
+| 3.2 STT seçimi | `stt_karsilastir`: cümle %, komut %, ort/p95 ms, RTF, en sık yanlış duyulanlar | ✔ betik gerçek modelle denendi; ölçüm kayıt bekliyor |
+| 3.3 stt_node | sounddevice + Silero VAD (400 ms) + faster-whisper, dosya modu, ısınma, uydurma filtresi | ✔ VAD/STT gerçek modelle, node sahte rclpy ile; mikrofon **Makinede** |
+| 3.4 Uçtan uca ses | `all.launch.py` (stt dahil), `ses_test.launch.py`, `ses_testi` | Makinede |
+| 3.5 latency_monitor | yürütücü t3/t4/t5 damgalar, `/latency/olcum` → CSV, `ozet` (ort/p50/p95, en yavaş aşama) | ✔ sahte sim + pytest; ölçüm **Makinede** |
 
 ## Tasarım kararları (MIMARI.txt'ten sapmalar / ayrıntılar)
 
@@ -50,6 +55,24 @@ Kod hazır = depoda; ✔ = birim testi / sahte simülasyonla doğrulandı;
   isteklerde `enable_thinking=false` ve `/no_think`.
 - **Normalizasyon**: "2 km" → "2000 m" (LLM/hızlı yol tek birim görsün). "bir"/"yarım" yalnızca
   arkasından birim gelirse sayıdır ("bir şey" sayı değil). "ona git" sayı değil.
+
+### Faz 3
+
+- **Ses girişi ayrı topic**: `stt_node` → `/voice/stt` (`VoiceText`: metin + t0 + t1). `/voice/text`
+  (String) terminal / telefon için aynen kalır; parser ikisini de dinler. Zaman damgaları String'e
+  sığmadığı için böyle. "/voice/text'te görünüyor" kontrolü için `ros2 topic echo /voice/stt`.
+- **Gecikme damgaları**: t0 = VAD konuşmanın bittiğine karar verdi (bitiş sessizliği beklendikten
+  sonra; konuşmanın gerçek sonu t0 − `bitis_sessizlik_ms`). Dosya modunda t0 = dosya alındı.
+  t3/t4/t5'i yürütücü ekler; t5 = hız vektörü 0.2 m/s değişti (`olcum_hiz_esigi_mps`).
+  Kuyruğa eklenen / reddedilen komutta t4/t5 yok; `bekle` gibi hareketsiz komutta 5 sn sonra t5'siz kapanır.
+- **Silero VAD 512 örnek** (32 ms) çerçeve ister; görevdeki 20-30 ms yerine bu kullanıldı.
+- **Konuşma değil**: min 250 ms konuşma; Whisper'ın sessizlikte uydurduğu "Altyazı M.K." vb. ve
+  `no_speech_prob` yüksek parçalar atılır. Mikrofon modunda boş sonuç yayınlanmaz.
+- **STT ayarları**: `language="tr"`, `beam_size=1`, `temperature=0` (geri düşme denemesi yok),
+  `initial_prompt` = drone sözlüğü (`stt.py`), `condition_on_previous_text=False`.
+- **Uzak makine** (Görev 3.3 son madde) yapılmadı: gerekirse `stt_node`'u mikrofonun olduğu makinede
+  çalıştır; ağdan yalnızca `/voice/stt` metni gider.
+- `kayit_klasoru` dolu ise her mikrofon konuşması WAV + duyulan metin olarak saklanır (Faz 4 verisi).
 
 ## Ölçümler
 
@@ -78,3 +101,19 @@ Gözlemler (Faz 4 veri üretimi için):
   çok adımda sayı bir sonraki adıma kayıyor ("sağa dön sonra 20 m" -> 20°).
 - 0.6B sayıyı bozabiliyor ("50" -> 500). Normalizasyon doğru, hata modelde.
 - Sonuç: fine-tune'suz hiçbir model %97 hedefine yakın değil -> Faz 4 gerekli.
+
+### Faz 3 duman testi (sentetik ses) — 2026-11-04
+
+Gerçek ölçüm DEĞİL: Mac M1 CPU, macOS'un Türkçe TTS sesi (Yelda) ile üretilmiş 20 WAV; amaç
+betiklerin gerçek modellerle çalıştığını görmek. Gerçek tablo insan kayıtlarıyla (3.1) çıkarılacak.
+
+| STT | cümle doğru % | komut tam % (yalnızca hızlı yol) | STT ort ms | RTF |
+|---|---|---|---|---|
+| base int8 | 35 | 20 | 296 | 0.23 |
+| small int8 | 70 | 55 | 903 | 0.71 |
+
+- Silero VAD: tıklama gürültüsü atıldı, sessizlikte STT boş döndü; 250 ms aralıklı iki komut
+  (bitiş sessizliği 400 ms) tek parça oldu — beklenen davranış.
+- Whisper büyük "İ" yerine "I" yazabiliyor ("Ileri" → normalize "ıleri"); gerçek kayıtlarda
+  sık görülürse normalizasyona eklenmeli.
+- Kısa komutlar ("sağa dön" → "Saadun") en çok bozulanlar; Faz 4 STT gürültüsü listesine.

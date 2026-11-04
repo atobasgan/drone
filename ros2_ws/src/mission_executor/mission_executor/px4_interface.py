@@ -150,6 +150,10 @@ class PX4Arayuz:
         y = self.yerel
         return math.sqrt(y.vx ** 2 + y.vy ** 2 + y.vz ** 2)
 
+    def hiz_vektoru(self):
+        y = self.yerel
+        return (float(y.vx), float(y.vy), float(y.vz))
+
     @property
     def armli(self):
         return self.durum is not None and \

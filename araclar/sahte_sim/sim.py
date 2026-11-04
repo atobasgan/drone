@@ -16,7 +16,8 @@ sys.path[:0] = [os.path.join(BURASI, 'stubs'), os.path.join(SRC, 'mission_execut
                 os.path.join(SRC, 'command_parser')]
 from rclpy.node import WORLD
 from px4_msgs.msg import *
-from drone_interfaces.msg import CommandList, DroneCommand
+from drone_interfaces.msg import CommandList, DroneCommand, VoiceText
+from builtin_interfaces.msg import Time
 from std_msgs.msg import Empty, String
 
 WORLD['px4_out'] = ['/fmu/out/vehicle_local_position', '/fmu/out/vehicle_status_v1',
@@ -74,6 +75,8 @@ pa = ParserNode()
 arac = Arac()
 fb = []
 WORLD['topics'].setdefault('/drone/feedback', []).append(lambda m: fb.append((WORLD['t'], m.durum, m.mesaj)))
+olcumler = []
+WORLD['topics'].setdefault('/latency/olcum', []).append(olcumler.append)
 
 def calis(sn):
     dt = 0.01
@@ -87,6 +90,16 @@ def calis(sn):
 def metin(s):
     print(f'\n>>> "{s}"')
     for cb in WORLD['topics']['/voice/text']: cb(String(data=s))
+
+def ses(s, stt_ms=300):
+    # stt_node gibi: t0 = simdi - STT suresi, t1 = simdi
+    print(f'\n>>> (ses) "{s}"')
+    t = WORLD['t']
+    m = VoiceText(metin=s, kaynak='dosya', t_konusma_bitti=Time(sec=(t - stt_ms*10**6)//10**9, nanosec=(t - stt_ms*10**6) % 10**9),
+                  t_stt_bitti=Time(sec=t//10**9, nanosec=t % 10**9))
+    for cb in WORLD['topics']['/voice/stt']: cb(m)
+
+def ns(tm): return tm.sec*10**9 + tm.nanosec
 
 def komut(*adimlar, ekle=False):
     print(f'\n>>> komut {adimlar}')
@@ -114,6 +127,17 @@ metin('kuzeye 100 metre git'); calis(3); print('   hareket ortasi', poz())
 metin('dur'); calis(1.5); x1 = arac.x; calis(2); print('   dur sonrasi', poz()); assert abs(arac.x - x1) < 0.3 and ex.aktif is None
 komut({'komut':'yuksel','metre':10.0}, {'komut':'git_yon','yon':'bati','metre':10.0}); bekle_bitis()
 assert abs(arac.z + 20) < 0.6
+print('\n>>> Faz 3: ses girisi ve gecikme olcumu')
+olcumler.clear()
+ses('on metre yüksel'); bekle_bitis(); assert abs(arac.z + 30) < 0.6
+o = olcumler[0]
+assert o.sonuc == 'kabul' and o.ses_kaynagi == 'dosya' and o.kaynak == 'hizli_yol'
+t = [ns(getattr(o, a)) for a in ('t0_konusma_bitti', 't1_stt_bitti', 't_metin_geldi', 't2_komut_hazir', 't3_yurutucu_aldi', 't4_ilk_setpoint', 't5_hiz_degisti')]
+assert all(t) and t == sorted(t), t
+print(f'    t1-t0={(t[1]-t[0])/1e6:.0f} ms  t4-t3={(t[5]-t[4])/1e6:.0f} ms  t5-t4={(t[6]-t[5])/1e6:.0f} ms  toplam={(t[6]-t[0])/1e6:.0f} ms')
+ses(''); ses('beş bin metre yüksel'); calis(0.5)
+assert [o.sonuc for o in olcumler[1:]] == ['reddedildi'], [o.sonuc for o in olcumler]
+komut({'komut':'alcal','metre':10.0}); bekle_bitis()
 metin('sonra 3 saniye bekle'); metin('sonra eve dön'); bekle_bitis()
 assert not arac.armed and math.hypot(arac.x, arac.y) < 1
 print('\n>>> 10 dakika boşta (offboard akışı kesilmemeli)')

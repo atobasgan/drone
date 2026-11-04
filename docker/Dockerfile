@@ -45,6 +45,13 @@ RUN git clone https://github.com/ggml-org/llama.cpp.git ${LLAMA_CPP_DIR} \
     && cmake -S ${LLAMA_CPP_DIR} -B ${LLAMA_CPP_DIR}/build ${LLAMA_CMAKE_ARGS} \
     && cmake --build ${LLAMA_CPP_DIR}/build --config Release -j"$(nproc)" --target llama-server
 
+# Faz 3 ses: PortAudio + faster-whisper + Silero VAD (torch CPU). Mikrofon icin
+# konteyneri --device /dev/snd ile calistir.
+RUN apt-get update && apt-get install -y --no-install-recommends libportaudio2 portaudio19-dev python3-numpy \
+    && rm -rf /var/lib/apt/lists/* \
+    && pip3 install --break-system-packages torch --index-url https://download.pytorch.org/whl/cpu \
+    && pip3 install --break-system-packages faster-whisper silero-vad sounddevice
+
 RUN echo "source /opt/ros/${ROS_DISTRO}/setup.bash" >> /root/.bashrc \
     && echo '[ -f ${LLM_DRONE_DIR}/ros2_ws/install/setup.bash ] && source ${LLM_DRONE_DIR}/ros2_ws/install/setup.bash' >> /root/.bashrc
 

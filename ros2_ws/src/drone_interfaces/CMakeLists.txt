@@ -9,6 +9,8 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/DroneCommand.msg"
   "msg/CommandList.msg"
   "msg/Feedback.msg"
+  "msg/VoiceText.msg"
+  "msg/LatencySample.msg"
   DEPENDENCIES builtin_interfaces
 )
 

@@ -15,6 +15,7 @@ class _Log:
     def _w(self, lvl, m): WORLD['log'].append((WORLD['t'], lvl, m)); print(f'{WORLD["t"]/1e9:7.2f} [{lvl}] {m}')
     def info(self, m): self._w('I', m)
     def warn(self, m): self._w('W', m)
+    def error(self, m): self._w('E', m)
     def debug(self, m): pass
 class _Clock:
     def now(self): return Time(WORLD['t'])

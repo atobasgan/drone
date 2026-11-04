@@ -1,0 +1,21 @@
+# stt_node parametreleri (Faz 3). Olcumle ayarla: NOTLAR.md "Faz 3".
+stt_node:
+  ros__parameters:
+    mod: mikrofon                 # mikrofon | dosya | ikisi (launch: stt_mod:=...)
+    mikrofon_cihazi: ""           # bos = varsayilan; numara ya da ad (python3 -m sounddevice)
+
+    # --- STT (faster-whisper), Gorev 3.2'de secilen aday ---
+    stt_model: small              # GPU: large-v3-turbo; ya da Turkce CT2 deposu
+    stt_cihaz: auto               # auto | cpu | cuda
+    stt_hesaplama: int8           # CPU: int8, GPU: float16
+    stt_beam: 1
+    stt_thread: 0                 # 0 = varsayilan; CPU'da LLM ile cekirdek paylasimi icin ayarla
+
+    # --- VAD (Silero) ---
+    vad_esik: 0.5
+    bitis_sessizlik_ms: 400.0     # dogrudan gecikmeye eklenir; Faz 6'da 300 -> 250
+    on_kayit_ms: 200.0
+    min_konusma_ms: 250.0         # daha kisasi (klavye, tik) atilir
+    max_konusma_s: 10.0
+
+    kayit_klasoru: ""             # dolu ise her konusma WAV olarak saklanir (Faz 4 verisi)

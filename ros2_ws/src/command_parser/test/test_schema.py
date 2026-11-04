@@ -37,3 +37,14 @@ def test_yardimcilar():
     assert bilinmiyor_mu([{'komut': 'kalk'}, {'komut': 'bilinmiyor'}])
     assert msg_alanlarina({'komut': 'kalk', 'irtifa_m': 20.0}) == {'komut': 'kalk', 'metre': 20.0}
     assert kanonik([{'metre': 50, 'komut': 'yuksel'}]) == kanonik([{'komut': 'yuksel', 'metre': 50}])
+
+
+def test_msg_alanlarindan_tersi():
+    from command_parser.schema import msg_alanlarina, msg_alanlarindan
+    for adim in ({'komut': 'kalk', 'irtifa_m': 20.0}, {'komut': 'kalk'},
+                 {'komut': 'git_yon', 'yon': 'kuzey', 'metre': 50.0},
+                 {'komut': 'don', 'yon': 'sag', 'derece': 90.0}, {'komut': 'dur'}):
+        msg = dict.fromkeys(('metre', 'derece', 'saniye', 'mps', 'enlem', 'boylam'), 0.0)
+        msg.update(yon='', tur='')
+        msg.update(msg_alanlarina(adim))
+        assert msg_alanlarindan(msg) == adim
