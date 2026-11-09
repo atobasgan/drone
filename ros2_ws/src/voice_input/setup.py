@@ -23,6 +23,7 @@ setup(
             'kayit_al = voice_input.kayit_al:main',
             'stt_karsilastir = voice_input.stt_karsilastir:main',
             'ses_testi = voice_input.ses_testi:main',
+            'sentetik_set = voice_input.sentetik_set:main',
         ],
     },
 )

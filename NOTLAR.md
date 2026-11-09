@@ -69,7 +69,11 @@ Kod hazır = depoda; ✔ = birim testi / sahte simülasyonla doğrulandı;
 - **Konuşma değil**: min 250 ms konuşma; Whisper'ın sessizlikte uydurduğu "Altyazı M.K." vb. ve
   `no_speech_prob` yüksek parçalar atılır. Mikrofon modunda boş sonuç yayınlanmaz.
 - **STT ayarları**: `language="tr"`, `beam_size=1`, `temperature=0` (geri düşme denemesi yok),
-  `initial_prompt` = drone sözlüğü (`stt.py`), `condition_on_previous_text=False`.
+  `initial_prompt` = drone sözlüğü (`stt_sozlugu.py`, 220 token, emir kipi; DRONE_SOZLUGU.txt),
+  `condition_on_previous_text=False`.
+- **Uydurma filtresi** (`stt.segmentleri_suz`): tekrar döngüsü (compression_ratio > 2.4) ve ses
+  yokken sözlükten kopya (no_speech_prob > 0.5 + bütün kelimeler sözlükte) atılır; durdurma
+  içeren metin hiç atılmaz.
 - **Uzak makine** (Görev 3.3 son madde) yapılmadı: gerekirse `stt_node`'u mikrofonun olduğu makinede
   çalıştır; ağdan yalnızca `/voice/stt` metni gider.
 - `kayit_klasoru` dolu ise her mikrofon konuşması WAV + duyulan metin olarak saklanır (Faz 4 verisi).
@@ -117,3 +121,20 @@ betiklerin gerçek modellerle çalıştığını görmek. Gerçek tablo insan ka
 - Whisper büyük "İ" yerine "I" yazabiliyor ("Ileri" → normalize "ıleri"); gerçek kayıtlarda
   sık görülürse normalizasyona eklenmeli.
 - Kısa komutlar ("sağa dön" → "Saadun") en çok bozulanlar; Faz 4 STT gürültüsü listesine.
+
+### Drone sözlüğü (initial_prompt) — sentetik ses — 2026-11-09
+
+Ayrıntı: DRONE_SOZLUGU.txt. Piper tr_TR-dfki, 167 cümle x 3 koşul (temiz / hızlı+gürültü SNR 8 /
+telefon bandı) + 12 gürültü klibi; small int8, bulut CPU 4 çekirdek. Komut % = hızlı yol (LLM'siz).
+
+| sözlük | token | cumleler.jsonl komut % | ayrı set komut % | kelime hatası % (cumleler) | gürültüden uydurma | STT ort ms |
+|---|---|---|---|---|---|---|
+| yok | 0 | 65.7 | 73.3 | 28.5 | 0/12 | 1410 |
+| eski | 99 | 82.6 | 82.8 | 14.0 | 0/12 | 1452 |
+| yeni | 220 | 93.1 | 91.1 | 9.4 | 0/12 (filtresiz 1/12 "Kalk.") | 1528 |
+
+- Whisper Türkçe emirleri anlatıya çeviriyor ("yüksel" → "yükseldi", "git" → "gittik"); sözlüksüz 28 kez
+  "meter". Emir kipindeki kısa cümleler ikisini de düzeltti.
+- 223 token ≈ 540-580 Türkçe karakter (850 değil); fazlasının başı sessizce kesilir.
+- Sonu "Kalk." olan sözlük gürültüden 11/12 "Kalk." uydurdu → sözlük "Acil dur. Dur." ile bitiyor.
+- Gerçek kayıtlarla doğrulanmadı: `stt_karsilastir small:int8 --sozluk eski --sozluk yeni`.

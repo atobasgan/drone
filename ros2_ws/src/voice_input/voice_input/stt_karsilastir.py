@@ -3,6 +3,8 @@
     python3 -m voice_input.stt_karsilastir small:int8 medium:int8
     python3 -m voice_input.stt_karsilastir large-v3-turbo:float16@cuda --tablo NOTLAR_sonuclar.md
     python3 -m voice_input.stt_karsilastir small:int8 --llm http://127.0.0.1:8080   # + LLM
+    python3 -m voice_input.stt_karsilastir small:int8 --sozluk eski --sozluk yeni   # sozluk etkisi
+    python3 -m voice_input.stt_karsilastir small:int8 --sozluk benim_sozlugum.txt
 
 Aday bicimi: <model>[:<hesaplama>][@<cihaz>]. Model bir faster-whisper boyutu
 (tiny, base, small, medium, large-v3-turbo) ya da Hugging Face'teki bir
@@ -26,7 +28,8 @@ from command_parser.komut_cozucu import KomutCozucu
 from command_parser.normalize import normalize
 
 from .etiketler import etiketleri_oku, karsilastir, varsayilan_klasor, yuzdelik
-from .stt import DRONE_SOZLUGU, FasterWhisperSTT, aday_ayristir, kelime_farklari
+from .stt import FasterWhisperSTT, aday_ayristir, kelime_farklari
+from .stt_sozlugu import sozluk_sec
 from .wav import HZ, wav_oku
 
 
@@ -77,7 +80,10 @@ def main(argv=None):
     ap.add_argument('adaylar', nargs='+', help='ör. small:int8 large-v3-turbo:float16@cuda')
     ap.add_argument('--etiketler', default=os.path.join(varsayilan_klasor(), 'etiketler.csv'))
     ap.add_argument('--llm', default=None, help='llama-server adresi; yoksa yalnızca hızlı yol')
-    ap.add_argument('--sozluksuz', action='store_true', help='initial_prompt kullanma (etkisini ölçmek için)')
+    ap.add_argument('--sozluk', action='append', default=None,
+                    help='initial_prompt: yeni (varsayılan) | eski | yok | dosya.txt; '
+                         'birden çok kez verilirse her aday her sözlükle ölçülür')
+    ap.add_argument('--sozluksuz', action='store_true', help='--sozluk yok ile aynı')
     ap.add_argument('--beam', type=int, default=1)
     ap.add_argument('--thread', type=int, default=0, help='CPU thread sayısı (0 = varsayılan)')
     ap.add_argument('--hatalar', type=int, default=15, help='en sık yanlış duyulan kaç kelime')
@@ -103,19 +109,24 @@ def main(argv=None):
         llm.isit()
     cozucu = KomutCozucu(llm=llm, onbellek_boyutu=0)
 
+    sozlukler = ['yok'] if args.sozluksuz else (args.sozluk or ['yeni'])
+    coklu = len(sozlukler) > 1
     sonuclar = []
     for tanim in args.adaylar:
         model, hesaplama, cihaz = aday_ayristir(tanim)
-        print(f'\n=== {tanim}: yükleniyor ===')
-        stt = FasterWhisperSTT(model, cihaz=cihaz, hesaplama=hesaplama, beam_size=args.beam,
-                               ilk_prompt='' if args.sozluksuz else DRONE_SOZLUGU, thread=args.thread)
-        stt.isit()
-        sonuclar.append(adayi_olc(stt, satirlar, cozucu, args.ayrintili))
-        del stt
+        for sozluk in sozlukler:
+            print(f'\n=== {tanim}, sözlük: {sozluk}: yükleniyor ===')
+            stt = FasterWhisperSTT(model, cihaz=cihaz, hesaplama=hesaplama, beam_size=args.beam,
+                                   ilk_prompt=sozluk_sec(sozluk), thread=args.thread)
+            print(f'initial_prompt: {stt.prompt_token} token')
+            stt.isit()
+            s = adayi_olc(stt, satirlar, cozucu, args.ayrintili)
+            if coklu or sozluk != 'yeni':
+                s['aday'] += f' [sözlük: {sozluk}]'
+            sonuclar.append(s)
+            del stt
 
     etiket = ' ' + args.etiket if args.etiket else ''
-    if args.sozluksuz:
-        etiket += ' (sözlüksüz)'
     print('\n' + BASLIK + ''.join(satir(s, etiket) for s in sonuclar), end='')
     print(f'(komut: {"hızlı yol + LLM" if llm else "yalnızca hızlı yol; LLM için --llm"})')
     for s in sonuclar:

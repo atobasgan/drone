@@ -8,6 +8,7 @@ Gazebo Jetty + ROS 2 Lyrical + PX4 (SITL) + yerel küçük LLM.
 | [YOL_HARITASI.txt](YOL_HARITASI.txt) | hangi sırayla: fazlar ve görev listesi |
 | [KAVRAMLAR.txt](KAVRAMLAR.txt) | gereken kavramlar |
 | [LLM_API_SENARYOSU.txt](LLM_API_SENARYOSU.txt) | LLM bize hazır verilirse: API + few-shot ile Faz 2 |
+| [DRONE_SOZLUGU.txt](DRONE_SOZLUGU.txt) | Whisper `initial_prompt` sözlüğü: tasarım, ölçümler, uydurma filtresi |
 | [NOTLAR.md](NOTLAR.md) | sürümler, ölçümler, görev durumu |
 
 ## Durum
@@ -39,7 +40,8 @@ ros2_ws/src/
   drone_interfaces/        DroneCommand, CommandList, Feedback mesajları
   mission_executor/        px4_interface.py, safety.py, planlayici.py, geo.py, executor_node.py
   command_parser/          normalize.py, fast_path.py, schema.py, prompt.py, llm_client.py, parser_node.py
-  voice_input/             vad.py, stt.py, stt_node.py, kayit_al.py, stt_karsilastir.py, ses_testi.py
+  voice_input/             vad.py, stt.py, stt_sozlugu.py, stt_node.py, kayit_al.py, stt_karsilastir.py,
+                           sentetik_set.py, ses_testi.py
   latency_monitor/         monitor_node.py (CSV), ozet.py (ort / p50 / p95)
   drone_bringup/           launch/ + config/guvenlik.yaml, config/parser.yaml
 recordings/                cumleler.jsonl (okunacak 107 cümle), *.wav + etiketler.csv
@@ -102,6 +104,8 @@ PYTHONPATH=ros2_ws/src/voice_input:ros2_ws/src/command_parser python3 -m voice_i
 # 3.2 STT adaylarını ölç (ROS gerekmez) -> tablo + en sık yanlış duyulan kelimeler
 ros2 run voice_input stt_karsilastir small:int8 medium:int8 --tablo NOTLAR_sonuclar.md --etiket "CPU 4c"
 ros2 run voice_input stt_karsilastir large-v3-turbo:float16@cuda --llm http://127.0.0.1:8080
+# Drone sözlüğünün etkisi (DRONE_SOZLUGU.txt): eski / yeni / sözlüksüz ya da kendi .txt dosyan
+ros2 run voice_input stt_karsilastir small:int8 --sozluk yok --sozluk eski --sozluk yeni
 
 # 3.3 / 3.4 Mikrofonla uç (stt_node, all.launch.py içinde)
 ./scripts/hepsini_baslat.sh

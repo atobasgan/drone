@@ -1,0 +1,410 @@
+================================================================================
+  DRONE SÖZLÜĞÜ: WHISPER initial_prompt TASARIMI VE ÖLÇÜMLERİ
+  Türkçe Sesli Komutla Drone Kontrolü (Faz 3, ses girişi)
+  Sözlük: ros2_ws/src/voice_input/voice_input/stt_sozlugu.py  (DRONE_SOZLUGU)
+  Filtre: ros2_ws/src/voice_input/voice_input/stt.py          (segmentleri_suz)
+================================================================================
+
+İÇİNDEKİLER
+  1.  Sonuç: sözlük ve kazanç
+  2.  initial_prompt gerçekte nasıl çalışır
+  3.  İlk varsayımın düzeltilmesi: 224 token ≠ 850 karakter
+  4.  Ölçüm düzeneği
+  5.  Sonuçlar
+  6.  Tasarım kuralları (ölçümden çıkanlar)
+  7.  Güvenlik: sözlük uydurma da üretir; yeni filtreler
+  8.  Sözlükte neden olmayan kelimeler var
+  9.  Kalan hatalar ve sonraki adımlar
+  10. Kullanım: değiştirme, kendi kayıtlarınla ölçme
+
+
+================================================================================
+1. SONUÇ: SÖZLÜK VE KAZANÇ
+================================================================================
+
+  DRONE_SOZLUGU: str = "Kalkış yap. Kalk. Havalan. Yüksel. Tırman. Yukarı çık. İrtifa al. 50 metreye çık. Alçal. Aşağı in. İrtifa kaybet. İniş yap. Yere in. İn. İleri git. Geri git. Sağa git. Sola git. Kuzeye git. Güneye git. Doğuya git. Batıya git. Sağa dön. Sola dön. Saat yönünde 90 derece dön. Hızı 5 metre bölü saniye yap. 10 saniye bekle. Havada kal. Önce 20 metre yüksel, sonra kuzeye 50 metre git. Sağa dön ve 100 metre ileri git. 30 metre alçal, ardından in. 200 metre ilerle. 150 metre sonra ikinci sola gir. Fren yap. Motorları durdur. İptal. Vazgeç. Üsse dön. Eve dön. Acil dur. Dur."
+
+  571 karakter, 220 token (Whisper sınırı 223).
+
+Kazanç (faster-whisper small int8, 4 çekirdek CPU, 513 sentetik klip; Bölüm 4-5):
+
+                                       sözlüksüz   eski sözlük   YENİ SÖZLÜK
+  komut doğru (cumleler.jsonl)            %65.7        %82.6         %93.1
+  komut doğru (ayrı set)                  %73.3        %82.8         %91.1
+  kelime hatası (cumleler.jsonl)          %28.5        %14.0          %9.4
+  kelime hatası (ayrı set)                %33.9        %20.9          %8.8
+  kelime hatası: temiz/gürültü/telefon  25/31/35     14/15/20       7/9/11
+  "dur" içeren komutta "dur" kaybı        6            6              1
+  gürültüden komut uydurma (12 klip)      0            0              0
+  ortalama STT süresi                    1410 ms      1452 ms        1528 ms
+
+Kısaca: komut doğruluğu eski sözlüğe göre ~9-10 puan arttı, kelime hatası
+yarıya indi. Bedeli STT başına ~80 ms (eski sözlüğe göre). Bu sonuçlar gerçek
+ses değil SENTETİK sesle alındı (Bölüm 4). Karar senin kayıtlarınla verilmeli
+(Bölüm 10).
+
+Örnekler (sözlüksüz | eski | yeni), üç koşul:
+  "iki yüz metre ilerle"     "200 meter ilerli." | "200 metre ilerli." | "200 metre ilerle."
+  "kırk metre ilerle ardından dur"
+                             "40 metre ilerli ..." / "ileride ..." (iki eskide de, 3/3)
+                             -> yeni: "40 metre ilerle ardından dur." (3/3)
+  "yüz elli metre sonra ikinci sola gir" (gürültülü)
+                             "150 metve sonra ..." -> "150 metre sonra ikinci sola gir."
+  "yere in"                  "Yereyim." / "Yerein." / "Yerin." -> "Yere in." (3/3)
+  "vazgeç"                   "Bazı geç." (iki eskide de, 3/3) -> "Vazgeç." (3/3)
+  "sağa git"                 "Sağ ol git." / "Sağ git." / "Sağgın." -> "Sağa git." (3/3)
+  "havada kal"               "Holodakal." | "Hava de kalk." (!) -> "Havada kal." (3/3)
+  "irtifa al"                "Güzel." / "İyidir." / "İstifal." -> "İrtifa al." (2/3)
+
+Eski sözlükteki "havada kal" -> "Hava de kalk." hatasına dikkat: askıda kal
+komutu "kalk" kelimesine dönüyordu.
+
+"idareli", "sonu var" hatalarını sentetik seste birebir göremedim; bunlar
+senin sesine ve mikrofonuna özgü. Aynı türden hatalar ("ilerli", "sağ ol",
+"bazı geç", "alçalı", "meter") ölçümde vardı ve yeni sözlük çoğunu düzeltti.
+"200 metre ilerle" ve "150 metre sonra ikinci sola gir" iki cümlesi de
+sözlükte birebir geçiyor.
+
+
+================================================================================
+2. initial_prompt GERÇEKTE NASIL ÇALIŞIR
+================================================================================
+
+Whisper'ın çözücüsü (decoder) her pencereyi şu dizinin DEVAMI olarak yazar:
+
+  <|startofprev|> [SÖZLÜK TOKENLERİ] <|startoftranscript|><|tr|><|transcribe|><|notimestamps|> ...
+
+Yani initial_prompt "bu kayıttan ÖNCE söylenmiş metin" yerine geçer. Bir
+talimat değildir. Model iki şeyi taklit eder:
+
+  a) KELİMELERİ: Akustik olarak ikilemde kalınca ("ilerle" mi "ilerli" mi)
+     önceki metinde geçen kelimenin olasılığı artar.
+  b) ÜSLUBU: Önceki metin nasıl yazılmışsa öyle devam eder. Emir kipi, rakamla
+     sayı, noktalama, büyük harf, kesme işareti. Ölçümde bu (b) etkisi (a)
+     kadar önemli çıktı (Bölüm 6, kural 1).
+
+faster-whisper'daki gerçek kod (transcribe.py, get_prompt):
+
+  prompt.extend(previous_tokens[-(self.max_length // 2 - 1):])   # 448 // 2 - 1 = 223
+
+İki sonucu var:
+  1. Sınır 223 tokendir. Aşarsan hata vermez; metnin BAŞINI sessizce atar.
+  2. Çözülen metne en yakın kısım, yani sözlüğün SONU, en güçlü etkiyi yapar.
+     Ses belirsizken Whisper'ın "kopyalama" eğilimi de en çok buradan beslenir
+     (Bölüm 7).
+
+
+================================================================================
+3. İLK VARSAYIMIN DÜZELTİLMESİ: 224 TOKEN ≠ 850 KARAKTER
+================================================================================
+
+İngilizcede 1 token ~4 karakterdir. Türkçede değil. Whisper'ın tokenizer'ı
+çoğunlukla İngilizce metinle eğitildi; Türkçe ekler ve ı, ş, ğ, ç, ö, ü harfleri
+çok parçaya bölünür:
+
+  " ilerle"   -> " il" + "er" + "le"          3 token
+  " alçal"    -> " al" + "ç" + "al"           3 token
+  " sonra"    -> " sonra"                     1 token
+  " sonu var" -> " son" + "u" + " var"        3 token
+
+Ölçülen ortalama: 1 token ≈ 2.4-2.6 karakter. 223 token ≈ 540-580 karakter.
+
+Bu yüzden:
+  - 850 karakterlik bir sözlüğün ilk ~300 karakteri hiç kullanılmaz.
+  - İstenen kelime gruplarının hepsini düz liste halinde yazmak bile 251 token
+    tutuyor (LİSTE adayı, sığmadı).
+  - Sözlüğe her kelime bedeliyle girer. Kural: Whisper'ın zaten doğru
+    yazdığı kelimeye yer harcama, en çok bozulanlara harca (Bölüm 5.2).
+
+Token saymak: FasterWhisperSTT her açılışta sayar (stt.prompt_token) ve 223'ü
+aşarsa uyarı verir. Elle:
+  from faster_whisper import WhisperModel
+  from voice_input.stt_sozlugu import DRONE_SOZLUGU, token_sayisi
+  print(token_sayisi(WhisperModel('small', compute_type='int8').hf_tokenizer, DRONE_SOZLUGU))
+
+
+================================================================================
+4. ÖLÇÜM DÜZENEĞİ
+================================================================================
+
+Ses   : Piper TTS, tr_TR-dfki-medium (tek sentetik ses), 16 kHz.
+Setler:
+  - cumleler.jsonl : 107 cümle (recordings/, senin kayıt listen; komutlar + negatifler)
+  - ayrı set       : 60 cümle, sözlükten bağımsız yazıldı (araclar/stt_sozluk/ayri_set.txt).
+                     İstenen 7 grubun hepsi + senin iki örneğin.
+Her cümle 3 koşulda (voice_input/sentetik_set.py):
+  temiz         : normal hız
+  hizli_gurultu : %25 hızlı + rüzgar/pervane benzeri gürültü, SNR 8 dB
+  telefon       : %15 yavaş, 300-3400 Hz bant, gürültü SNR 15 dB
+Ayrıca 12 klip yalnızca gürültü (konuşma yok): uydurma testi.
+Toplam: (107 + 60) x 3 + 12 = 513 klip, her aday için. 7 aday denendi.
+
+Ayarlar stt.py ile birebir aynı: language="tr", beam_size=1, temperature=0,
+condition_on_previous_text=False, without_timestamps=True. Filtre: stt.py'deki
+segmentleri_suz (Bölüm 7), bütün adaylara aynısı.
+
+Ölçütler:
+  kelime hatası (WER) : normalize() edilmiş metinde kelime düzeyinde hata
+  komut doğru         : STT çıktısı hızlı yoldan (LLM'siz) metnin kendisiyle aynı
+                        sonucu veriyor mu
+  uydurma             : yalnız gürültü kliplerinde boş olmayan çıktı
+
+Sınırlar (dürüstçe):
+  - Tek sentetik ses. İnsan sesi, aksan, nefes ve gerçek mikrofon yok.
+    Eğilimi gösterir; mutlak sayılar gerçek kayıtta farklı olacaktır.
+  - Sözlük bu setlerdeki hatalara bakılarak iyileştirildi. Ayrı set sözlüğe
+    bakılmadan yazıldı; iki örnek cümlen ise bilerek sözlükte.
+  - Gecikme bu bulut makinesinde (4 çekirdek CPU). Senin Mac M1'de small
+    ~900 ms idi (NOTLAR.md), fark oranla daha küçük olmalı (ölçülmedi).
+
+
+================================================================================
+5. SONUÇLAR
+================================================================================
+
+5.1 Adaylar (aynı 513 klip, aynı filtre)
+
+  aday      token   cumleler.jsonl    ayrı set         WER temiz/gürültü/telefon
+                    WER   komut       WER   komut
+  YOK           0   28.5  65.7        33.9  73.3        25.1 / 31.0 / 35.1
+  ESKİ         99   14.0  82.6        20.9  82.8        14.3 / 14.9 / 20.0
+  KARMA*      230   34.4  87.5        12.1  88.3         8.6 / 12.1 / 59.5
+  EMİR        220   11.1  91.3         8.9  91.7         6.5 /  9.8 / 14.8
+  GÜVENLİ     219   11.0  91.9         9.5  91.7         6.7 / 10.0 / 14.8
+  GÜVENLİ2    220    9.4  93.1         8.8  91.1         7.1 /  9.2 / 11.3   <- SEÇİLEN
+  LİSTE       251   (ölçülmedi: sınırı aşıyor, başı kesilir)
+
+  * KARMA filtre eklenmeden önce ölçüldü; tekrar döngüleri ve 3/12 uydurma yüzünden
+    WER yüksek. Filtreyle de kelime hatası EMİR'den yüksek (ayrı set 12.1 vs 8.9).
+
+  KARMA    : kelime kümeleri ("Yüksel, tırman, yukarı çık; alçal, ...") + sonda örnekler
+  EMİR     : her komut ayrı, kısa, emir kipinde, noktalı cümle; sonu "... Kalk."
+  GÜVENLİ  : EMİR + güvenlik komutları sona ("... Acil dur. Dur."), "Kalk." çıkarıldı
+  GÜVENLİ2 : GÜVENLİ + tek heceli "Kalk." ve "İn." başa, ayrı cümle
+
+Tek heceli komutlar (6 deneme):  "kalk" doğru     "in" doğru
+  YOK                                  3              2    (2 kez "Bin.", "İz.", "İ.")
+  ESKİ                                 4              3
+  EMİR (sonu "Kalk.")                  6              4    ama gürültüden 11/12 "Kalk."!
+  GÜVENLİ ("Kalk." yok)                1              3    ("Kal.", "Kon.", "Kut.", "Bin.")
+  GÜVENLİ2                             5              4    hiç "Bin." yok ("İz.", "İ." kalıyor)
+
+5.2 Sözlüksüz Whisper'ın en sık hataları
+
+   28  "metre"  -> "meter"        (İngilizce! sayıdan sonra)
+   18  "sağa"   -> "sağ"
+   14  "git"    -> "gittik" / "gittim" / "gitti"   (emir -> geçmiş zaman)
+    8  "yüksel" -> "yükseldi"
+    7  "sola"   -> "sol'a"        (kesme işareti)
+    5  "alçal"  -> "alçalı"
+    4  "ilerle" -> "ilerli"
+    4  "kuzeye" -> "kuzey"
+    4  "doğuya" -> "doğu'ya"
+    4  "hızı"   -> "hızlı"
+    3  "yere in"-> "yereyim"
+    3  "vazgeç" -> "bazı geç"
+
+5.3 Gecikme (aynı 60 klip, adaylar iç içe çalıştırıldı)
+
+  YOK 1410 ms, ESKİ 1452 ms, YENİ 1528 ms (ortalama; ikinci bir ölçümde fark
+  aynıydı: +133 / +87 ms). Sözlüğün her tokeni çözücüde işlenir:
+  220 token ≈ +120 ms sözlüksüze, +80 ms eskiye göre. GPU'da birkaç ms.
+
+
+================================================================================
+6. TASARIM KURALLARI (ÖLÇÜMDEN ÇIKANLAR)
+================================================================================
+
+1. EMİR KİPİNDE CÜMLE YAZ, KELİME LİSTESİ DEĞİL.
+   Whisper'ın Türkçe eğitim verisi çoğunlukla altyazı ve anlatı. Emir kipi ona
+   yabancı geldiği için "yüksel"i "yükseldi", "git"i "gittik" yazıyor.
+   "Yüksel. Sola git. Yere in." gibi cümleler üslubu değiştiriyor.
+   KARMA (liste ağırlıklı) -> EMİR (cümle): ayrı sette kelime hatası 12.1 -> 8.9.
+
+2. HER KOMUT AYRI CÜMLE, NOKTAYLA BİTSİN; TEK HECELİLER DE.
+   "Kalk." ve "İn." ayrı cümle olarak yoksa Whisper bunları "Kal.", "Kon.",
+   "Bin.", "İz." yazıyor (5.1'deki tablo). Kısa komut en zor komuttur.
+
+3. SAYILAR RAKAMLA, "metre" BOL.
+   Sözlüksüz Whisper 28 kez "meter" yazdı. Sözlükte "20 metre", "50 metreye",
+   "100 metre" geçince hiç yazmadı. Rakam normalize() için de güvenilir.
+
+4. EKLER KESME İŞARETSİZ VE YÖNELME EKİYLE: "Sağa", "Sola", "Kuzeye", "50 metreye".
+   "sol'a", "doğu'ya", "irtifa'yı" çıktıları normalize'ı ve hızlı yolu bozuyor.
+   (test_stt_sozlugu: sözlükte ' karakteri olmamalı.)
+
+5. ÇOK ADIMLI ÖRNEK KOY: "Önce ..., sonra ...", "... ve ...", "..., ardından ...".
+   Bağlaçlar kısa ve vurgusuz; örnekler olmayınca kayboluyor. Yeni sözlükle
+   "dur" içeren komutlarda "dur" kaybı 6'dan 1'e indi.
+
+6. SONA EN ÖNEMLİ VE EN GÜVENLİ KISMI KOY.
+   Son kısım en güçlü etkiyi yapar ve uydurma en çok oradan kopyalanır (Bölüm 7).
+   Bu yüzden son kısım güvenlik komutları; uydurma olsa bile "Dur." olur.
+   Hareket komutu ("Kalk.") ASLA sona konmaz.
+
+7. 223 TOKEN SINIRINI ÖLÇEREK DOLDUR, AŞMA.
+   Aşarsan baş kesilir (kalkış/irtifa grubu kaybolur). test_stt_sozlugu bunu
+   gerçek tokenizer'la denetler.
+
+8. TALİMAT YAZMA. "Drone komutları:", "Lütfen dikkatli çevir" gibi başlıklar
+   hiçbir şey öğretmez, token yer. Eski sözlükteki "Drone komutları:" başlığı
+   çıkarıldı. "Hastane, eczane, benzinlik" de çıkarıldı (yakin_yere_git LLM
+   yolunda; sık kullanılırsa geri eklenir).
+
+
+================================================================================
+7. GÜVENLİK: SÖZLÜK UYDURMA DA ÜRETİR; YENİ FİLTRELER
+================================================================================
+
+Güçlü bir sözlüğün yan etkisi var: ses belirsizken Whisper sözlükten kopyalar.
+
+  a) GÜRÜLTÜDEN KOMUT UYDURMA
+     Sonu "... Kalk." olan EMİR adayı, konuşma olmayan 12 gürültü klibinin
+     11'inde "Kalk." yazdı. KARMA 3 klipte "Yüksel, irtifa kaybet, irtifa
+     kaybet." yazdı. Silero VAD önde olduğu için sessizlik STT'ye zor ulaşır.
+     Ama rüzgar ve pervane VAD'ı tetikleyebilir. Drone'un gürültüden kalkması
+     kabul edilemez.
+
+     Eski filtre bunu yakalamıyordu: "no_speech_prob > 0.6 VE avg_logprob < -1".
+     Kopyalanan metin modele "kolay" geldiği için logprob yüksek (-0.7..-0.9).
+     Ayırt eden tek sinyal no_speech_prob. Ölçümde:
+       sözlükten kopya (gürültü) : 0.58 - 0.88
+       gerçek konuşma            : neredeyse hepsi < 0.15. GÜVENLİ2'de 501
+                                   segmentten 2'si 0.5'in üstünde (0.55, 0.58);
+                                   ikisi de sözlükten kopya değildi.
+
+  b) TEKRAR DÖNGÜSÜ
+     "5 metre, 5 metre, 5 metre, ..." (100+ kez). temperature=0 sabit olduğu için
+     Whisper'ın kendi yeniden deneme mekanizması çalışmıyor.
+
+stt.py'ye eklenen filtre (segmentleri_suz, test: test_stt_sozlugu.py):
+  1. compression_ratio > 2.4 (Whisper'ın kendi eşiği) -> tekrar döngüsü, atılır.
+  2. Eski kural aynen: no_speech_prob > 0.6 ve avg_logprob < -1 -> atılır.
+  3. YENİ: no_speech_prob > 0.5 ve bütün kelimeleri sözlükte geçiyor -> sözlükten
+     kopya, atılır. (Sıra karışık olabilir: "Yüksel, irtifa kaybet, irtifa kaybet.")
+  4. İSTİSNA: Durdurma içeren metin (dur, durdur, stop, acil, iptal, vazgeç,
+     fren) hiçbir kuralla atılmaz. Tekrar döngüsünde bir kez tutulur
+     ("Dur. Dur. Dur. ..." -> "Dur."). Yanlışlıkla durmak her zaman güvenli.
+
+Sonuç: Yeni sözlük + yeni filtre ile gürültüden 0/12 uydurma. Konuşmalarda
+filtrenin yanlışlıkla attığı komut çıkmadı.
+
+DİKKAT, pay ince: GÜVENLİ2'de bir gürültü klibi "Kalk." üretti (no_speech_prob
+0.58). Eski filtre (0.6) kaçırırdı, yeni kopya kuralı (0.5) yakaladı. Konuşmada
+da 0.58'e çıkan değer var. Yani bu filtre ikinci savunma hattıdır, birinci
+değil:
+  - Birinci hat Silero VAD (vad_esik, min_konusma_ms).
+  - Sahada rüzgar/pervane gürültüsünü kaydet (kayit_al, mikrofon açık,
+    konuşmadan) ve stt_node loglarında "sözlükten kopya" / atılan satırlarına bak.
+  - Kalkış komutu için ayrıca "operatör onayı" (Faz 5-6) düşünülebilir.
+
+ACİL DUR'un asıl yolu yine STT'siz: telefon tuşu, /drone/emergency_stop ve
+hızlı yolun "acil kelime" kuralı. Sözlük bu yolu değiştirmez.
+
+
+================================================================================
+8. SÖZLÜKTE NEDEN OLMAYAN KELİMELER VAR
+================================================================================
+
+İstenen gruplardaki bazı ifadeler 223 token sınırı yüzünden yok. Seçim
+ölçüme göre yapıldı: Whisper'ın zaten doğru yazdıkları ve şemada karşılığı
+olmayanlar önce çıktı.
+
+  Yok                          Neden / ölçümde ne oldu
+  teker koy                    Sözlükte yokken de 2/3 doğru ("Teker koy."); hızlı yol
+                               bilmiyor (LLM'e gider). Sık kullanırsan ekle.
+  burnunu çevir, baş açısı     Nadir; LLM yolu.
+  hover yap                    İngilizce kelime: 0/3 ("Holar yap.", "Oladık.").
+                               Sözlüğe eklemek yerine "Havada kal." de (3/3 doğru).
+  asılı kal                    Zayıf: "Asıllık kal.", "Asılı kalk.", "Acil dur."
+                               Yerine "Havada kal." kullan.
+  km/saat, kilometre bölü saat Hız komutu m/s; "metre bölü saniye" var.
+  dakika                       Sözlüksüz de 3/3 doğru ("1 dakika bekle ...").
+  birinci, üçüncü              "ikinci" örnek cümlede var. Whisper sıra sayısını "1", "2"
+                               yazabiliyor; normalize'da ele alınmalı (Bölüm 9).
+  rota, rotaya gir, tavan      Şemada karşılığı yok.
+  başlangıç noktasına dön      "Eve dön. Üsse dön." var; hızlı yol üçünü de bilir.
+  hemen iptal                  "İptal." var; "hemen" dolgu kelimesi (fast_path.DOLGU).
+  sürdür, peşinden             Sınır yüzünden yok; "ilerle", "ardından", "sonra" var.
+
+Operatöre pratik öneri (ölçümden): Kısa ve tek heceli komut yerine uzun
+biçimi kullan. "kalk" yerine "kalkış yap" (3/3; sözlüksüz 1/3), "in" yerine
+"iniş yap", "hover" yerine "havada kal". Uzun komutlar her koşulda daha sağlam.
+(Yan etki: "iniş yap" 6 denemenin 2'sinde başına "İn." eklenerek çıktı
+("İn. İniş yap.", "İn. İ."); hızlı yol bunu çözmez, cümle LLM'e gider. Komut
+doğruluğu tablosunda bu iki deneme hata sayıldı. Gerçek kayıtta sık görülürse
+"İn." sözlükten çıkarılabilir ya da normalize'da tekrar ayıklanabilir.)
+
+Kelime eklemek istersen: bir şey çıkar, ekle, token sayısını kontrol et ve
+ölç (Bölüm 10). Ekleyeceğin kelimeyi en çok bozulanlardan seç.
+
+
+================================================================================
+9. KALAN HATALAR VE SONRAKİ ADIMLAR
+================================================================================
+
+Yeni sözlükle bile kalan en sık hatalar (sentetik ses):
+   7  "sağa"     -> "sağ"        ("Önce sağ dön" -> hızlı yol eşleşmez, LLM'e gider)
+   5  "irtifayı" -> "irtifa"
+   3  "kalk"     -> "kal" (+2 "kalp")
+   3  "hızını"   -> "hızı"
+   3  "sonra in" -> "sormayın"
+   2  "alçal"    -> "alçalı"
+
+Sözlüğün çözemediği bu hatalar için sıradaki adımlar (etki/emek sırasıyla):
+
+1. KENDİ KAYITLARINLA ÖLÇ (en önemlisi):
+     ros2 run voice_input kayit_al --konusmaci <ad>
+     python3 -m voice_input.stt_karsilastir small:int8 --sozluk eski --sozluk yeni
+   "idareli", "sonu var" gibi senin sesine özel hatalar burada görünür.
+
+2. STT SONRASI DÜZELTME TABLOSU (normalize.py'den önce): Sözlük olasılığı
+   artırır; tablo kesin düzeltir. Yalnızca drone bağlamında anlamsız olan ve
+   kayıtlarda TEKRAR TEKRAR görülen hatalar için:
+     "idareli" -> "ilerle", "ilerli" -> "ilerle", "alçalı" -> "alçal",
+     "sağ dön" -> "sağa dön", "sol dön" -> "sola dön", "meter" -> "metre",
+     "bazı geç" -> "vazgeç"
+   Dikkat: "sonu var" -> "sonra" gibi gerçek Türkçe ifadeleri körlemesine
+   düzeltme; önce kayıtta sık görüldüğünü ölç. "kal" -> "kalk" gibi
+   HAREKETE çeviren düzeltme hiç yapma.
+
+3. MODEL: GPU varsa large-v3-turbo. Aynı sözlük çalışır. large-v3'ün
+   tokenizer'ı neredeyse aynı (bir dil tokeni eklendi); token sayısını yine
+   kontrol et. Doğruluk belirgin artar, gecikme düşer. Yine ölç.
+
+4. FAZ 4 VERİSİ: Kalan STT hataları ("Önce sağ dön, ...") LLM fine-tune
+   verisine STT gürültüsü olarak girer. LLM bozuk metinden de doğru JSON
+   çıkarmayı öğrenir.
+
+5. WHISPER FINE-TUNE (en son): Birkaç saatlik etiketli kayıtla small'a LoRA.
+   Sözlük + düzeltme tablosu yetmezse.
+
+
+================================================================================
+10. KULLANIM: DEĞİŞTİRME, KENDİ KAYITLARINLA ÖLÇME
+================================================================================
+
+Varsayılan: stt_node ve stt_karsilastir yeni sözlüğü kullanır. Değiştirmek için:
+
+  ROS parametresi:
+    ros2 run voice_input stt_node --ros-args -p ilk_prompt:="Kalk. İn. Dur."
+    ilk_prompt:="" -> sözlüksüz
+
+  Karşılaştırma (yeni / eski / yok / kendi dosyan):
+    python3 -m voice_input.stt_karsilastir small:int8 --sozluk yok --sozluk eski --sozluk yeni
+    python3 -m voice_input.stt_karsilastir small:int8 --sozluk benim_sozlugum.txt
+    (dosyada # ile başlayan satırlar yorum; satırlar boşlukla birleştirilir)
+
+  Sentetik set (gerçek kayıt yokken eğilimi görmek için; pip install piper-tts):
+    python3 -m voice_input.sentetik_set araclar/stt_sozluk/ayri_set.txt --cikti /tmp/ayri \
+        --ses ~/piper/tr_TR-dfki-medium.onnx
+    python3 -m voice_input.stt_karsilastir small:int8 --etiketler /tmp/ayri/etiketler.csv \
+        --sozluk eski --sozluk yeni
+    Ses modeli: huggingface.co/rhasspy/piper-voices  tr/tr_TR/dfki/medium (.onnx + .onnx.json)
+
+Sözlüğü değiştirirken kontrol listesi:
+  [ ] Emir kipi, kısa, noktalı cümleler mi? Tek heceli komutlar ayrı cümle mi?
+  [ ] Sayılar rakam, ekler kesmesiz mi?
+  [ ] 223 tokenin altında mı? (pytest test/test_stt_sozlugu.py)
+  [ ] Son cümle durdurma mı? Sonda hareket komutu yok mu?
+  [ ] stt_karsilastir'da eskisinden iyi mi? Gürültü kayıtlarında uydurma var mı?

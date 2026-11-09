@@ -1,29 +1,54 @@
 """STT motoru: faster-whisper sarmalayici (Gorev 3.2 / 3.3, MIMARI 3.6).
 
 Ayarlar: language='tr' sabit (dil algilama atlanir), beam_size=1, sicaklik 0
-(geri dusme denemesi yok), initial_prompt = drone sozlugu (Whisper bu kelimelere
-yatkinlasir). Sessizlik / Whisper'in bilinen uydurmalari bos metin dondurur.
+(geri dusme denemesi yok), initial_prompt = drone sozlugu (stt_sozlugu.py; Whisper
+bu kelimelere ve emir kipine yatkinlasir). Sessizlik / Whisper'in bilinen
+uydurmalari bos metin dondurur.
 """
 from dataclasses import dataclass
 import difflib
+import re
 import time
 
 import numpy as np
 
-DRONE_SOZLUGU = (
-    'Drone komutları: kalk, kalkış yap, in, iniş yap, yüksel, alçal, metre, '
-    'metreye çık, irtifa, ileri, geri, sağa, sola, kuzeye, güneye, doğuya, batıya, '
-    'git, dön, derece, bekle, saniye, hız, eve dön, dur, acil, en yakın hastane, '
-    'eczane, benzinlik.'
-)
+from .stt_sozlugu import DRONE_SOZLUGU, siniri_kontrol_et  # noqa: F401 (DRONE_SOZLUGU disari)
 
 # Whisper sessizlikte / gurultude bunlari uydurur (Turkce altyazi verisinden).
 HALUSINASYONLAR = ('altyazı', 'abone ol', 'izlediğiniz için', 'www.', 'm.k.')
 
 
+# Whisper'in kendi esigi: metin zlib ile bu orandan fazla sikisiyorsa tekrar dongusudur
+# ("5 metre, 5 metre, 5 metre, ..."). sicaklik 0 sabit oldugu icin Whisper yeniden denemez.
+TEKRAR_ORANI = 2.4
+# Sozlukten kopya icin no_speech_prob esigi. Olcum (DRONE_SOZLUGU.txt Bolum 7): gurultuden
+# sozlukten kopyalanan cumlelerde 0.58-0.88; 501 konusma segmentinde 0.5'i asan 2 tane (kopya
+# degildi). Pay ince: bu filtre VAD'dan sonra ikinci savunma hattidir.
+KOPYA_SESSIZLIK_ESIGI = 0.5
+# Durdurma iceren metin hicbir filtreyle atilmaz: yanlislikla durmak her zaman guvenli.
+DURDURMA = frozenset({'dur', 'durdur', 'stop', 'acil', 'iptal', 'vazgeç', 'fren'})
+
+
 def halusinasyon_mu(metin):
     m = metin.lower()
     return any(h in m for h in HALUSINASYONLAR)
+
+
+def _sade(metin):
+    # Turkce kucuk harf: 'İ'.lower() Python'da 'i' + birlesik nokta verir.
+    metin = metin.replace('İ', 'i').replace('I', 'ı').lower()
+    return ' '.join(re.sub(r'[^\w\s]', ' ', metin).split())
+
+
+def durdurma_mi(metin):
+    return not DURDURMA.isdisjoint(_sade(metin).split())
+
+
+def sozlukten_kopya_mi(metin, sozluk):
+    """Ses yokken Whisper initial_prompt'tan kelime kopyalar ("Yüksel, irtifa kaybet, irtifa
+    kaybet."); sira karisik olabilir. Butun kelimeleri sozlukte geciyorsa kopya sayilir."""
+    kelimeler = set(_sade(metin).split())
+    return bool(kelimeler and sozluk) and kelimeler <= set(_sade(sozluk).split())
 
 
 def aday_ayristir(tanim):
@@ -33,6 +58,34 @@ def aday_ayristir(tanim):
     if not ayrac:
         model, hesaplama = tanim, 'int8'
     return model, hesaplama, cihaz or 'auto'
+
+
+def segmentleri_suz(segmentler, sozluk=None, sessizlik_esigi=0.6):
+    """Whisper segmentleri -> (metin, atilanlar). Uydurma ve tekrar dongulerini ayiklar.
+
+    Durdurma iceren metin atilmaz (DURDURMA): suphede drone durmali, hareket etmemeli.
+    """
+    metinler, atilan = [], []
+    for s in segmentler:
+        metin = s.text.strip()
+        if s.compression_ratio > TEKRAR_ORANI:
+            atilan.append(f'tekrar: {metin[:40]}')
+            if durdurma_mi(metin):          # "Dur. Dur. Dur. ..." -> bir kez "Dur."
+                metinler.append(re.split(r'(?<=[.!?,])\s', metin)[0])
+        elif s.no_speech_prob > sessizlik_esigi and s.avg_logprob < -1.0:
+            atilan.append(metin)
+        elif (s.no_speech_prob > KOPYA_SESSIZLIK_ESIGI and not durdurma_mi(metin)
+              and sozlukten_kopya_mi(metin, sozluk)):
+            # Ses yokken sozlukten kopyalanan cumle modele "kolay" gelir (logprob yuksek);
+            # onu yalniz no_speech_prob ele verir.
+            atilan.append(f'sözlükten kopya: {metin}')
+        else:
+            metinler.append(metin)
+    metin = ' '.join(m for m in metinler if m)
+    if halusinasyon_mu(metin):
+        atilan.append(metin)
+        metin = ''
+    return metin, atilan
 
 
 @dataclass
@@ -51,6 +104,7 @@ class FasterWhisperSTT:
         self.model = WhisperModel(model, device=cihaz, compute_type=hesaplama, cpu_threads=thread)
         self.beam_size = beam_size
         self.ilk_prompt = ilk_prompt or None
+        self.prompt_token = siniri_kontrol_et(self.model.hf_tokenizer, ilk_prompt or '')
         self.dil = dil
         self.sessizlik_esigi = sessizlik_esigi
 
@@ -61,16 +115,8 @@ class FasterWhisperSTT:
             np.asarray(ornekler, np.float32), language=self.dil, beam_size=self.beam_size,
             initial_prompt=self.ilk_prompt, temperature=0.0, vad_filter=False,
             condition_on_previous_text=False, without_timestamps=True)
-        metinler, atilan = [], []
-        for s in segmentler:     # uretec: cozme burada calisir
-            if s.no_speech_prob > self.sessizlik_esigi and s.avg_logprob < -1.0:
-                atilan.append(s.text.strip())
-            else:
-                metinler.append(s.text.strip())
-        metin = ' '.join(m for m in metinler if m)
-        if halusinasyon_mu(metin):
-            atilan.append(metin)
-            metin = ''
+        # segmentler bir uretec: cozme suz() icinde, ilk segment istenince calisir
+        metin, atilan = segmentleri_suz(segmentler, self.ilk_prompt, self.sessizlik_esigi)
         return STTSonucu(metin, (time.perf_counter() - t0) * 1000, ' | '.join(atilan))
 
     def isit(self):
