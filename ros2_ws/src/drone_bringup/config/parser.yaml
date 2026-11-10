@@ -5,7 +5,7 @@ command_parser:
     llm_url: http://127.0.0.1:8080   # scripts/llama_server.sh
     llm_model: yerel
     llm_zaman_asimi_s: 5.0
-    llm_max_tokens: 64
+    llm_max_tokens: 128              # Faz 4: en uzun cevap 88 token (3 adim, 2 koordinat)
     kisa_prompt: false               # Faz 4'te fine-tune'lu modelle true
     hizli_yol_acik: true
     onbellek_boyutu: 256

@@ -77,7 +77,7 @@ _KURALLAR = [
     # bekle
     (rf'{N} saniye bekle', lambda m: _adim(komut='bekle', saniye=_m(m[1]))),
     # hiz_ayarla: normalize "m/s"yi "m s" yapar
-    (rf'hızı {N}(?: m s| m saniye)? (?:yap|ayarla)',
+    (rf'hızı(?:nı)? {N}(?: m s| m saniye)? (?:yap|ayarla)',
      lambda m: _adim(komut='hiz_ayarla', mps=_m(m[1]))),
 ]
 _DERLENMIS = [(re.compile(desen), uret) for desen, uret in _KURALLAR]

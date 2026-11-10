@@ -1,0 +1,1119 @@
+[komut_yanlis] 150 m'yi havalan
+    beklenen: [{"komut": "kalk", "irtifa_m": 150}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 150.0}] 
+[negatifi_kabul] kayda başla hadi
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "kalk"}] 
+[adim_sayisi] 8 m saniyeyle uç
+    beklenen: [{"komut": "hiz_ayarla", "mps": 8}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 8.0}, {"komut": "git_yon", "yon": "bati", "metre": 100.0}] 
+[goreli_mutlak] 118 m aşağı
+    beklenen: [{"komut": "alcal", "metre": 118}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 118.0}] 
+[komut_yanlis] 15 m saniyeyle uç ondan sonra sağ tarafa 270 ° dön
+    beklenen: [{"komut": "hiz_ayarla", "mps": 15}, {"komut": "don", "yon": "sag", "derece": 270}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 15.0}, {"komut": "git_yon", "yon": "sag", "metre": 270.0}] 
+[yon] doğu yönüne 70 m ilerle
+    beklenen: [{"komut": "git_yon", "yon": "dogu", "metre": 70}]
+    üretilen: [{"komut": "git_yon", "yon": "guney", "metre": 70.0}] 
+[goreli_mutlak] 10 m in
+    beklenen: [{"komut": "alcal", "metre": 10}]
+    üretilen: [{"komut": "yuksel", "metre": 10.0}] 
+[negatifi_kabul] biraz yukarı
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 100.0}] 
+[komutu_kacirdi] 1000 m alçalıp tamam 271 m tırman en yakın hastaneye gidelim
+    beklenen: [{"komut": "alcal", "metre": 1000}, {"komut": "yuksel", "metre": 271}, {"komut": "yakin_yere_git", "tur": "hastane"}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[komut_yanlis] 150 m'ye havalan
+    beklenen: [{"komut": "kalk", "irtifa_m": 150}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 150.0}] 
+[negatifi_kabul] güneye uç
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "git_yon", "yon": "guney", "metre": 0.0}] 
+[goreli_mutlak] iniş sonra 200 m irtifa kazan
+    beklenen: [{"komut": "in"}, {"komut": "yuksel", "metre": 200}]
+    üretilen: [{"komut": "in"}, {"komut": "irtifaya_cik", "metre": 200.0}] 
+[yon] sol bir 158 ° donsene
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 158}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 158.0}] 
+[yon] solu 15 ° çevril
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 15}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 15.0}] 
+[goreli_mutlak] 120 m irtifa kazan
+    beklenen: [{"komut": "yuksel", "metre": 120}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 120.0}] 
+[komut_yanlis] yere kon artık
+    beklenen: [{"komut": "in"}]
+    üretilen: [{"komut": "dur"}] 
+[komut_yanlis] önce 15 saniye bekler misin sonra 1000 m in
+    beklenen: [{"komut": "bekle", "saniye": 15}, {"komut": "alcal", "metre": 1000}]
+    üretilen: [{"komut": "bekle", "saniye": 15.0}, {"komut": "git_yon", "yon": "bati", "metre": 1000.0}] 
+[komut_yanlis] önce tamam şimdi ileri 90 m git sonra 80 m'ye çık
+    beklenen: [{"komut": "git_yon", "yon": "ileri", "metre": 90}, {"komut": "irtifaya_cik", "metre": 80}]
+    üretilen: [{"komut": "yuksel", "metre": 90.0}, {"komut": "git_yon", "yon": "ileri", "metre": 80.0}] 
+[negatifi_kabul] yüksel şimdi
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 100.0}] 
+[goreli_mutlak] 250 m aşağı
+    beklenen: [{"komut": "alcal", "metre": 250}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 250.0}] 
+[adim_sayisi] 30 m'ye havalan sonra 165 saniye boyunca bekle
+    beklenen: [{"komut": "kalk", "irtifa_m": 30}, {"komut": "bekle", "saniye": 165}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 165.0}, {"komut": "bekle", "saniye": 165.0}, {"komut": "eve_don"}] 
+[komut_yanlis] yere kon artık sonra 30 saniye boyunca bekle
+    beklenen: [{"komut": "in"}, {"komut": "bekle", "saniye": 30}]
+    üretilen: [{"komut": "bekle", "saniye": 30.0}, {"komut": "yakin_yere_git", "tur": "hastane"}] 
+[komut_yanlis] 60 m'ye havalan
+    beklenen: [{"komut": "kalk", "irtifa_m": 60}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 60.0}] 
+[negatifi_kabul] pekala 50 m
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 500.0}] 
+[goreli_mutlak] 250 m in
+    beklenen: [{"komut": "alcal", "metre": 250}]
+    üretilen: [{"komut": "yuksel", "metre": 250.0}] 
+[komut_yanlis] iniş daha sonra sol tarafa 318 ° dön
+    beklenen: [{"komut": "in"}, {"komut": "don", "yon": "sol", "derece": 318}]
+    üretilen: [{"komut": "in"}, {"komut": "git_yon", "yon": "sol", "metre": 318.0}] 
+[komut_yanlis] 80 m geri ilerle
+    beklenen: [{"komut": "git_yon", "yon": "geri", "metre": 80}]
+    üretilen: [{"komut": "yuksel", "metre": 80.0}] 
+[negatifi_kabul] hemen bir de
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "dur"}] 
+[sayi] lütfen enlem 41.3356 boylam 42.17014 noktasına git
+    beklenen: [{"komut": "git_koordinat", "enlem": 41.3356, "boylam": 42.17014}]
+    üretilen: [{"komut": "git_koordinat", "enlem": 413356.0, "boylam": 4217014.0}] 
+[adim_sayisi] önce 150 m'ye havalan sonra biraz doğuya doğru git 50 m kadar
+    beklenen: [{"komut": "kalk", "irtifa_m": 150}, {"komut": "git_yon", "yon": "dogu", "metre": 50}]
+    üretilen: [{"komut": "kalk"}, {"komut": "yakin_yere_git", "tur": "okul"}, {"komut": "git_yon", "yon": "guney", "metre": 50.0}] 
+[komut_yanlis] önce en yakın karakola gidelim sonra tamam kalkabilirsin
+    beklenen: [{"komut": "yakin_yere_git", "tur": "polis"}, {"komut": "kalk"}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "okul"}, {"komut": "dur"}] 
+[goreli_mutlak] 12.5 m irtifa kazan 30 m in
+    beklenen: [{"komut": "yuksel", "metre": 12.5}, {"komut": "alcal", "metre": 30}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 12.5}, {"komut": "git_yon", "yon": "sag", "metre": 30.0}] 
+[adim_sayisi] çık 150 m'ye sonra lütfen enlem 41.503 boylam 40.944462 noktasına git daha sonra eve geri gel
+    beklenen: [{"komut": "irtifaya_cik", "metre": 150}, {"komut": "git_koordinat", "enlem": 41.503, "boylam": 40.944462}, {"komut": "eve_don"}]
+    üretilen: [{"komut": "git_koordinat", "enlem": 41.503, "boylam": 40.94462, "irtifa_m": 150.0}] 
+[yon] tamam şimdi doğuya 150 m git
+    beklenen: [{"komut": "git_yon", "yon": "dogu", "metre": 150}]
+    üretilen: [{"komut": "git_yon", "yon": "guney", "metre": 150.0}] 
+[negatifi_kabul] biraz yukarı hadi
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 100.0}, {"komut": "git_yon", "yon": "guney", "metre": 100.0}] 
+[goreli_mutlak] 494 m aşağı
+    beklenen: [{"komut": "alcal", "metre": 494}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 494.0}] 
+[yon] 400 m doğuya ilerle
+    beklenen: [{"komut": "git_yon", "yon": "dogu", "metre": 400}]
+    üretilen: [{"komut": "git_yon", "yon": "guney", "metre": 400.0}] 
+[negatifi_kabul] tamam şimdi kuzeye git
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "git_yon", "yon": "kuzey", "metre": 0.0}] 
+[sayi] tamam kalk bakalım
+    beklenen: [{"komut": "kalk"}]
+    üretilen: [{"komut": "kalk", "irtifa_m": 0.0}] 
+[komut_yanlis] önce tamam şimdi geri 383 m git sonra 200 m kuzeye ilerle
+    beklenen: [{"komut": "git_yon", "yon": "geri", "metre": 383}, {"komut": "git_yon", "yon": "kuzey", "metre": 200}]
+    üretilen: [{"komut": "yuksel", "metre": 383.0}, {"komut": "git_yon", "yon": "kuzey", "metre": 200.0}] 
+[yon] sola bir 180 ° dönsene
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 180}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 180.0}] 
+[adim_sayisi] önce aşağı in 60 m sonra hız 10 m saniye olsun
+    beklenen: [{"komut": "alcal", "metre": 60}, {"komut": "hiz_ayarla", "mps": 10}]
+    üretilen: [{"komut": "alcal", "metre": 60.0}, {"komut": "hiz_ayarla", "mps": 10.0}, {"komut": "bekle", "saniye": 0.0}] 
+[yon] sola 60 ° çevril
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 60}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 60.0}] 
+[goreli_mutlak] 250 m irtifa kazan
+    beklenen: [{"komut": "yuksel", "metre": 250}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 250.0}] 
+[negatifi_kabul] güneye uç lütfen
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "git_yon", "yon": "guney", "metre": 100.0}] 
+[goreli_mutlak] 75 m in
+    beklenen: [{"komut": "alcal", "metre": 75}]
+    üretilen: [{"komut": "yuksel", "metre": 75.0}] 
+[adim_sayisi] kalkış noktasına dönü ondan sonra tamam kalkabilirsin
+    beklenen: [{"komut": "eve_don"}, {"komut": "kalk"}]
+    üretilen: [{"komut": "eve_don"}, {"komut": "kalk"}, {"komut": "dur"}] 
+[goreli_mutlak] 300 m in
+    beklenen: [{"komut": "alcal", "metre": 300}]
+    üretilen: [{"komut": "yuksel", "metre": 300.0}] 
+[yon] sola 15 ° çevril
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 15}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 15.0}] 
+[negatifi_kabul] daha yükseğe şimdi
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 100.0}] 
+[yon] sol tarafa 180 ° dön
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 180}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 180.0}] 
+[yon] sol tarafa 250 ° dön
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 250}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 250.0}] 
+[komut_yanlis] güney yönüne 414 m ilerle daha sonra 25 m irtifaya kalk
+    beklenen: [{"komut": "git_yon", "yon": "guney", "metre": 414}, {"komut": "kalk", "irtifa_m": 25}]
+    üretilen: [{"komut": "git_yon", "yon": "guney", "metre": 414.0}, {"komut": "irtifaya_cik", "metre": 25.0}] 
+[yon] sol tarafa 133 ° dön
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 133}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 133.0}] 
+[komut_yanlis] asagi in 25 m
+    beklenen: [{"komut": "alcal", "metre": 25}]
+    üretilen: [{"komut": "git_yon", "yon": "sag", "metre": 25.0}] 
+[negatifi_kabul] bir de şimdi
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "dur"}] 
+[goreli_mutlak] 300 m aşağı
+    beklenen: [{"komut": "alcal", "metre": 300}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 300.0}] 
+[goreli_mutlak] 40 m irtifa kazan
+    beklenen: [{"komut": "yuksel", "metre": 40}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 40.0}] 
+[negatifi_kabul] en yakın yere git hemen
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "hastane"}] 
+[yon] sola bir 207 ° dönsene
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 207}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 207.0}] 
+[goreli_mutlak] önce 144 m aşağı sonra buraya en yakın benzinliğe git sonra çık 80 m'ye
+    beklenen: [{"komut": "alcal", "metre": 144}, {"komut": "yakin_yere_git", "tur": "benzinlik"}, {"komut": "irtifaya_cik", "metre": 80}]
+    üretilen: [{"komut": "yuksel", "metre": 144.0}, {"komut": "yakin_yere_git", "tur": "benzinlik"}, {"komut": "irtifaya_cik", "metre": 80.0}] 
+[adim_sayisi] buraya en yakın hastaneye git daha sonra tamam 299 m tırman sonra 30 m aşağı
+    beklenen: [{"komut": "yakin_yere_git", "tur": "hastane"}, {"komut": "yuksel", "metre": 299}, {"komut": "alcal", "metre": 30}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "hastane"}, {"komut": "dur"}, {"komut": "git_yon", "yon": "sag", "metre": 30.0}, {"komut": "irtifaya_cik", "metre": 299.0}] 
+[adim_sayisi] en yakın parka gidelim ve 100 m'ye çık
+    beklenen: [{"komut": "yakin_yere_git", "tur": "park"}, {"komut": "irtifaya_cik", "metre": 100}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "park"}] 
+[goreli_mutlak] 100 m irtifa kazan
+    beklenen: [{"komut": "yuksel", "metre": 100}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 100.0}] 
+[negatifi_kabul] drone güneye uç
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "git_yon", "yon": "guney", "metre": 0.0}] 
+[goreli_mutlak] 594 m in
+    beklenen: [{"komut": "alcal", "metre": 594}]
+    üretilen: [{"komut": "yuksel", "metre": 594.0}] 
+[komut_yanlis] tamam 120 m tırman
+    beklenen: [{"komut": "yuksel", "metre": 120}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "polis"}] 
+[adim_sayisi] 6 m saniyeyle uç
+    beklenen: [{"komut": "hiz_ayarla", "mps": 6}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 6.0}, {"komut": "git_yon", "yon": "bati", "metre": 0.0}] 
+[komut_yanlis] drone beklemede kal
+    beklenen: [{"komut": "dur"}]
+    üretilen: [{"komut": "bekle", "saniye": 0.0}] 
+[komut_yanlis] havalanıp tamam kalkabilirsin
+    beklenen: [{"komut": "kalk"}, {"komut": "kalk"}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 8.0}, {"komut": "kalk"}] 
+[komut_yanlis] tamam şimdi güneye 60 m git tamam şimdi güneye 400 m git ardından 400 m aşağı
+    beklenen: [{"komut": "git_yon", "yon": "guney", "metre": 60}, {"komut": "git_yon", "yon": "guney", "metre": 400}, {"komut": "alcal", "metre": 400}]
+    üretilen: [{"komut": "yuksel", "metre": 60.0}, {"komut": "yuksel", "metre": 400.0}, {"komut": "irtifaya_cik", "metre": 400.0}] 
+[negatifi_kabul] haydi biraz yukarı
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 100.0}] 
+[adim_sayisi] 312 m in arkasından lütfen enlem 41.70213 boylam 41.6809 noktasına git daha sonra lütfen enlem 37.991836 boylam 37.399072 noktasına git
+    beklenen: [{"komut": "alcal", "metre": 312}, {"komut": "git_koordinat", "enlem": 41.70213, "boylam": 41.6809}, {"komut": "git_koordinat", "enlem": 37.991836, "boylam": 37.399072}]
+    üretilen: [{"komut": "git_koordinat", "enlem": 41.70213, "boylam": 41.6809}, {"komut": "git_koordinat", "enlem": 37.991836, "boylam": 37.399072}] 
+[komut_yanlis] 1000 m ileri ilerle
+    beklenen: [{"komut": "git_yon", "yon": "ileri", "metre": 1000}]
+    üretilen: [{"komut": "yuksel", "metre": 1000.0}] 
+[negatifi_kabul] şey biraz yukarı
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 100.0}, {"komut": "git_yon", "yon": "guney", "metre": 100.0}] 
+[adim_sayisi] aşağı in 250 m
+    beklenen: [{"komut": "alcal", "metre": 250}]
+    üretilen: [{"komut": "in"}, {"komut": "git_yon", "yon": "sol", "metre": 250.0}] 
+[adim_sayisi] eve git arkasından kalk bakalım arkasından eve git
+    beklenen: [{"komut": "eve_don"}, {"komut": "kalk"}, {"komut": "eve_don"}]
+    üretilen: [{"komut": "eve_don"}, {"komut": "git_yon", "yon": "sag", "metre": 0.0}] 
+[adim_sayisi] tamam 300 m tırman daha sonra kalkış noktasına dön sonrasında irtifanı 5 m'ye ayarla
+    beklenen: [{"komut": "yuksel", "metre": 300}, {"komut": "eve_don"}, {"komut": "irtifaya_cik", "metre": 5}]
+    üretilen: [{"komut": "yuksel", "metre": 300.0}, {"komut": "irtifaya_cik", "metre": 5.0}] 
+[komut_yanlis] irtifanı 20 m'ye ayarla arkasından eve git ve enlem 36.9014 boylam 32.882236
+    beklenen: [{"komut": "irtifaya_cik", "metre": 20}, {"komut": "eve_don"}, {"komut": "git_koordinat", "enlem": 36.9014, "boylam": 32.882236}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 20.0}, {"komut": "eve_don"}, {"komut": "git_koordinat", "enlem": 36.0, "boylam": 32.0, "irtifa_m": 20.0}] 
+[adim_sayisi] 5 m'ye havalan
+    beklenen: [{"komut": "kalk", "irtifa_m": 5}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 5.0}, {"komut": "git_yon", "yon": "bati", "metre": 100.0}] 
+[yon] tamam şimdi geri 1.5 m git
+    beklenen: [{"komut": "git_yon", "yon": "geri", "metre": 1.5}]
+    üretilen: [{"komut": "git_yon", "yon": "sol", "metre": 1.5}] 
+[yon] sol tarafa 30 ° dön
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 30}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 30.0}] 
+[goreli_mutlak] 387 m in
+    beklenen: [{"komut": "alcal", "metre": 387}]
+    üretilen: [{"komut": "yuksel", "metre": 387.0}] 
+[yon] doğu yönüne 70 m ilerli
+    beklenen: [{"komut": "git_yon", "yon": "dogu", "metre": 70}]
+    üretilen: [{"komut": "git_yon", "yon": "guney", "metre": 70.0}] 
+[komut_yanlis] ırtifanı 97 m'ye ayarla
+    beklenen: [{"komut": "irtifaya_cik", "metre": 97}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 97.0}] 
+[yon] tamam şimdi geri 25 m git
+    beklenen: [{"komut": "git_yon", "yon": "geri", "metre": 25}]
+    üretilen: [{"komut": "git_yon", "yon": "sol", "metre": 25.0}] 
+[negatifi_kabul] en yakın yere git artık
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "hastane"}] 
+[goreli_mutlak] 400 m aşağı sonra irtifanı 53 m'ye ayarla
+    beklenen: [{"komut": "alcal", "metre": 400}, {"komut": "irtifaya_cik", "metre": 53}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 53.0}, {"komut": "yakin_yere_git", "tur": "polis"}] 
+[sayi] kalk bakalım şimdi
+    beklenen: [{"komut": "kalk"}]
+    üretilen: [{"komut": "kalk", "irtifa_m": 0.0}] 
+[goreli_mutlak] 156 m in
+    beklenen: [{"komut": "alcal", "metre": 156}]
+    üretilen: [{"komut": "yuksel", "metre": 156.0}] 
+[goreli_mutlak] 120 m aşağı
+    beklenen: [{"komut": "alcal", "metre": 120}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 120.0}] 
+[sayi] kalk bakalım
+    beklenen: [{"komut": "kalk"}]
+    üretilen: [{"komut": "kalk", "irtifa_m": 0.0}] 
+[goreli_mutlak] önce eve gitti sonra 10 m'ye çık sonra biraz sağa doğru git 60 m kadar
+    beklenen: [{"komut": "eve_don"}, {"komut": "irtifaya_cik", "metre": 10}, {"komut": "git_yon", "yon": "sag", "metre": 60}]
+    üretilen: [{"komut": "eve_don"}, {"komut": "yuksel", "metre": 10.0}, {"komut": "git_yon", "yon": "sag", "metre": 60.0}] 
+[komut_yanlis] 45 m in
+    beklenen: [{"komut": "alcal", "metre": 45}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 45.0}] 
+[goreli_mutlak] 571 m aşağı
+    beklenen: [{"komut": "alcal", "metre": 571}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 571.0}] 
+[goreli_mutlak] 60 m aşağı
+    beklenen: [{"komut": "alcal", "metre": 60}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 60.0}] 
+[komut_yanlis] 21 m'ye havalan
+    beklenen: [{"komut": "kalk", "irtifa_m": 21}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 21.0}] 
+[yon] biraz doğuya doğru git 90 m kadar
+    beklenen: [{"komut": "git_yon", "yon": "dogu", "metre": 90}]
+    üretilen: [{"komut": "git_yon", "yon": "guney", "metre": 90.0}] 
+[negatifi_kabul] haydi sağa git
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "git_koordinat", "enlem": 0.0, "boylam": 0.0, "irtifa_m": 0.0}] 
+[adim_sayisi] 63 m'ye havalan
+    beklenen: [{"komut": "kalk", "irtifa_m": 63}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 63.0}, {"komut": "git_yon", "yon": "guney", "metre": 63.0}] 
+[adim_sayisi] aşağı in 150 m
+    beklenen: [{"komut": "alcal", "metre": 150}]
+    üretilen: [{"komut": "in"}, {"komut": "git_yon", "yon": "sol", "metre": 150.0}] 
+[adim_sayisi] kalk bakalım hadi
+    beklenen: [{"komut": "kalk"}]
+    üretilen: [{"komut": "kalk", "irtifa_m": 1.0}, {"komut": "hiz_ayarla", "mps": 1.0}, {"komut": "bekle", "saniye": 1.0}, {"komut": "eve_don"}] 
+[yon] biraz geri doğru git 15 m kadar
+    beklenen: [{"komut": "git_yon", "yon": "geri", "metre": 15}]
+    üretilen: [{"komut": "git_yon", "yon": "sol", "metre": 15.0}] 
+[komut_yanlis] 34 m'ye havalan
+    beklenen: [{"komut": "kalk", "irtifa_m": 34}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 34.0}] 
+[goreli_mutlak] 70 m in
+    beklenen: [{"komut": "alcal", "metre": 70}]
+    üretilen: [{"komut": "yuksel", "metre": 70.0}] 
+[yon] sol tarafa 135 ° dön
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 135}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 135.0}] 
+[komut_yanlis] sağa 304 ° çevril sonra 120 m aşağı ve tamam 213 m tırman
+    beklenen: [{"komut": "don", "yon": "sag", "derece": 304}, {"komut": "alcal", "metre": 120}, {"komut": "yuksel", "metre": 213}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 304.0}, {"komut": "git_yon", "yon": "geri", "metre": 120.0}, {"komut": "git_koordinat", "enlem": 304.0, "boylam": 213.0, "irtifa_m": 213.0}] 
+[komut_yanlis] önce 1.5 m saniyeyle uç sonra çık 60 m'ye
+    beklenen: [{"komut": "hiz_ayarla", "mps": 1.5}, {"komut": "irtifaya_cik", "metre": 60}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 1.5}, {"komut": "git_yon", "yon": "sag", "metre": 60.0}] 
+[negatifi_kabul] kuzeyden soğuk hava geliyor
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 90.0}] 
+[goreli_mutlak] 1000 m aşağı
+    beklenen: [{"komut": "alcal", "metre": 1000}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 1000.0}] 
+[komut_yanlis] 20 m'ye havalan
+    beklenen: [{"komut": "kalk", "irtifa_m": 20}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 20.0}] 
+[adim_sayisi] kalkış noktasına dön sonrasında kalkış noktasına dön
+    beklenen: [{"komut": "eve_don"}, {"komut": "eve_don"}]
+    üretilen: [{"komut": "eve_don"}] 
+[komut_yanlis] sol tarafa 322 ° dön ondan sonra tamam 497 m tırman
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 322}, {"komut": "yuksel", "metre": 497}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 322.0}, {"komut": "git_yon", "yon": "bati", "metre": 497.0}] 
+[adim_sayisi] kalkış noktasına dön daha sonra tamam kalkabilirsin
+    beklenen: [{"komut": "eve_don"}, {"komut": "kalk"}]
+    üretilen: [{"komut": "eve_don"}, {"komut": "kalk"}, {"komut": "dur"}] 
+[komut_yanlis] kalkış noktasına dön ondan sonra tamam kalkabilirsin
+    beklenen: [{"komut": "eve_don"}, {"komut": "kalk"}]
+    üretilen: [{"komut": "eve_don"}, {"komut": "dur"}] 
+[yon] 199 m geri ilerle
+    beklenen: [{"komut": "git_yon", "yon": "geri", "metre": 199}]
+    üretilen: [{"komut": "git_yon", "yon": "sol", "metre": 199.0}] 
+[negatifi_kabul] en yakın yere gittik
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "hastane"}] 
+[adim_sayisi] tamam iniş
+    beklenen: [{"komut": "in"}]
+    üretilen: [{"komut": "in"}, {"komut": "dur"}] 
+[komut_yanlis] buraya en yakın okula git arkasından sola 270 ° çevril
+    beklenen: [{"komut": "yakin_yere_git", "tur": "okul"}, {"komut": "don", "yon": "sol", "derece": 270}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "okul"}, {"komut": "git_yon", "yon": "sag", "metre": 270.0}] 
+[goreli_mutlak] 60 m in
+    beklenen: [{"komut": "alcal", "metre": 60}]
+    üretilen: [{"komut": "yuksel", "metre": 60.0}] 
+[komut_yanlis] yere kon artik ondan sonra eve geri gel sonra eve geri gel
+    beklenen: [{"komut": "in"}, {"komut": "eve_don"}, {"komut": "eve_don"}]
+    üretilen: [{"komut": "git_yon", "yon": "sag", "metre": 45.0}, {"komut": "git_yon", "yon": "sag", "metre": 45.0}, {"komut": "git_yon", "yon": "sag", "metre": 45.0}] 
+[goreli_mutlak] 90 m aşağı
+    beklenen: [{"komut": "alcal", "metre": 90}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 90.0}] 
+[goreli_mutlak] 12.5 m irtifa kazan ve 30 m in
+    beklenen: [{"komut": "yuksel", "metre": 12.5}, {"komut": "alcal", "metre": 30}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 12.5}, {"komut": "git_yon", "yon": "kuzey", "metre": 30.0}] 
+[yon] sola bir 36 ° dönsene
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 36}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 36.0}] 
+[goreli_mutlak] 7.5 m irtifa kazan
+    beklenen: [{"komut": "yuksel", "metre": 7.5}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 7.5}] 
+[negatifi_kabul] yereyim hadi
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "dur"}] 
+[negatifi_kabul] yükselt
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 100.0}] 
+[komut_yanlis] tamam şimdi ileri 1000 m git
+    beklenen: [{"komut": "git_yon", "yon": "ileri", "metre": 1000}]
+    üretilen: [{"komut": "yuksel", "metre": 1000.0}] 
+[yon] doğu yönüne 402 m ilerle
+    beklenen: [{"komut": "git_yon", "yon": "dogu", "metre": 402}]
+    üretilen: [{"komut": "git_yon", "yon": "guney", "metre": 402.0}] 
+[goreli_mutlak] 294 m aşağı
+    beklenen: [{"komut": "alcal", "metre": 294}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 294.0}] 
+[negatifi_kabul] 50 m hadi
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 50.0}] 
+[yon] biraz sola doğru git 1.5 m kadar
+    beklenen: [{"komut": "git_yon", "yon": "sol", "metre": 1.5}]
+    üretilen: [{"komut": "git_yon", "yon": "sag", "metre": 1.5}] 
+[goreli_mutlak] 1000 m irtifa kazan
+    beklenen: [{"komut": "yuksel", "metre": 1000}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 1000.0}] 
+[negatifi_kabul] kuzeye git
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "git_yon", "yon": "kuzey", "metre": 0.0}] 
+[yon] sola 270 ° çevril
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 270}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 270.0}] 
+[adim_sayisi] şey eve geri gel
+    beklenen: [{"komut": "eve_don"}]
+    üretilen: [{"komut": "git_yon", "yon": "guney", "metre": 0.0}, {"komut": "git_yon", "yon": "sag", "metre": 0.0}] 
+[goreli_mutlak] 30 m in
+    beklenen: [{"komut": "alcal", "metre": 30}]
+    üretilen: [{"komut": "yuksel", "metre": 30.0}] 
+[goreli_mutlak] 300 m irtifa kazan
+    beklenen: [{"komut": "yuksel", "metre": 300}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 300.0}] 
+[adim_sayisi] aşağı in 2.5 m
+    beklenen: [{"komut": "alcal", "metre": 2.5}]
+    üretilen: [{"komut": "in"}, {"komut": "git_yon", "yon": "sol", "metre": 2.5}] 
+[komut_yanlis] irtifanı 80 m'ye ayarla
+    beklenen: [{"komut": "irtifaya_cik", "metre": 80}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 80.0}] 
+[adim_sayisi] eve gittik arkasından kalk bakalım arkasından eve git
+    beklenen: [{"komut": "eve_don"}, {"komut": "kalk"}, {"komut": "eve_don"}]
+    üretilen: [{"komut": "eve_don"}, {"komut": "dur"}] 
+[komut_yanlis] 26 m'yi havalan daha sonra lütfen enlem 39.809043 boylam 32.8062 noktasına git
+    beklenen: [{"komut": "kalk", "irtifa_m": 26}, {"komut": "git_koordinat", "enlem": 39.809043, "boylam": 32.8062}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 26.0}, {"komut": "git_koordinat", "enlem": 39.809043, "boylam": 32.8062}] 
+[goreli_mutlak] 420 m in
+    beklenen: [{"komut": "alcal", "metre": 420}]
+    üretilen: [{"komut": "yuksel", "metre": 420.0}] 
+[adim_sayisi] 500 m aşağı daha sonra 25 m daha yukarı çık arkasından kalk bakalım
+    beklenen: [{"komut": "alcal", "metre": 500}, {"komut": "yuksel", "metre": 25}, {"komut": "kalk"}]
+    üretilen: [{"komut": "yuksel", "metre": 500.0}, {"komut": "git_yon", "yon": "geri", "metre": 25.0}] 
+[komut_yanlis] 50 m'ye havalan
+    beklenen: [{"komut": "kalk", "irtifa_m": 50}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 50.0}] 
+[yon] sol tarafa 270 ° dön
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 270}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 270.0}] 
+[adim_sayisi] en yakın akaryakıt istasyonuna gidelim çık 120 m'ye
+    beklenen: [{"komut": "yakin_yere_git", "tur": "benzinlik"}, {"komut": "irtifaya_cik", "metre": 120}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "polis"}] 
+[negatifi_kabul] şu kadar yüksel
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 100.0}] 
+[yon] sola 20 ° çevril
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 20}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 20.0}] 
+[adim_sayisi] önce eve git sonra 10 m'ye çık sonra biraz sağa doğru git 60 m kadar
+    beklenen: [{"komut": "eve_don"}, {"komut": "irtifaya_cik", "metre": 10}, {"komut": "git_yon", "yon": "sag", "metre": 60}]
+    üretilen: [{"komut": "git_yon", "yon": "sag", "metre": 60.0}, {"komut": "irtifaya_cik", "metre": 10.0}] 
+[goreli_mutlak] önce aşağı in 100 m sonra 180 saniye bekler misin sonra 592 m aşağı
+    beklenen: [{"komut": "alcal", "metre": 100}, {"komut": "bekle", "saniye": 180}, {"komut": "alcal", "metre": 592}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 100.0}, {"komut": "bekle", "saniye": 180.0}, {"komut": "git_yon", "yon": "bati", "metre": 592.0}] 
+[adim_sayisi] tamam kalkabilirsin hadi
+    beklenen: [{"komut": "kalk"}]
+    üretilen: [{"komut": "kalk"}, {"komut": "dur"}] 
+[komut_yanlis] önce sol tarafa 185 ° dön sonra tamam şimdi sağa 433 m git sonra 5 m irtifaya kalk
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 185}, {"komut": "git_yon", "yon": "sag", "metre": 433}, {"komut": "kalk", "irtifa_m": 5}]
+    üretilen: [{"komut": "don", "yon": "sol", "derece": 185.0}, {"komut": "git_yon", "yon": "sag", "metre": 433.0}, {"komut": "irtifaya_cik", "metre": 5.0}] 
+[yon] sola 45 ° çevril
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 45}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 45.0}] 
+[adim_sayisi] 25 m'ye havalan
+    beklenen: [{"komut": "kalk", "irtifa_m": 25}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 25.0}, {"komut": "eve_don"}] 
+[adim_sayisi] hız 1 m saniye olsun
+    beklenen: [{"komut": "hiz_ayarla", "mps": 1}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 1.0}, {"komut": "dur"}] 
+[komut_yanlis] eve git
+    beklenen: [{"komut": "eve_don"}]
+    üretilen: [{"komut": "git_yon", "yon": "sag", "metre": 0.0}] 
+[adim_sayisi] aşağı in 300 m
+    beklenen: [{"komut": "alcal", "metre": 300}]
+    üretilen: [{"komut": "in"}, {"komut": "git_yon", "yon": "sol", "metre": 300.0}] 
+[yon] sol tarafa 42 ° dön
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 42}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 42.0}] 
+[negatifi_kabul] şimdi de kayda başla
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "kalk"}] 
+[komut_yanlis] tamam şimdi yere kon artık
+    beklenen: [{"komut": "in"}]
+    üretilen: [{"komut": "dur"}] 
+[goreli_mutlak] 269 m aşağı
+    beklenen: [{"komut": "alcal", "metre": 269}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 269.0}] 
+[negatifi_kabul] peki daha yükseğe
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 500.0}] 
+[negatifi_kabul] peki 50 m
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 50.0}] 
+[negatifi_kabul] kuzeye git hemen
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "git_yon", "yon": "kuzey", "metre": 0.0}] 
+[goreli_mutlak] önce 234 m aşağı sonra sola bir 90 ° dönsene
+    beklenen: [{"komut": "alcal", "metre": 234}, {"komut": "don", "yon": "sol", "derece": 90}]
+    üretilen: [{"komut": "yuksel", "metre": 234.0}, {"komut": "don", "yon": "sag", "derece": 90.0}] 
+[adim_sayisi] aşağı in 50 m
+    beklenen: [{"komut": "alcal", "metre": 50}]
+    üretilen: [{"komut": "in"}, {"komut": "yuksel", "metre": 50.0}] 
+[negatifi_kabul] daha yükseğe bakalım
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 100.0}] 
+[negatifi_kabul] peki yereyim
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "dur"}] 
+[komut_yanlis] önce 75 m irtifa kazan sonra 344 m in sonra 15 saniye boyunca bekle
+    beklenen: [{"komut": "yuksel", "metre": 75}, {"komut": "alcal", "metre": 344}, {"komut": "bekle", "saniye": 15}]
+    üretilen: [{"komut": "yuksel", "metre": 75.0}, {"komut": "yakin_yere_git", "tur": "eczane"}, {"komut": "bekle", "saniye": 15.0}] 
+[yon] sola bir 360 ° dönsene
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 360}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 360.0}] 
+[adim_sayisi] sola 15 ° çevril arkasından 20 m'ye havalan arkasından enlem 41.18971 boylam 41.8776
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 15}, {"komut": "kalk", "irtifa_m": 20}, {"komut": "git_koordinat", "enlem": 41.18971, "boylam": 41.8776}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 15.0}, {"komut": "kalk"}, {"komut": "git_yon", "yon": "bati", "metre": 20.0}, {"komut": "git_koordinat", "enlem": 41.18971, "boylam": 41.8776}] 
+[komut_yanlis] önce 15 saniye boyunca bekle sonra 300 m aşağı
+    beklenen: [{"komut": "bekle", "saniye": 15}, {"komut": "alcal", "metre": 300}]
+    üretilen: [{"komut": "bekle", "saniye": 15.0}, {"komut": "git_yon", "yon": "geri", "metre": 300.0}] 
+[goreli_mutlak] 150 m irtifa kazan
+    beklenen: [{"komut": "yuksel", "metre": 150}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 150.0}] 
+[negatifi_kabul] yuksel
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 0.0}] 
+[yon] biraz sola doğru git 15 m kadar
+    beklenen: [{"komut": "git_yon", "yon": "sol", "metre": 15}]
+    üretilen: [{"komut": "git_yon", "yon": "sag", "metre": 15.0}] 
+[goreli_mutlak] 232 m aşağı
+    beklenen: [{"komut": "alcal", "metre": 232}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 232.0}] 
+[komut_yanlis] 30 m'ye havalan
+    beklenen: [{"komut": "kalk", "irtifa_m": 30}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 30.0}] 
+[adim_sayisi] önce biraz doğuya doğru git 75 m kadar sonra hız 5 m saniye olsun
+    beklenen: [{"komut": "git_yon", "yon": "dogu", "metre": 75}, {"komut": "hiz_ayarla", "mps": 5}]
+    üretilen: [{"komut": "git_yon", "yon": "guney", "metre": 75.0}, {"komut": "hiz_ayarla", "mps": 5.0}, {"komut": "git_yon", "yon": "bati", "metre": 100.0}] 
+[komut_yanlis] biraz sola dogru git 15 m kadar
+    beklenen: [{"komut": "git_yon", "yon": "sol", "metre": 15}]
+    üretilen: [{"komut": "git_koordinat", "enlem": 15.0, "boylam": 0.0, "irtifa_m": 0.0}] 
+[adim_sayisi] aşağı in 60 m
+    beklenen: [{"komut": "alcal", "metre": 60}]
+    üretilen: [{"komut": "in"}, {"komut": "git_yon", "yon": "sol", "metre": 60.0}] 
+[yon] sol tarafa 120 ° dön
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 120}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 120.0}] 
+[sayi] lütfen enlem 37.052969 boylam 43.04381 noktasına git
+    beklenen: [{"komut": "git_koordinat", "enlem": 37.052969, "boylam": 43.04381}]
+    üretilen: [{"komut": "git_koordinat", "enlem": 37.0, "boylam": 43.0, "irtifa_m": 1.0}] 
+[adim_sayisi] kuzey yönüne 374 m ilerle arkasından çık 30 m'ye ardından irtifanı 114 m'ye ayarla
+    beklenen: [{"komut": "git_yon", "yon": "kuzey", "metre": 374}, {"komut": "irtifaya_cik", "metre": 30}, {"komut": "irtifaya_cik", "metre": 114}]
+    üretilen: [{"komut": "git_yon", "yon": "kuzey", "metre": 374.0}, {"komut": "irtifaya_cik", "metre": 114.0}] 
+[adim_sayisi] önce 6 m saniyeyle uç sonra 85 saniye boyunca bekle
+    beklenen: [{"komut": "hiz_ayarla", "mps": 6}, {"komut": "bekle", "saniye": 85}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 6.0}, {"komut": "bekle", "saniye": 85.0}, {"komut": "git_yon", "yon": "bati", "metre": 100.0}] 
+[adim_sayisi] kalkıp 60 saniye bekler misin
+    beklenen: [{"komut": "kalk"}, {"komut": "bekle", "saniye": 60}]
+    üretilen: [{"komut": "bekle", "saniye": 60.0}] 
+[adim_sayisi] eve git ardından 75 m in
+    beklenen: [{"komut": "eve_don"}, {"komut": "alcal", "metre": 75}]
+    üretilen: [{"komut": "eve_don"}] 
+[komut_yanlis] önce yere kon artık sonra 70 m kadar yukarı çık
+    beklenen: [{"komut": "in"}, {"komut": "yuksel", "metre": 70}]
+    üretilen: [{"komut": "yuksel", "metre": 70.0}, {"komut": "git_yon", "yon": "guney", "metre": 70.0}] 
+[yon] sola bir 135 ° dönsene
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 135}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 135.0}] 
+[sayi] enlem 41.102 boylam 43.3514
+    beklenen: [{"komut": "git_koordinat", "enlem": 41.102, "boylam": 43.3514}]
+    üretilen: [{"komut": "git_koordinat", "enlem": 41102.0, "boylam": 433514.0}] 
+[negatifi_kabul] kuzeyden soğuk hava geliyor hemen
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 90.0}] 
+[adim_sayisi] tamam kalkabilirsin tamam mı
+    beklenen: [{"komut": "kalk"}]
+    üretilen: [{"komut": "kalk"}, {"komut": "dur"}] 
+[adim_sayisi] aşağı in 113 m
+    beklenen: [{"komut": "alcal", "metre": 113}]
+    üretilen: [{"komut": "in"}, {"komut": "git_yon", "yon": "sol", "metre": 113.0}] 
+[adim_sayisi] buraya en yakın parka git sonra 13 m saniyeyle uç
+    beklenen: [{"komut": "yakin_yere_git", "tur": "park"}, {"komut": "hiz_ayarla", "mps": 13}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "park"}, {"komut": "bekle", "saniye": 13.0}, {"komut": "git_yon", "yon": "bati", "metre": 100.0}] 
+[sayi] kalk bakalım lütfen
+    beklenen: [{"komut": "kalk"}]
+    üretilen: [{"komut": "kalk", "irtifa_m": 0.0}] 
+[goreli_mutlak] 225 m daha yukarı çık ve aşağı in 30 m ondan sonra tamam 29 m tırman
+    beklenen: [{"komut": "yuksel", "metre": 225}, {"komut": "alcal", "metre": 30}, {"komut": "yuksel", "metre": 29}]
+    üretilen: [{"komut": "yuksel", "metre": 225.0}, {"komut": "irtifaya_cik", "metre": 30.0}, {"komut": "git_yon", "yon": "guney", "metre": 29.0}] 
+[goreli_mutlak] 10 m irtifa kazan
+    beklenen: [{"komut": "yuksel", "metre": 10}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 10.0}] 
+[yon] doğu yönüne 87 m ilerle
+    beklenen: [{"komut": "git_yon", "yon": "dogu", "metre": 87}]
+    üretilen: [{"komut": "git_yon", "yon": "guney", "metre": 87.0}] 
+[negatifi_kabul] kuzeyden soğuk hava geliyor artık
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 90.0}] 
+[sayi] kalk bakalım ve kalk bakalım
+    beklenen: [{"komut": "kalk"}, {"komut": "kalk"}]
+    üretilen: [{"komut": "kalk", "irtifa_m": 0.0}, {"komut": "kalk", "irtifa_m": 0.0}] 
+[adim_sayisi] 3 m saniyeyle uc
+    beklenen: [{"komut": "hiz_ayarla", "mps": 3}]
+    üretilen: [{"komut": "bekle", "saniye": 3.0}, {"komut": "dur"}] 
+[komut_yanlis] irtifanı 97 m'ye ayarla
+    beklenen: [{"komut": "irtifaya_cik", "metre": 97}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 97.0}] 
+[yon] sola 118 ° çevril sonrasında en yakın okula gidelim
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 118}, {"komut": "yakin_yere_git", "tur": "okul"}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 118.0}, {"komut": "yakin_yere_git", "tur": "okul"}] 
+[negatifi_kabul] sağa git artık
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "git_koordinat", "enlem": 0.0, "boylam": 0.0, "irtifa_m": 0.0}] 
+[yon] sol 45 ° çevril
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 45}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 45.0}] 
+[komut_yanlis] tamam 450 m tırman
+    beklenen: [{"komut": "yuksel", "metre": 450}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 450.0}] 
+[adim_sayisi] aşağı in 111 m
+    beklenen: [{"komut": "alcal", "metre": 111}]
+    üretilen: [{"komut": "in"}, {"komut": "git_yon", "yon": "sol", "metre": 111.0}] 
+[goreli_mutlak] önce çık 20 m'ye sonra irtifanı 5 m'ye ayarla
+    beklenen: [{"komut": "irtifaya_cik", "metre": 20}, {"komut": "irtifaya_cik", "metre": 5}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 5.0}, {"komut": "yuksel", "metre": 20.0}] 
+[komut_yanlis] havalanıp biraz güneye doğru git 1.5 m kadar
+    beklenen: [{"komut": "kalk"}, {"komut": "git_yon", "yon": "guney", "metre": 1.5}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 1.5}, {"komut": "git_yon", "yon": "guney", "metre": 1.5}] 
+[goreli_mutlak] 20 m in
+    beklenen: [{"komut": "alcal", "metre": 20}]
+    üretilen: [{"komut": "yuksel", "metre": 20.0}] 
+[adim_sayisi] 100 m'ye havalan
+    beklenen: [{"komut": "kalk", "irtifa_m": 100}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 100.0}, {"komut": "eve_don"}] 
+[goreli_mutlak] 15 m irtifa kazan ve en yakın hastaneye gidelim
+    beklenen: [{"komut": "yuksel", "metre": 15}, {"komut": "yakin_yere_git", "tur": "hastane"}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 15.0}, {"komut": "yakin_yere_git", "tur": "hastane"}] 
+[komut_yanlis] kalk bakalım ondan sonra 137 m'ye havalan
+    beklenen: [{"komut": "kalk"}, {"komut": "kalk", "irtifa_m": 137}]
+    üretilen: [{"komut": "kalk", "irtifa_m": 137.0}, {"komut": "yakin_yere_git", "tur": "hastane"}] 
+[yon] en yakın akaryakıt istasyonuna gidelim ve çık 120 m'ye
+    beklenen: [{"komut": "yakin_yere_git", "tur": "benzinlik"}, {"komut": "irtifaya_cik", "metre": 120}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "polis"}, {"komut": "irtifaya_cik", "metre": 120.0}] 
+[komut_yanlis] önce iniş sonra kalkış noktasına dön sonra 10 m irtifaya kalk
+    beklenen: [{"komut": "in"}, {"komut": "eve_don"}, {"komut": "kalk", "irtifa_m": 10}]
+    üretilen: [{"komut": "in"}, {"komut": "git_yon", "yon": "kuzey", "metre": 10.0}, {"komut": "git_yon", "yon": "sag", "metre": 10.0}] 
+[adim_sayisi] yere kon artık ondan sonra eve geri gel sonra eve geri gel
+    beklenen: [{"komut": "in"}, {"komut": "eve_don"}, {"komut": "eve_don"}]
+    üretilen: [{"komut": "git_yon", "yon": "sag", "metre": 45.0}, {"komut": "git_yon", "yon": "bati", "metre": 100.0}] 
+[goreli_mutlak] 190 m irtifa kazan
+    beklenen: [{"komut": "yuksel", "metre": 190}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 190.0}] 
+[sayi] enlem 41.4311 boylam 38.1209
+    beklenen: [{"komut": "git_koordinat", "enlem": 41.4311, "boylam": 38.1209}]
+    üretilen: [{"komut": "git_koordinat", "enlem": 414311.0, "boylam": 381209.0}] 
+[komut_yanlis] kalkış noktasına dönü daha sonra tamam kalkabilirsin
+    beklenen: [{"komut": "eve_don"}, {"komut": "kalk"}]
+    üretilen: [{"komut": "eve_don"}, {"komut": "dur"}] 
+[komut_yanlis] yere kon artık tamam mı
+    beklenen: [{"komut": "in"}]
+    üretilen: [{"komut": "dur"}] 
+[negatifi_kabul] ee en yakın yere git
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "eczane"}] 
+[komut_yanlis] tamam şimdi sola 180 m git
+    beklenen: [{"komut": "git_yon", "yon": "sol", "metre": 180}]
+    üretilen: [{"komut": "git_koordinat", "enlem": 180.0, "boylam": 0.0, "irtifa_m": 0.0}] 
+[adim_sayisi] aşağı in 100 m
+    beklenen: [{"komut": "alcal", "metre": 100}]
+    üretilen: [{"komut": "in"}, {"komut": "git_yon", "yon": "sol", "metre": 100.0}] 
+[yon] buraya en yakın karakola gitti
+    beklenen: [{"komut": "yakin_yere_git", "tur": "polis"}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "okul"}] 
+[adim_sayisi] aşağı in 1000 m sonrasında 54 m'ye havalan
+    beklenen: [{"komut": "alcal", "metre": 1000}, {"komut": "kalk", "irtifa_m": 54}]
+    üretilen: [{"komut": "git_yon", "yon": "bati", "metre": 54.0}] 
+[adim_sayisi] 5 m saniyeyle uç
+    beklenen: [{"komut": "hiz_ayarla", "mps": 5}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 5.0}, {"komut": "git_yon", "yon": "bati", "metre": 100.0}] 
+[yon] sola bir 270 ° dönsene
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 270}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 270.0}] 
+[negatifi_kabul] tamam şimdi şu kadar yüksel
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 1000.0}] 
+[adim_sayisi] tamam şimdi geri 30 m git sonrasında sol tarafa 10 ° dön sonrasında enlem 40.5672 boylam 36.9493
+    beklenen: [{"komut": "git_yon", "yon": "geri", "metre": 30}, {"komut": "don", "yon": "sol", "derece": 10}, {"komut": "git_koordinat", "enlem": 40.5672, "boylam": 36.9493}]
+    üretilen: [{"komut": "git_koordinat", "enlem": 40.5672, "boylam": 36.9493}, {"komut": "yakin_yere_git", "tur": "polis"}] 
+[adim_sayisi] önce 20 saniye boyunca bekle sonra tamam 5 m tırman sonra aşağı in 315 m
+    beklenen: [{"komut": "bekle", "saniye": 20}, {"komut": "yuksel", "metre": 5}, {"komut": "alcal", "metre": 315}]
+    üretilen: [{"komut": "bekle", "saniye": 20.0}, {"komut": "yuksel", "metre": 5.0}, {"komut": "git_yon", "yon": "geri", "metre": 315.0}, {"komut": "irtifaya_cik", "metre": 315.0}] 
+[adim_sayisi] hız 8 m saniye olsun
+    beklenen: [{"komut": "hiz_ayarla", "mps": 8}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 8.0}, {"komut": "bekle", "saniye": 100.0}] 
+[adim_sayisi] kalk bakalım sonrasında 309 m daha yukarı çık ondan sonra tamam 75 m tırman
+    beklenen: [{"komut": "kalk"}, {"komut": "yuksel", "metre": 309}, {"komut": "yuksel", "metre": 75}]
+    üretilen: [{"komut": "kalk", "irtifa_m": 1.0}, {"komut": "yuksel", "metre": 309.0}, {"komut": "git_yon", "yon": "guney", "metre": 75.0}, {"komut": "irtifaya_cik", "metre": 75.0}] 
+[negatifi_kabul] ee biraz yukarı
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 100.0}, {"komut": "git_yon", "yon": "guney", "metre": 100.0}] 
+[komut_yanlis] sağa 90 ° çevril arkasından sola 90 ° çevril
+    beklenen: [{"komut": "don", "yon": "sag", "derece": 90}, {"komut": "don", "yon": "sol", "derece": 90}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 90.0}, {"komut": "git_yon", "yon": "sag", "metre": 90.0}] 
+[adim_sayisi] buraya en yakın itfaiye istasyonuna git daha sonra eve git
+    beklenen: [{"komut": "yakin_yere_git", "tur": "itfaiye"}, {"komut": "eve_don"}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "itfaiye"}] 
+[negatifi_kabul] şimdi güneye uç
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "git_yon", "yon": "guney", "metre": 0.0}] 
+[yon] buraya en yakın karakola git
+    beklenen: [{"komut": "yakin_yere_git", "tur": "polis"}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "okul"}] 
+[yon] biraz doğuya doğru git 75 m kadar
+    beklenen: [{"komut": "git_yon", "yon": "dogu", "metre": 75}]
+    üretilen: [{"komut": "git_yon", "yon": "guney", "metre": 75.0}] 
+[negatifi_kabul] 50 m
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 50.0}] 
+[goreli_mutlak] 232 m irtifa kazan
+    beklenen: [{"komut": "yuksel", "metre": 232}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 232.0}] 
+[goreli_mutlak] 225 m aşağı
+    beklenen: [{"komut": "alcal", "metre": 225}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 225.0}] 
+[komut_yanlis] irtifanı 25 m'ye ayarla
+    beklenen: [{"komut": "irtifaya_cik", "metre": 25}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 25.0}] 
+[adim_sayisi] 138 m'ye çıkıp yere kon artık yere kon artık
+    beklenen: [{"komut": "irtifaya_cik", "metre": 138}, {"komut": "in"}, {"komut": "in"}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 138.0}, {"komut": "dur"}] 
+[yon] tamam şimdi doğuya 5 m git
+    beklenen: [{"komut": "git_yon", "yon": "dogu", "metre": 5}]
+    üretilen: [{"komut": "git_yon", "yon": "guney", "metre": 5.0}] 
+[negatifi_kabul] şu kadar yükseldi
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 100.0}] 
+[komut_yanlis] 400 m geri ilerle
+    beklenen: [{"komut": "git_yon", "yon": "geri", "metre": 400}]
+    üretilen: [{"komut": "yuksel", "metre": 400.0}] 
+[adim_sayisi] 3 m saniyeyle uç
+    beklenen: [{"komut": "hiz_ayarla", "mps": 3}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 3.0}, {"komut": "git_yon", "yon": "bati", "metre": 100.0}] 
+[komut_yanlis] 30 m aşağı inip 77 m in hız 10 m saniye olsun
+    beklenen: [{"komut": "alcal", "metre": 30}, {"komut": "alcal", "metre": 77}, {"komut": "hiz_ayarla", "mps": 10}]
+    üretilen: [{"komut": "alcal", "metre": 77.0}, {"komut": "hiz_ayarla", "mps": 10.0}, {"komut": "bekle", "saniye": 10.0}] 
+[adim_sayisi] tamam o zaman tamam kalkabilirsin
+    beklenen: [{"komut": "kalk"}]
+    üretilen: [{"komut": "kalk"}, {"komut": "dur"}] 
+[adim_sayisi] aşağı in 488 m
+    beklenen: [{"komut": "alcal", "metre": 488}]
+    üretilen: [{"komut": "in"}, {"komut": "git_yon", "yon": "sol", "metre": 488.0}] 
+[yon] biraz sola doğru git 1000 m kadar
+    beklenen: [{"komut": "git_yon", "yon": "sol", "metre": 1000}]
+    üretilen: [{"komut": "git_yon", "yon": "sag", "metre": 1000.0}] 
+[negatifi_kabul] şimdi de sağa git
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "git_koordinat", "enlem": 0.0, "boylam": 0.0, "irtifa_m": 0.0}] 
+[yon] sol tarafa 20 ° don ardindan sol tarafa 30 ° don
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 20}, {"komut": "don", "yon": "sol", "derece": 30}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 30.0}, {"komut": "don", "yon": "sag", "derece": 20.0}] 
+[negatifi_kabul] bak daha yükseğe
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 100.0}] 
+[yon] sol tarafa 10 ° donu
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 10}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 10.0}] 
+[komut_yanlis] önce 300 m kadar yukarı çık sonra 119 m aşağı
+    beklenen: [{"komut": "yuksel", "metre": 300}, {"komut": "alcal", "metre": 119}]
+    üretilen: [{"komut": "yuksel", "metre": 300.0}, {"komut": "git_yon", "yon": "guney", "metre": 119.0}] 
+[adim_sayisi] önce 257 m sağa ilerle sonra enlem 40.5216 boylam 32.81497
+    beklenen: [{"komut": "git_yon", "yon": "sag", "metre": 257}, {"komut": "git_koordinat", "enlem": 40.5216, "boylam": 32.81497}]
+    üretilen: [{"komut": "git_koordinat", "enlem": 40.5216, "boylam": 32.81497}] 
+[adim_sayisi] aşağı in 25 m
+    beklenen: [{"komut": "alcal", "metre": 25}]
+    üretilen: [{"komut": "in"}, {"komut": "git_yon", "yon": "sol", "metre": 25.0}] 
+[negatifi_kabul] kuzeye git tamam mı
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "git_yon", "yon": "kuzey", "metre": 0.0}] 
+[goreli_mutlak] 90 m irtifa kazan ondan sonra çık 150 m'ye
+    beklenen: [{"komut": "yuksel", "metre": 90}, {"komut": "irtifaya_cik", "metre": 150}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 90.0}, {"komut": "git_yon", "yon": "bati", "metre": 150.0}] 
+[negatifi_kabul] kayda başla hemen
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "kalk"}] 
+[yon] sola 219 ° çevril
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 219}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 219.0}] 
+[negatifi_kabul] yüksel
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 100.0}] 
+[adim_sayisi] 2 m saniyeyle uç
+    beklenen: [{"komut": "hiz_ayarla", "mps": 2}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 2.0}, {"komut": "git_yon", "yon": "bati", "metre": 100.0}] 
+[yon] sol tarafa 10 ° dön
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 10}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 10.0}] 
+[goreli_mutlak] 120 m asagi
+    beklenen: [{"komut": "alcal", "metre": 120}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 120.0}] 
+[adim_sayisi] yere kon artık ardından en yakın markete gidelim
+    beklenen: [{"komut": "in"}, {"komut": "yakin_yere_git", "tur": "market"}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "market"}] 
+[komut_yanlis] 1 saniye boyunca bekle ve tamam 90 m tırman
+    beklenen: [{"komut": "bekle", "saniye": 1}, {"komut": "yuksel", "metre": 90}]
+    üretilen: [{"komut": "bekle", "saniye": 1.0}, {"komut": "dur"}] 
+[negatifi_kabul] su kadar yukselt
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 100.0}] 
+[goreli_mutlak] 96 m irtifa kazan
+    beklenen: [{"komut": "yuksel", "metre": 96}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 96.0}] 
+[komut_yanlis] tamam şimdi güneye 60 m git ve tamam şimdi güneye 400 m git ardından 400 m aşağı
+    beklenen: [{"komut": "git_yon", "yon": "guney", "metre": 60}, {"komut": "git_yon", "yon": "guney", "metre": 400}, {"komut": "alcal", "metre": 400}]
+    üretilen: [{"komut": "yuksel", "metre": 60.0}, {"komut": "yuksel", "metre": 400.0}, {"komut": "irtifaya_cik", "metre": 400.0}] 
+[komut_yanlis] sağa bir 90 ° dönsene sonrasında sağa 15 ° çevril sonra biraz batıya doğru git 152 m kadar
+    beklenen: [{"komut": "don", "yon": "sag", "derece": 90}, {"komut": "don", "yon": "sag", "derece": 15}, {"komut": "git_yon", "yon": "bati", "metre": 152}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 90.0}, {"komut": "git_yon", "yon": "sag", "metre": 15.0}, {"komut": "git_yon", "yon": "bati", "metre": 152.0}] 
+[yon] sola bir 135 ° dönsene sonrasında 120 saniye bekler misin
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 135}, {"komut": "bekle", "saniye": 120}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 135.0}, {"komut": "bekle", "saniye": 120.0}] 
+[negatifi_kabul] şimdi yüksel
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 100.0}] 
+[sayi] kalkıp enlem 39.106495 boylam 29.58428
+    beklenen: [{"komut": "kalk"}, {"komut": "git_koordinat", "enlem": 39.106495, "boylam": 29.58428}]
+    üretilen: [{"komut": "kalk", "irtifa_m": 39.106495}, {"komut": "git_koordinat", "enlem": 39.106495, "boylam": 29.58428}] 
+[adim_sayisi] önce tamam şimdi sola 30 m git sonra 1.5 m irtifa kazan
+    beklenen: [{"komut": "git_yon", "yon": "sol", "metre": 30}, {"komut": "yuksel", "metre": 1.5}]
+    üretilen: [{"komut": "yuksel", "metre": 30.0}, {"komut": "git_yon", "yon": "sag", "metre": 1.5}, {"komut": "irtifaya_cik", "metre": 30.0}] 
+[sayi] şimdi kalk bakalım
+    beklenen: [{"komut": "kalk"}]
+    üretilen: [{"komut": "kalk", "irtifa_m": 0.0}] 
+[negatifi_kabul] sağa git
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "git_koordinat", "enlem": 0.0, "boylam": 0.0, "irtifa_m": 0.0}] 
+[negatifi_kabul] kayda başla
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "kalk"}] 
+[komut_yanlis] 138 m'ye havalan
+    beklenen: [{"komut": "kalk", "irtifa_m": 138}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 138.0}] 
+[sayi] kalkış yapıp enlem 37.205334 boylam 39.573306
+    beklenen: [{"komut": "kalk"}, {"komut": "git_koordinat", "enlem": 37.205334, "boylam": 39.573306}]
+    üretilen: [{"komut": "kalk", "irtifa_m": 37.205334}, {"komut": "git_koordinat", "enlem": 37.205334, "boylam": 39.573306}] 
+[komut_yanlis] sağa 120 m uçup 59 m irtifaya kalk
+    beklenen: [{"komut": "git_yon", "yon": "sag", "metre": 120}, {"komut": "kalk", "irtifa_m": 59}]
+    üretilen: [{"komut": "git_yon", "yon": "sag", "metre": 120.0}, {"komut": "irtifaya_cik", "metre": 59.0}] 
+[adim_sayisi] 20 m aşağı arkasından biraz sola doğru git 254 m kadar sonra kalkış noktasına dön
+    beklenen: [{"komut": "alcal", "metre": 20}, {"komut": "git_yon", "yon": "sol", "metre": 254}, {"komut": "eve_don"}]
+    üretilen: [{"komut": "git_yon", "yon": "sag", "metre": 254.0}, {"komut": "irtifaya_cik", "metre": 20.0}] 
+[adim_sayisi] aşağı in 466 m
+    beklenen: [{"komut": "alcal", "metre": 466}]
+    üretilen: [{"komut": "in"}, {"komut": "git_yon", "yon": "sol", "metre": 466.0}] 
+[yon] en yakin akaryakit istasyonuna gidelim
+    beklenen: [{"komut": "yakin_yere_git", "tur": "benzinlik"}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "itfaiye"}] 
+[negatifi_kabul] hemen en yakın yere git
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "hastane"}] 
+[komut_yanlis] tamam 439 m tırman ve enlem 40.8812 boylam 36.831413 ardından eve git
+    beklenen: [{"komut": "yuksel", "metre": 439}, {"komut": "git_koordinat", "enlem": 40.8812, "boylam": 36.831413}, {"komut": "eve_don"}]
+    üretilen: [{"komut": "yuksel", "metre": 439.0}, {"komut": "git_yon", "yon": "bati", "metre": 100.0}, {"komut": "eve_don"}] 
+[adim_sayisi] aşağı in 90 m
+    beklenen: [{"komut": "alcal", "metre": 90}]
+    üretilen: [{"komut": "in"}, {"komut": "git_yon", "yon": "sol", "metre": 90.0}] 
+[negatifi_kabul] yereyim
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "dur"}] 
+[yon] sola 135 ° çevril
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 135}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 135.0}] 
+[komut_yanlis] tamam 10 m tırman
+    beklenen: [{"komut": "yuksel", "metre": 10}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "polis"}] 
+[adim_sayisi] 9 m saniyeyle uç
+    beklenen: [{"komut": "hiz_ayarla", "mps": 9}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 9.0}, {"komut": "git_yon", "yon": "bati", "metre": 100.0}] 
+[komut_yanlis] tamam şimdi ileri 70 m git
+    beklenen: [{"komut": "git_yon", "yon": "ileri", "metre": 70}]
+    üretilen: [{"komut": "yuksel", "metre": 70.0}] 
+[adim_sayisi] aşağı in 500 m
+    beklenen: [{"komut": "alcal", "metre": 500}]
+    üretilen: [{"komut": "in"}, {"komut": "yuksel", "metre": 500.0}] 
+[komut_yanlis] irtifanı 70 m'ye ayarla
+    beklenen: [{"komut": "irtifaya_cik", "metre": 70}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 70.0}] 
+[goreli_mutlak] 50 m in
+    beklenen: [{"komut": "alcal", "metre": 50}]
+    üretilen: [{"komut": "yuksel", "metre": 50.0}] 
+[goreli_mutlak] 335 m aşağı
+    beklenen: [{"komut": "alcal", "metre": 335}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 335.0}] 
+[goreli_mutlak] 500 m aşağı
+    beklenen: [{"komut": "alcal", "metre": 500}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 500.0}] 
+[komut_yanlis] tamam 5 m tırman
+    beklenen: [{"komut": "yuksel", "metre": 5}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "polis"}] 
+[yon] sola 324 ° çevril
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 324}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 324.0}] 
+[goreli_mutlak] önce 2 saniye boyunca bekle sonra 5 m irtifa kazan
+    beklenen: [{"komut": "bekle", "saniye": 2}, {"komut": "yuksel", "metre": 5}]
+    üretilen: [{"komut": "bekle", "saniye": 2.0}, {"komut": "irtifaya_cik", "metre": 5.0}] 
+[negatifi_kabul] kuzey git
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "git_yon", "yon": "kuzey", "metre": 0.0}] 
+[komut_yanlis] beklemede kal
+    beklenen: [{"komut": "dur"}]
+    üretilen: [{"komut": "bekle", "saniye": 0.0}] 
+[komut_yanlis] çık 70 m'ye daha sonra tamam şimdi ileri 500 m git daha sonra çık 25 m'ye
+    beklenen: [{"komut": "irtifaya_cik", "metre": 70}, {"komut": "git_yon", "yon": "ileri", "metre": 500}, {"komut": "irtifaya_cik", "metre": 25}]
+    üretilen: [{"komut": "git_yon", "yon": "bati", "metre": 100.0}, {"komut": "yuksel", "metre": 500.0}, {"komut": "irtifaya_cik", "metre": 25.0}] 
+[goreli_mutlak] 103 m in
+    beklenen: [{"komut": "alcal", "metre": 103}]
+    üretilen: [{"komut": "yuksel", "metre": 103.0}] 
+[komut_yanlis] 100 m irtifaya kalk
+    beklenen: [{"komut": "kalk", "irtifa_m": 100}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 100.0}] 
+[adim_sayisi] sağa dönüp 281 m kadar yukarı çık
+    beklenen: [{"komut": "don", "yon": "sag", "derece": 90}, {"komut": "yuksel", "metre": 281}]
+    üretilen: [{"komut": "git_yon", "yon": "sag", "metre": 281.0}] 
+[negatifi_kabul] yükseldi
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 100.0}] 
+[yon] biraz geri doğru git 10 m kadar
+    beklenen: [{"komut": "git_yon", "yon": "geri", "metre": 10}]
+    üretilen: [{"komut": "git_yon", "yon": "sol", "metre": 10.0}] 
+[komut_yanlis] irtifanı 60 m'ye ayarla
+    beklenen: [{"komut": "irtifaya_cik", "metre": 60}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 60.0}] 
+[negatifi_kabul] güneye uç hadi
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "git_yon", "yon": "guney", "metre": 100.0}] 
+[adim_sayisi] evet eve geri gel
+    beklenen: [{"komut": "eve_don"}]
+    üretilen: [{"komut": "git_yon", "yon": "guney", "metre": 0.0}, {"komut": "eve_don"}] 
+[komut_yanlis] 15 saniye bekleyip 60 saniye boyunca bekle sola 60 ° çevril
+    beklenen: [{"komut": "bekle", "saniye": 15}, {"komut": "bekle", "saniye": 60}, {"komut": "don", "yon": "sol", "derece": 60}]
+    üretilen: [{"komut": "bekle", "saniye": 15.0}, {"komut": "git_yon", "yon": "sag", "metre": 60.0}, {"komut": "yakin_yere_git", "tur": "polis"}] 
+[yon] sola bir 20 ° dönsene
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 20}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 20.0}] 
+[adim_sayisi] buraya en yakın itfaiye istasyonuna gitti daha sonra eve git
+    beklenen: [{"komut": "yakin_yere_git", "tur": "itfaiye"}, {"komut": "eve_don"}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "itfaiye"}] 
+[komut_yanlis] irtifanı 71 m'ye ayarla
+    beklenen: [{"komut": "irtifaya_cik", "metre": 71}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 71.0}] 
+[komut_yanlis] hadi beklemede kal
+    beklenen: [{"komut": "dur"}]
+    üretilen: [{"komut": "bekle", "saniye": 0.0}] 
+[goreli_mutlak] 391 m in
+    beklenen: [{"komut": "alcal", "metre": 391}]
+    üretilen: [{"komut": "yuksel", "metre": 391.0}] 
+[adim_sayisi] tamam şimdi geri 30 m gittik sonrasında sol tarafa 10 ° dön sonrasında enlem 40.5672 boylam 36.9493
+    beklenen: [{"komut": "git_yon", "yon": "geri", "metre": 30}, {"komut": "don", "yon": "sol", "derece": 10}, {"komut": "git_koordinat", "enlem": 40.5672, "boylam": 36.9493}]
+    üretilen: [{"komut": "git_koordinat", "enlem": 40.5672, "boylam": 36.9493}, {"komut": "don", "yon": "sol", "derece": 10.0}] 
+[adim_sayisi] bak beklemede kal
+    beklenen: [{"komut": "dur"}]
+    üretilen: [{"komut": "bekle", "saniye": 0.0}, {"komut": "dur"}] 
+[adim_sayisi] 4 m saniyeyle uç
+    beklenen: [{"komut": "hiz_ayarla", "mps": 4}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 4.0}, {"komut": "git_yon", "yon": "bati", "metre": 100.0}] 
+[goreli_mutlak] 200 m in
+    beklenen: [{"komut": "alcal", "metre": 200}]
+    üretilen: [{"komut": "yuksel", "metre": 200.0}] 
+[komut_yanlis] drone yere kon artık
+    beklenen: [{"komut": "in"}]
+    üretilen: [{"komut": "dur"}] 
+[komut_yanlis] yere kon artık hemen
+    beklenen: [{"komut": "in"}]
+    üretilen: [{"komut": "dur"}] 
+[negatifi_kabul] şey kuzeye git
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "git_yon", "yon": "kuzey", "metre": 0.0}] 
+[adim_sayisi] kalkış noktasına dön ve 20 m in ardından 136 saniye bekler misin
+    beklenen: [{"komut": "eve_don"}, {"komut": "alcal", "metre": 20}, {"komut": "bekle", "saniye": 136}]
+    üretilen: [{"komut": "eve_don"}, {"komut": "bekle", "saniye": 20.0}] 
+[komut_yanlis] ırtifanı 20 m'ye ayarla arkasından eve git ve enlem 36.9014 boylam 32.882236
+    beklenen: [{"komut": "irtifaya_cik", "metre": 20}, {"komut": "eve_don"}, {"komut": "git_koordinat", "enlem": 36.9014, "boylam": 32.882236}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 20.0}, {"komut": "git_yon", "yon": "bati", "metre": 100.0}, {"komut": "eve_don"}] 
+[goreli_mutlak] 100 m aşağı
+    beklenen: [{"komut": "alcal", "metre": 100}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 100.0}] 
+[adim_sayisi] aşağı in 554 m
+    beklenen: [{"komut": "alcal", "metre": 554}]
+    üretilen: [{"komut": "in"}, {"komut": "yuksel", "metre": 554.0}] 
+[yon] sola 211 ° çevril
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 211}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 211.0}] 
+[komut_yanlis] 26 m'ye havalan daha sonra lütfen enlem 39.809043 boylam 32.8062 noktasına git
+    beklenen: [{"komut": "kalk", "irtifa_m": 26}, {"komut": "git_koordinat", "enlem": 39.809043, "boylam": 32.8062}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 26.0}, {"komut": "git_yon", "yon": "bati", "metre": 100.0}] 
+[sayi] tamam 50 m tırman
+    beklenen: [{"komut": "yuksel", "metre": 50}]
+    üretilen: [{"komut": "yuksel", "metre": 500.0}] 
+[adim_sayisi] 1 m saniyeyle uç
+    beklenen: [{"komut": "hiz_ayarla", "mps": 1}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 1.0}, {"komut": "git_yon", "yon": "bati", "metre": 1.0}] 
+[yon] sola 71 ° çevril
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 71}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 71.0}] 
+[komut_yanlis] tamam 203 m tırman
+    beklenen: [{"komut": "yuksel", "metre": 203}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "polis"}] 
+[goreli_mutlak] 80 m aşağı daha sonra buraya en yakın hastaneye git
+    beklenen: [{"komut": "alcal", "metre": 80}, {"komut": "yakin_yere_git", "tur": "hastane"}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 80.0}, {"komut": "yakin_yere_git", "tur": "hastane"}] 
+[adim_sayisi] iniş ondan sonra 12 m saniyeyle uç
+    beklenen: [{"komut": "in"}, {"komut": "hiz_ayarla", "mps": 12}]
+    üretilen: [{"komut": "in"}, {"komut": "bekle", "saniye": 12.0}, {"komut": "yuksel", "metre": 12.0}] 
+[goreli_mutlak] önce 120 saniye boyunca bekle sonra 20 m irtifa kazan sonra sağ tarafa 28 ° dön
+    beklenen: [{"komut": "bekle", "saniye": 120}, {"komut": "yuksel", "metre": 20}, {"komut": "don", "yon": "sag", "derece": 28}]
+    üretilen: [{"komut": "bekle", "saniye": 120.0}, {"komut": "irtifaya_cik", "metre": 20.0}, {"komut": "git_yon", "yon": "sag", "metre": 28.0}] 
+[adim_sayisi] aşağı in 579 m
+    beklenen: [{"komut": "alcal", "metre": 579}]
+    üretilen: [{"komut": "in"}, {"komut": "git_yon", "yon": "sag", "metre": 579.0}] 
+[negatifi_kabul] en yakın yere git
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "polis"}] 
+[adim_sayisi] evet beklemede kal
+    beklenen: [{"komut": "dur"}]
+    üretilen: [{"komut": "bekle", "saniye": 0.0}, {"komut": "dur"}] 
+[sayi] önce sağa 20 ° çevril sonra kalk bakalım
+    beklenen: [{"komut": "don", "yon": "sag", "derece": 20}, {"komut": "kalk"}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 20.0}, {"komut": "kalk", "irtifa_m": 20.0}] 
+[adim_sayisi] 2.5 m saniyeyle uç
+    beklenen: [{"komut": "hiz_ayarla", "mps": 2.5}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 2.5}, {"komut": "git_yon", "yon": "bati", "metre": 100.0}] 
+[adim_sayisi] 10 m saniyeyle uç
+    beklenen: [{"komut": "hiz_ayarla", "mps": 10}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 10.0}, {"komut": "git_yon", "yon": "bati", "metre": 10.0}] 
+[komut_yanlis] irtifanı 30 m'ye ayarla
+    beklenen: [{"komut": "irtifaya_cik", "metre": 30}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 30.0}] 
+[komut_yanlis] tamam şimdi batıya 400 m gittik
+    beklenen: [{"komut": "git_yon", "yon": "bati", "metre": 400}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 400.0}] 
+[goreli_mutlak] 51 m asagi
+    beklenen: [{"komut": "alcal", "metre": 51}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 51.0}] 
+[yon] biraz geri doğru git 25 m kadar
+    beklenen: [{"komut": "git_yon", "yon": "geri", "metre": 25}]
+    üretilen: [{"komut": "git_yon", "yon": "sol", "metre": 25.0}] 
+[adim_sayisi] 100 m aşağı sonrasında irtifanı 36 m'ye ayarla
+    beklenen: [{"komut": "alcal", "metre": 100}, {"komut": "irtifaya_cik", "metre": 36}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 36.0}] 
+[adim_sayisi] 40 m in sonra kalk bakalım ardından çık 120 m'ye
+    beklenen: [{"komut": "alcal", "metre": 40}, {"komut": "kalk"}, {"komut": "irtifaya_cik", "metre": 120}]
+    üretilen: [{"komut": "yuksel", "metre": 40.0}, {"komut": "irtifaya_cik", "metre": 120.0}] 
+[komut_yanlis] önce 3 saniye bekler misin sonra 400 m in
+    beklenen: [{"komut": "bekle", "saniye": 3}, {"komut": "alcal", "metre": 400}]
+    üretilen: [{"komut": "bekle", "saniye": 3.0}, {"komut": "git_yon", "yon": "ileri", "metre": 400.0}] 
+[yon] en yakın karakola gidelim
+    beklenen: [{"komut": "yakin_yere_git", "tur": "polis"}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "okul"}] 
+[goreli_mutlak] 80 m aşağı daha sonra buraya en yakın hastaneye gitti
+    beklenen: [{"komut": "alcal", "metre": 80}, {"komut": "yakin_yere_git", "tur": "hastane"}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 80.0}, {"komut": "yakin_yere_git", "tur": "hastane"}] 
+[goreli_mutlak] 51 m aşağı
+    beklenen: [{"komut": "alcal", "metre": 51}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 51.0}] 
+[negatifi_kabul] daha yükseğe
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 100.0}] 
+[komut_yanlis] 0.5 m in
+    beklenen: [{"komut": "alcal", "metre": 0.5}]
+    üretilen: [{"komut": "kalk", "irtifa_m": 0.5}] 
+[adim_sayisi] aşağı in 5 m
+    beklenen: [{"komut": "alcal", "metre": 5}]
+    üretilen: [{"komut": "in"}, {"komut": "git_yon", "yon": "sol", "metre": 5.0}] 
+[yon] sol tarafa 293 ° dön
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 293}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 293.0}] 
+[yon] doğu yönüne 324 m ilerle
+    beklenen: [{"komut": "git_yon", "yon": "dogu", "metre": 324}]
+    üretilen: [{"komut": "git_yon", "yon": "guney", "metre": 324.0}] 
+[yon] tamam şimdi geri 5 m git
+    beklenen: [{"komut": "git_yon", "yon": "geri", "metre": 5}]
+    üretilen: [{"komut": "git_yon", "yon": "sol", "metre": 5.0}] 
+[komut_yanlis] irtifanı 20 m'ye ayarla
+    beklenen: [{"komut": "irtifaya_cik", "metre": 20}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 20.0}] 
+[adim_sayisi] önce biraz ileri doğru git 150 m kadar sonra sola 169 ° çevril sonra eve geri gel
+    beklenen: [{"komut": "git_yon", "yon": "ileri", "metre": 150}, {"komut": "don", "yon": "sol", "derece": 169}, {"komut": "eve_don"}]
+    üretilen: [{"komut": "yuksel", "metre": 150.0}, {"komut": "don", "yon": "sag", "derece": 169.0}, {"komut": "git_yon", "yon": "bati", "metre": 100.0}, {"komut": "eve_don"}] 
+[goreli_mutlak] 20 m irtifa kazan
+    beklenen: [{"komut": "yuksel", "metre": 20}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 20.0}] 
+[negatifi_kabul] şu kadar yüksel tamam mı
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 1000.0}] 
+[yon] sol tarafa 45 ° dön
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 45}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 45.0}] 
+[komut_yanlis] yere kon artık şimdi
+    beklenen: [{"komut": "in"}]
+    üretilen: [{"komut": "dur"}] 
+[goreli_mutlak] 80 m aşağı
+    beklenen: [{"komut": "alcal", "metre": 80}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 80.0}] 
+[komut_yanlis] 9 m saniyeyle uc
+    beklenen: [{"komut": "hiz_ayarla", "mps": 9}]
+    üretilen: [{"komut": "bekle", "saniye": 9.0}] 
+[komut_yanlis] 120 m'ye havalan
+    beklenen: [{"komut": "kalk", "irtifa_m": 120}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 120.0}] 
+[adim_sayisi] batı yönüne 42 m ilerle sonra 1.5 m irtifa kazan arkasından aşağı in 120 m
+    beklenen: [{"komut": "git_yon", "yon": "bati", "metre": 42}, {"komut": "yuksel", "metre": 1.5}, {"komut": "alcal", "metre": 120}]
+    üretilen: [{"komut": "git_yon", "yon": "bati", "metre": 120.0}, {"komut": "irtifaya_cik", "metre": 1.5}] 
+[yon] biraz geri doğru git 328 m kadar
+    beklenen: [{"komut": "git_yon", "yon": "geri", "metre": 328}]
+    üretilen: [{"komut": "git_yon", "yon": "sol", "metre": 328.0}] 
+[yon] sola bir 90 ° dönsene ardından irtifanı 80 m'ye ayarla
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 90}, {"komut": "irtifaya_cik", "metre": 80}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 90.0}, {"komut": "irtifaya_cik", "metre": 80.0}] 
+[yon] sola bir 90 ° donsene ardindan irtifani 80 m'ye ayarla
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 90}, {"komut": "irtifaya_cik", "metre": 80}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 90.0}, {"komut": "irtifaya_cik", "metre": 80.0}] 

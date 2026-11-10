@@ -1,0 +1,36 @@
+[sayi] kalk ve otuz metre ileri git
+    beklenen: [{"komut": "kalk"}, {"komut": "git_yon", "yon": "ileri", "metre": 30}]
+    üretilen: [{"komut": "kalk", "irtifa_m": 0.0}, {"komut": "git_yon", "yon": "ileri", "metre": 30.0}] 
+[komut_yanlis] yüksekliği iki yüz metreye ayarla
+    beklenen: [{"komut": "irtifaya_cik", "metre": 200}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 200.0}] 
+[yon] sol tarafa doğru 30 derece çevril
+    beklenen: [{"komut": "don", "yon": "sol", "derece": 30}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 30.0}] 
+[adim_sayisi] yere in artık
+    beklenen: [{"komut": "in"}]
+    üretilen: [{"komut": "in"}, {"komut": "yakin_yere_git", "tur": "hastane"}] 
+[adim_sayisi] havalan, sonra sağa dön, sonra 20 metre ileri git
+    beklenen: [{"komut": "kalk"}, {"komut": "don", "yon": "sag", "derece": 90}, {"komut": "git_yon", "yon": "ileri", "metre": 20}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 8.0}, {"komut": "git_yon", "yon": "sag", "metre": 20.0}] 
+[yon] geriye doğru 25 metre gel
+    beklenen: [{"komut": "git_yon", "yon": "geri", "metre": 25}]
+    üretilen: [{"komut": "git_yon", "yon": "sol", "metre": 25.0}] 
+[yon] doğu yönünde elli metre uç
+    beklenen: [{"komut": "git_yon", "yon": "dogu", "metre": 50}]
+    üretilen: [{"komut": "git_yon", "yon": "guney", "metre": 50.0}] 
+[adim_sayisi] hızı üç metre saniyeye düşür
+    beklenen: [{"komut": "hiz_ayarla", "mps": 3}]
+    üretilen: [{"komut": "bekle", "saniye": 3.0}, {"komut": "dur"}] 
+[komut_yanlis] en yakın parka uç
+    beklenen: [{"komut": "yakin_yere_git", "tur": "park"}]
+    üretilen: [{"komut": "git_yon", "yon": "dogu", "metre": 100.0}] 
+[sayi] kalk sonra yirmi metre yüksel
+    beklenen: [{"komut": "kalk"}, {"komut": "yuksel", "metre": 20}]
+    üretilen: [{"komut": "kalk", "irtifa_m": 0.0}, {"komut": "yuksel", "metre": 20.0}] 
+[komut_yanlis] yirmi metre yüksel ardından sağa dön
+    beklenen: [{"komut": "yuksel", "metre": 20}, {"komut": "don", "yon": "sag", "derece": 90}]
+    üretilen: [{"komut": "yuksel", "metre": 20.0}, {"komut": "git_yon", "yon": "sag", "metre": 0.0}] 
+[adim_sayisi] sağa dön ve on metre ileri git
+    beklenen: [{"komut": "don", "yon": "sag", "derece": 90}, {"komut": "git_yon", "yon": "ileri", "metre": 10}]
+    üretilen: [{"komut": "git_yon", "yon": "sag", "metre": 10.0}] 

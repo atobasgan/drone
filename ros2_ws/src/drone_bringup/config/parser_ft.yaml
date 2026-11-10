@@ -1,0 +1,13 @@
+# command_parser, Faz 4 fine-tune'lu model (Gorev 4.7). parser.yaml'dan TEK fark: kisa_prompt.
+# llama-server fine-tune'lu GGUF ile calismali:  FT=1 ./scripts/hepsini_baslat.sh
+# Sistem prompt'u egitimdekiyle BIREBIR ayni olmali (command_parser/prompt.py KISA_SISTEM_PROMPT).
+command_parser:
+  ros__parameters:
+    llm_acik: true
+    llm_url: http://127.0.0.1:8080
+    llm_model: yerel
+    llm_zaman_asimi_s: 5.0
+    llm_max_tokens: 128
+    kisa_prompt: true                # "Drone komutunu JSON'a çevir."
+    hizli_yol_acik: true
+    onbellek_boyutu: 256

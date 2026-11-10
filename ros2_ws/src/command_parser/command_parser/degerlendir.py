@@ -4,9 +4,11 @@
     # ya da ROS'suz:
     python3 -m command_parser.degerlendir --sadece-llm --etiket qwen3-1.7b
 
-Her satir: {"metin": "...", "beklenen": {"adimlar": [...]}}
-Metrikler (MIMARI 6.3 ADIM 5): tam eslesme, komut dogrulugu, yanlis kabul
-(alakasiz cumleye komut uretme), ortalama / p95 sure, kaynak dagilimi.
+Her satir: {"metin": "...", "beklenen": {"adimlar": [...]}}  ya da Faz 4'un chat-JSONL'i
+({"messages": [system, user, assistant]}, finetune/data/test.jsonl).
+Metrikler (MIMARI 6.3 ADIM 5): tam eslesme, komut dogrulugu, parametre dogrulugu
+(komutlari dogru olanlarda sayilar/yonler de dogru mu), yanlis kabul (alakasiz
+cumleye komut uretme), ortalama / p95 sure, kaynak dagilimi.
 """
 import argparse
 from collections import Counter
@@ -31,9 +33,17 @@ def varsayilan_veri():
         return os.path.join(os.path.dirname(__file__), '..', 'data', 'metin_test_seti.jsonl')
 
 
+def _ornege_cevir(satir):
+    if 'messages' in satir:           # Faz 4 chat bicimi: user = normalize metin, assistant = JSON
+        return {'metin': satir['messages'][1]['content'],
+                'beklenen': json.loads(satir['messages'][2]['content'])}
+    return satir
+
+
 def veri_oku(yol):
     with open(yol, encoding='utf-8') as f:
-        return [json.loads(satir) for satir in f if satir.strip() and not satir.startswith('#')]
+        return [_ornege_cevir(json.loads(satir)) for satir in f
+                if satir.strip() and not satir.startswith('#')]
 
 
 def yuzdelik(degerler, p):
@@ -47,7 +57,7 @@ def yuzdelik(degerler, p):
 
 
 def degerlendir(ornekler, cozucu, ayrintili=False):
-    tam = komut = yanlis_kabul = negatif = 0
+    tam = komut = yanlis_kabul = negatif = komutu_dogru_pozitif = parametre = 0
     sureler, llm_sureler = [], []
     kaynaklar = Counter()
     hatalar = []
@@ -69,6 +79,9 @@ def degerlendir(ornekler, cozucu, ayrintili=False):
         else:
             dogru = kanonik(uretilen) == kanonik(beklenen)
             komut_dogru = [a['komut'] for a in uretilen] == [a['komut'] for a in beklenen]
+            if komut_dogru:
+                komutu_dogru_pozitif += 1
+                parametre += dogru
         tam += dogru
         komut += komut_dogru
         if not dogru:
@@ -82,6 +95,7 @@ def degerlendir(ornekler, cozucu, ayrintili=False):
         'n': n,
         'tam_eslesme': tam / n * 100,
         'komut_dogrulugu': komut / n * 100,
+        'parametre_dogrulugu': (parametre / komutu_dogru_pozitif * 100) if komutu_dogru_pozitif else 0.0,
         'yanlis_kabul': (yanlis_kabul / negatif * 100) if negatif else 0.0,
         'ort_ms': statistics.mean(sureler),
         'p95_ms': yuzdelik(sureler, 95),
@@ -96,6 +110,7 @@ def rapor_yaz(sonuc, etiket):
     print(f'\n=== {etiket} ({sonuc["n"]} cümle) ===')
     print(f'tam eşleşme     : %{sonuc["tam_eslesme"]:.1f}')
     print(f'komut doğruluğu : %{sonuc["komut_dogrulugu"]:.1f}')
+    print(f'parametre doğr. : %{sonuc["parametre_dogrulugu"]:.1f}  (komutu doğru olanlarda)')
     print(f'yanlış kabul    : %{sonuc["yanlis_kabul"]:.1f}')
     print(f'süre (tüm hat)  : ort {sonuc["ort_ms"]:.1f} ms, p95 {sonuc["p95_ms"]:.1f} ms')
     print(f'süre (LLM)      : ort {sonuc["llm_ort_ms"]:.1f} ms, p95 {sonuc["llm_p95_ms"]:.1f} ms')
@@ -130,7 +145,7 @@ def main(argv=None):
                     help='hızlı yolu kapat: her cümle LLM\'e gitsin (baseline için)')
     ap.add_argument('--llm-yok', action='store_true', help='sadece hızlı yol')
     ap.add_argument('--kisa-prompt', action='store_true', help='fine-tune\'lu model (Faz 4)')
-    ap.add_argument('--max-tokens', type=int, default=64)
+    ap.add_argument('--max-tokens', type=int, default=128)
     ap.add_argument('--tablo', help='sonucu bu markdown tablosuna ekle (ör. NOTLAR_sonuclar.md)')
     ap.add_argument('-v', '--ayrintili', action='store_true')
     args = ap.parse_args(argv)

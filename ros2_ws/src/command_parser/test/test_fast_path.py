@@ -39,6 +39,10 @@ BASIT = [
     ('dur', {'komut': 'dur'}),
     ('acil', {'komut': 'dur'}),
     ('hemen iptal', {'komut': 'dur'}),
+    # Faz 4: dakika ve km/saat normalize'da cevrilir, LLM'e gitmez
+    ('bir dakika bekle', {'komut': 'bekle', 'saniye': 60.0}),
+    ('hızını beş metre bölü saniye yap', {'komut': 'hiz_ayarla', 'mps': 5.0}),
+    ('hızı 36 km/saat yap', {'komut': 'hiz_ayarla', 'mps': 10.0}),
 ]
 
 KARMASIK = [

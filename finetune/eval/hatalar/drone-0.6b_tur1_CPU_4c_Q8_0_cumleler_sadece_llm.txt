@@ -1,0 +1,9 @@
+[adim_sayisi] kalk ve otuz metre ileri git
+    beklenen: [{"komut": "kalk"}, {"komut": "git_yon", "yon": "ileri", "metre": 30}]
+    üretilen: [{"komut": "kalk", "irtifa_m": 30.0}] 
+[komutu_kacirdi] bana en yakın eczaneyi bul ve oraya uç
+    beklenen: [{"komut": "yakin_yere_git", "tur": "eczane"}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[adim_sayisi] kalk sonra yirmi metre yüksel
+    beklenen: [{"komut": "kalk"}, {"komut": "yuksel", "metre": 20}]
+    üretilen: [{"komut": "kalk", "irtifa_m": 20.0}] 

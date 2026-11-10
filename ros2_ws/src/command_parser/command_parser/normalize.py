@@ -6,12 +6,17 @@ STT'den (ya da klavyeden) gelen metni tek bicime sokar:
                             "bir buçuk" -> 1.5, "yüz elliye" -> "150'ye"
   - birimler: metre/mt/m -> "m", kilometre/km -> metreye cevrilir,
               derece -> "°", sn -> saniye
+  - zaman ve hiz (Faz 4): "2 dakika" -> "120 saniye",
+              "15 km/saat" / "saatte 15 km" -> "4.17 m s", "5 metre bölü saniye" -> "5 m s"
 Sayilari LLM'e birakmiyoruz; burada kesin ceviriyoruz.
 
     >>> normalize("Beş Yüz Metre Yüksel!")
     '500 m yüksel'
 """
 import re
+
+# "on" (10) ile ayni yazilan zamir halleri: "ondan sonra" -> 10'dan sonra OLMAMALI
+ZAMIRLER = frozenset({'ona', 'ondan', 'onda', 'onu'})
 
 BIRLER = {
     'sıfır': 0, 'bir': 1, 'iki': 2, 'üç': 3, 'dört': 4, 'beş': 5,
@@ -29,7 +34,9 @@ YUMUSAMA = {'dörd': 'dört', 'buçuğ': 'buçuk'}
 # Yalnizca yon/yer ekleri: "yüze", "elliye", "ona", "bine", "yüzden"
 EKLER = ('den', 'dan', 'ten', 'tan', 'ye', 'ya', 'de', 'da', 'te', 'ta', 'e', 'a')
 
-BIRIM_DESENI = re.compile(r"^(metre|metro?|mt|m|meter)('?)(.*)$")
+# Uzun secenekler once: yoksa "meter" kelimesinde "m" eslesir ve birim taninmaz.
+# meter / metve / mete: Whisper'in "metre" icin en sik yanlis yazimlari (DRONE_SOZLUGU.txt)
+BIRIM_DESENI = re.compile(r"^(metre|meter|metve|mete|metro?|mt|m)('?)(.*)$")
 KM_DESENI = re.compile(r"^(kilometre|km)('?)(.*)$")
 DERECE_DESENI = re.compile(r"^(derece|°)('?)(.*)$")
 # Birim kelimesinin arkasina gelebilecek ekler ("metreye", "m'de", "metrelik")
@@ -122,13 +129,19 @@ def _sayilari_cevir(tokenler):
             i += 1
             continue
 
-        # Tek basina "bir"/"on" gibi belirsiz kelimeler
+        # Tek basina "bir"/"on" gibi belirsiz kelimeler. Ayrica "bir elli metre" (= "bi elli",
+        # yaklasik 50): Turkcede "bir" onlar/yuzler basamagindan ONCE gelmez (51 = "elli bir").
+        sonraki_kok = (_ekli_sayi(sonraki) or (sonraki,))[0]
+        if tok == 'bir' and (sonraki_kok in ONLAR or sonraki_kok in ('yüz', 'bin') or _rakam_mi(sonraki)):
+            cikti.append(tok)
+            i += 1
+            continue
         if tok == 'bir' and not (_sayi_mi(sonraki) or sonraki == 'buçuk' or _ekli_sayi(sonraki)
                                  or _birim_mi(sonraki)):
             cikti.append(tok)
             i += 1
             continue
-        if ekli and tok == 'ona':      # "ona git" (zamir) sayi degil
+        if ekli and tok in ZAMIRLER:   # "ona git", "ondan sonra" (zamir) sayi degil
             cikti.append(tok)
             i += 1
             continue
@@ -199,6 +212,39 @@ def _birimleri_cevir(tokenler):
     return cikti
 
 
+def _yuvarla(deger):
+    return _sayi_yaz(round(deger, 2))
+
+
+def _zaman_ve_hizi_cevir(tokenler):
+    """Carpma/bolme LLM'e birakilmaz: dakika -> saniye, km/saat -> m/s.
+
+    Bu fonksiyon _birimleri_cevir'den SONRA calisir; km zaten metreye donmustur
+    ("15 km/saat" -> "15000 m saat").
+    """
+    t = [x for i, x in enumerate(tokenler)            # "m bölü saniye" -> "m saniye"
+         if not (x == 'bölü' and 0 < i < len(tokenler) - 1 and tokenler[i - 1] == 'm')]
+    cikti = []
+    i = 0
+    while i < len(t):
+        tok = t[i]
+        sonraki = t[i + 1] if i + 1 < len(t) else ''
+        sonraki2 = t[i + 2] if i + 2 < len(t) else ''
+        if _rakam_mi(tok) and sonraki in ('dakika', 'dakikalık'):
+            cikti += [_yuvarla(float(tok) * 60), 'saniye' if sonraki == 'dakika' else 'saniyelik']
+            i += 2
+        elif _rakam_mi(tok) and sonraki == 'm' and sonraki2 in ('saat', 'saatte'):
+            cikti += [_yuvarla(float(tok) / 3600), 'm', 's']          # 15000 m saat
+            i += 3
+        elif tok == 'saatte' and _rakam_mi(sonraki) and sonraki2 == 'm':
+            cikti += [_yuvarla(float(sonraki) / 3600), 'm', 's']      # saatte 15000 m
+            i += 3
+        else:
+            cikti.append(tok)
+            i += 1
+    return cikti
+
+
 def normalize(metin):
     """Ham metni normalize eder (bkz. modul aciklamasi)."""
     if not metin:
@@ -217,4 +263,5 @@ def normalize(metin):
     tokenler = _yarim(tokenler)
     tokenler = _sayilari_cevir(tokenler)
     tokenler = _birimleri_cevir(tokenler)
+    tokenler = _zaman_ve_hizi_cevir(tokenler)
     return ' '.join(tokenler)

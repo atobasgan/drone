@@ -1,0 +1,219 @@
+[goreli_mutlak] 10 m in
+    beklenen: [{"komut": "alcal", "metre": 10}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 10.0}] 
+[komutu_kacirdi] eve gittik bakalım
+    beklenen: [{"komut": "eve_don"}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[adim_sayisi] 1000 m alçalıp tamam 271 m tırman en yakın hastaneye gidelim
+    beklenen: [{"komut": "alcal", "metre": 1000}, {"komut": "yuksel", "metre": 271}, {"komut": "yakin_yere_git", "tur": "hastane"}]
+    üretilen: [{"komut": "alcal", "metre": 1000.0}, {"komut": "yakin_yere_git", "tur": "hastane"}] 
+[komut_yanlis] çık 10 m'yi
+    beklenen: [{"komut": "irtifaya_cik", "metre": 10}]
+    üretilen: [{"komut": "git_yon", "yon": "geri", "metre": 10.0}] 
+[komutu_kacirdi] bak eve git
+    beklenen: [{"komut": "eve_don"}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[goreli_mutlak] önce 15 saniye bekler misin sonra 1000 m in
+    beklenen: [{"komut": "bekle", "saniye": 15}, {"komut": "alcal", "metre": 1000}]
+    üretilen: [{"komut": "bekle", "saniye": 15.0}, {"komut": "irtifaya_cik", "metre": 1000.0}] 
+[goreli_mutlak] 250 m in
+    beklenen: [{"komut": "alcal", "metre": 250}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 250.0}] 
+[goreli_mutlak] 12.5 m irtifa kazan 30 m in
+    beklenen: [{"komut": "yuksel", "metre": 12.5}, {"komut": "alcal", "metre": 30}]
+    üretilen: [{"komut": "yuksel", "metre": 12.5}, {"komut": "yuksel", "metre": 30.0}] 
+[goreli_mutlak] 75 m in
+    beklenen: [{"komut": "alcal", "metre": 75}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 75.0}] 
+[goreli_mutlak] 300 m in
+    beklenen: [{"komut": "alcal", "metre": 300}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 300.0}] 
+[komutu_kacirdi] enlem 41.8675 boylam 33.73124
+    beklenen: [{"komut": "git_koordinat", "enlem": 41.8675, "boylam": 33.73124}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[komut_yanlis] en yakın markete gidelim sonra aşağı in 30 m sonra irtifanı 50 m'ye ayarla
+    beklenen: [{"komut": "yakin_yere_git", "tur": "market"}, {"komut": "alcal", "metre": 30}, {"komut": "irtifaya_cik", "metre": 50}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "market"}, {"komut": "in"}, {"komut": "irtifaya_cik", "metre": 50.0}] 
+[negatifi_kabul] en yakın yere git hemen
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "market"}] 
+[adim_sayisi] buraya en yakın hastaneye git daha sonra tamam 299 m tırman sonra 30 m aşağı
+    beklenen: [{"komut": "yakin_yere_git", "tur": "hastane"}, {"komut": "yuksel", "metre": 299}, {"komut": "alcal", "metre": 30}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "hastane"}, {"komut": "yakin_yere_git", "tur": "market"}, {"komut": "alcal", "metre": 299.0}, {"komut": "alcal", "metre": 30.0}] 
+[komutu_kacirdi] once saga 20 ° cevril sonra kalk bakalim
+    beklenen: [{"komut": "don", "yon": "sag", "derece": 20}, {"komut": "kalk"}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[goreli_mutlak] 594 m in
+    beklenen: [{"komut": "alcal", "metre": 594}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 594.0}] 
+[goreli_mutlak] 387 m in
+    beklenen: [{"komut": "alcal", "metre": 387}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 387.0}] 
+[negatifi_kabul] en yakın yere git artık
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "market"}] 
+[komutu_kacirdi] enlem 38.8647 boylam 40.36231
+    beklenen: [{"komut": "git_koordinat", "enlem": 38.8647, "boylam": 40.36231}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[goreli_mutlak] 156 m in
+    beklenen: [{"komut": "alcal", "metre": 156}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 156.0}] 
+[adim_sayisi] 45 saniye bekleyip en yakın hastaneye gidelim eve git
+    beklenen: [{"komut": "bekle", "saniye": 45}, {"komut": "yakin_yere_git", "tur": "hastane"}, {"komut": "eve_don"}]
+    üretilen: [{"komut": "bekle", "saniye": 45.0}, {"komut": "yakin_yere_git", "tur": "hastane"}] 
+[goreli_mutlak] 45 m in
+    beklenen: [{"komut": "alcal", "metre": 45}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 45.0}] 
+[goreli_mutlak] 70 m in
+    beklenen: [{"komut": "alcal", "metre": 70}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 70.0}] 
+[komut_yanlis] kalkış noktasına dön sonrasında kalkış noktasına dön
+    beklenen: [{"komut": "eve_don"}, {"komut": "eve_don"}]
+    üretilen: [{"komut": "eve_don"}, {"komut": "kalk"}] 
+[negatifi_kabul] en yakın yere gittik
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "market"}] 
+[goreli_mutlak] 60 m in
+    beklenen: [{"komut": "alcal", "metre": 60}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 60.0}] 
+[komut_yanlis] yere kon artik ondan sonra eve geri gel sonra eve geri gel
+    beklenen: [{"komut": "in"}, {"komut": "eve_don"}, {"komut": "eve_don"}]
+    üretilen: [{"komut": "in"}, {"komut": "in"}, {"komut": "in"}] 
+[komutu_kacirdi] eve git bakalım
+    beklenen: [{"komut": "eve_don"}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[negatifi_kabul] 50 m hadi
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 50.0}] 
+[komutu_kacirdi] enlem 37.927006 boylam 27.1241
+    beklenen: [{"komut": "git_koordinat", "enlem": 37.927006, "boylam": 27.1241}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[goreli_mutlak] 30 m in
+    beklenen: [{"komut": "alcal", "metre": 30}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 30.0}] 
+[goreli_mutlak] 420 m in
+    beklenen: [{"komut": "alcal", "metre": 420}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 420.0}] 
+[komutu_kacirdi] evet eve git
+    beklenen: [{"komut": "eve_don"}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[komutu_kacirdi] enlem 38.5073 boylam 43.7445
+    beklenen: [{"komut": "git_koordinat", "enlem": 38.5073, "boylam": 43.7445}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[komutu_kacirdi] eve git
+    beklenen: [{"komut": "eve_don"}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[negatifi_kabul] peki 50 m
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 50.0}] 
+[goreli_mutlak] önce 75 m irtifa kazan sonra 344 m in sonra 15 saniye boyunca bekle
+    beklenen: [{"komut": "yuksel", "metre": 75}, {"komut": "alcal", "metre": 344}, {"komut": "bekle", "saniye": 15}]
+    üretilen: [{"komut": "yuksel", "metre": 75.0}, {"komut": "irtifaya_cik", "metre": 344.0}, {"komut": "bekle", "saniye": 15.0}] 
+[komutu_kacirdi] enlem 40.0872 boylam 26.098447
+    beklenen: [{"komut": "git_koordinat", "enlem": 40.0872, "boylam": 26.098447}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[komutu_kacirdi] enlem 39.37211 boylam 28.608186
+    beklenen: [{"komut": "git_koordinat", "enlem": 39.37211, "boylam": 28.608186}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[goreli_mutlak] eve git ardından 75 m in
+    beklenen: [{"komut": "eve_don"}, {"komut": "alcal", "metre": 75}]
+    üretilen: [{"komut": "eve_don"}, {"komut": "irtifaya_cik", "metre": 75.0}] 
+[komutu_kacirdi] enlem 41.102 boylam 43.3514
+    beklenen: [{"komut": "git_koordinat", "enlem": 41.102, "boylam": 43.3514}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[komutu_kacirdi] enlem 41.98303 boylam 40.9713
+    beklenen: [{"komut": "git_koordinat", "enlem": 41.98303, "boylam": 40.9713}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[goreli_mutlak] 20 m in
+    beklenen: [{"komut": "alcal", "metre": 20}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 20.0}] 
+[adim_sayisi] kalk bakalım ondan sonra 137 m'ye havalan
+    beklenen: [{"komut": "kalk"}, {"komut": "kalk", "irtifa_m": 137}]
+    üretilen: [{"komut": "kalk"}, {"komut": "kalk"}, {"komut": "kalk"}, {"komut": "kalk"}, {"komut": "kalk"}] 
+[komut_yanlis] yere kon artık ondan sonra eve geri gel sonra eve geri gel
+    beklenen: [{"komut": "in"}, {"komut": "eve_don"}, {"komut": "eve_don"}]
+    üretilen: [{"komut": "in"}, {"komut": "in"}, {"komut": "in"}] 
+[komutu_kacirdi] enlem 41.4311 boylam 38.1209
+    beklenen: [{"komut": "git_koordinat", "enlem": 41.4311, "boylam": 38.1209}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[komutu_kacirdi] yere kon artık tamam mı
+    beklenen: [{"komut": "in"}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[negatifi_kabul] ee en yakın yere git
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "polis"}] 
+[adim_sayisi] önce 20 saniye boyunca bekle sonra tamam 5 m tırman sonra aşağı in 315 m
+    beklenen: [{"komut": "bekle", "saniye": 20}, {"komut": "yuksel", "metre": 5}, {"komut": "alcal", "metre": 315}]
+    üretilen: [{"komut": "bekle", "saniye": 20.0}, {"komut": "yakin_yere_git", "tur": "market"}, {"komut": "alcal", "metre": 5.0}, {"komut": "alcal", "metre": 315.0}] 
+[komutu_kacirdi] kalk bakalım sonrasında 309 m daha yukarı çık ondan sonra tamam 75 m tırman
+    beklenen: [{"komut": "kalk"}, {"komut": "yuksel", "metre": 309}, {"komut": "yuksel", "metre": 75}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[negatifi_kabul] 50 m
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yuksel", "metre": 50.0}] 
+[adim_sayisi] 138 m'ye çıkıp yere kon artık yere kon artık
+    beklenen: [{"komut": "irtifaya_cik", "metre": 138}, {"komut": "in"}, {"komut": "in"}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 138.0}, {"komut": "in"}] 
+[komutu_kacirdi] kalkıp enlem 39.106495 boylam 29.58428
+    beklenen: [{"komut": "kalk"}, {"komut": "git_koordinat", "enlem": 39.106495, "boylam": 29.58428}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[komut_yanlis] önce tamam şimdi sola 30 m git sonra 1.5 m irtifa kazan
+    beklenen: [{"komut": "git_yon", "yon": "sol", "metre": 30}, {"komut": "yuksel", "metre": 1.5}]
+    üretilen: [{"komut": "git_yon", "yon": "sol", "metre": 30.0}, {"komut": "git_yon", "yon": "ileri", "metre": 1.5}] 
+[komutu_kacirdi] enlem 41.61965 boylam 42.6581
+    beklenen: [{"komut": "git_koordinat", "enlem": 41.61965, "boylam": 42.6581}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[komutu_kacirdi] kalkış yapıp enlem 37.205334 boylam 39.573306
+    beklenen: [{"komut": "kalk"}, {"komut": "git_koordinat", "enlem": 37.205334, "boylam": 39.573306}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[komut_yanlis] 20 m aşağı arkasından biraz sola doğru git 254 m kadar sonra kalkış noktasına dön
+    beklenen: [{"komut": "alcal", "metre": 20}, {"komut": "git_yon", "yon": "sol", "metre": 254}, {"komut": "eve_don"}]
+    üretilen: [{"komut": "alcal", "metre": 20.0}, {"komut": "git_yon", "yon": "sol", "metre": 254.0}, {"komut": "kalk"}] 
+[komutu_kacirdi] drone eve git
+    beklenen: [{"komut": "eve_don"}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[negatifi_kabul] hemen en yakın yere git
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "market"}] 
+[negatifi_kabul] yereyim
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "dur"}] 
+[goreli_mutlak] 50 m in
+    beklenen: [{"komut": "alcal", "metre": 50}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 50.0}] 
+[goreli_mutlak] 103 m in
+    beklenen: [{"komut": "alcal", "metre": 103}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 103.0}] 
+[sayi] sağa dönüp 281 m kadar yukarı çık
+    beklenen: [{"komut": "don", "yon": "sag", "derece": 90}, {"komut": "yuksel", "metre": 281}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 281.0}, {"komut": "yuksel", "metre": 281.0}] 
+[goreli_mutlak] 391 m in
+    beklenen: [{"komut": "alcal", "metre": 391}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 391.0}] 
+[goreli_mutlak] 200 m in
+    beklenen: [{"komut": "alcal", "metre": 200}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 200.0}] 
+[negatifi_kabul] en yakın yere git
+    beklenen: [{"komut": "bilinmiyor"}]
+    üretilen: [{"komut": "yakin_yere_git", "tur": "market"}] 
+[komutu_kacirdi] şimdi de eve git
+    beklenen: [{"komut": "eve_don"}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[goreli_mutlak] 40 m in sonra kalk bakalım ardından çık 120 m'ye
+    beklenen: [{"komut": "alcal", "metre": 40}, {"komut": "kalk"}, {"komut": "irtifaya_cik", "metre": 120}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 40.0}, {"komut": "kalk"}, {"komut": "irtifaya_cik", "metre": 120.0}] 
+[goreli_mutlak] önce 3 saniye bekler misin sonra 400 m in
+    beklenen: [{"komut": "bekle", "saniye": 3}, {"komut": "alcal", "metre": 400}]
+    üretilen: [{"komut": "bekle", "saniye": 3.0}, {"komut": "irtifaya_cik", "metre": 400.0}] 
+[goreli_mutlak] 0.5 m in
+    beklenen: [{"komut": "alcal", "metre": 0.5}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 0.5}] 
+[komutu_kacirdi] enlem 40.4453 boylam 30.606703
+    beklenen: [{"komut": "git_koordinat", "enlem": 40.4453, "boylam": 30.606703}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[komutu_kacirdi] enlem 36.60119 boylam 39.6298
+    beklenen: [{"komut": "git_koordinat", "enlem": 36.60119, "boylam": 39.6298}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[komutu_kacirdi] enlem 39.9138 boylam 36.167893
+    beklenen: [{"komut": "git_koordinat", "enlem": 39.9138, "boylam": 36.167893}]
+    üretilen: [] anlaşılmadı (bilinmiyor)

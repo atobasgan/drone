@@ -1,0 +1,39 @@
+[goreli_mutlak] 20 metre yukarı çık
+    beklenen: [{"komut": "yuksel", "metre": 20}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 20.0}] 
+[komut_yanlis] 15 metre geri git
+    beklenen: [{"komut": "git_yon", "yon": "geri", "metre": 15}]
+    üretilen: [{"komut": "alcal", "metre": 15.0}] 
+[komut_yanlis] yüksekliği iki yüz metreye ayarla
+    beklenen: [{"komut": "irtifaya_cik", "metre": 200}]
+    üretilen: [{"komut": "hiz_ayarla", "mps": 200.0}] 
+[komut_yanlis] geldiğin yere geri dön
+    beklenen: [{"komut": "eve_don"}]
+    üretilen: [{"komut": "don", "yon": "sol", "derece": 90.0}] 
+[sayi] havalan, sonra sağa dön, sonra 20 metre ileri git
+    beklenen: [{"komut": "kalk"}, {"komut": "don", "yon": "sag", "derece": 90}, {"komut": "git_yon", "yon": "ileri", "metre": 20}]
+    üretilen: [{"komut": "kalk"}, {"komut": "don", "yon": "sag", "derece": 20.0}, {"komut": "git_yon", "yon": "ileri", "metre": 20.0}] 
+[sayi] 30 metre aşağı insene
+    beklenen: [{"komut": "alcal", "metre": 30}]
+    üretilen: [{"komut": "alcal", "metre": 20.0}] 
+[goreli_mutlak] altmış metre irtifaya yüksel
+    beklenen: [{"komut": "irtifaya_cik", "metre": 60}]
+    üretilen: [{"komut": "yuksel", "metre": 60.0}] 
+[komut_yanlis] geriye doğru 25 metre gel
+    beklenen: [{"komut": "git_yon", "yon": "geri", "metre": 25}]
+    üretilen: [{"komut": "alcal", "metre": 25.0}] 
+[goreli_mutlak] beş metre yukarı çık
+    beklenen: [{"komut": "yuksel", "metre": 5}]
+    üretilen: [{"komut": "irtifaya_cik", "metre": 5.0}] 
+[sayi] kırk metre aşağı in
+    beklenen: [{"komut": "alcal", "metre": 40}]
+    üretilen: [{"komut": "alcal", "metre": 20.0}] 
+[komutu_kacirdi] havalan
+    beklenen: [{"komut": "kalk"}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[yon] geri yirmi metre git
+    beklenen: [{"komut": "git_yon", "yon": "geri", "metre": 20}]
+    üretilen: [{"komut": "git_yon", "yon": "sol", "metre": 20.0}] 
+[sayi] sağa dön ve on metre ileri git
+    beklenen: [{"komut": "don", "yon": "sag", "derece": 90}, {"komut": "git_yon", "yon": "ileri", "metre": 10}]
+    üretilen: [{"komut": "don", "yon": "sag", "derece": 10.0}, {"komut": "git_yon", "yon": "ileri", "metre": 10.0}] 

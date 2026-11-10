@@ -80,6 +80,8 @@ def main(argv=None):
     ap.add_argument('adaylar', nargs='+', help='ör. small:int8 large-v3-turbo:float16@cuda')
     ap.add_argument('--etiketler', default=os.path.join(varsayilan_klasor(), 'etiketler.csv'))
     ap.add_argument('--llm', default=None, help='llama-server adresi; yoksa yalnızca hızlı yol')
+    ap.add_argument('--kisa-prompt', action='store_true',
+                    help='Faz 4 fine-tune\'lu model: eğitimdeki kısa sistem prompt\'u')
     ap.add_argument('--sozluk', action='append', default=None,
                     help='initial_prompt: yeni (varsayılan) | eski | yok | dosya.txt; '
                          'birden çok kez verilirse her aday her sözlükle ölçülür')
@@ -102,7 +104,9 @@ def main(argv=None):
     llm = None
     if args.llm:
         from command_parser.llm_client import LLMIstemcisi
-        llm = LLMIstemcisi(url=args.llm)
+        from command_parser.prompt import KISA_SISTEM_PROMPT, SISTEM_PROMPT
+        llm = LLMIstemcisi(url=args.llm, zaman_asimi=30.0,
+                           sistem_prompt=KISA_SISTEM_PROMPT if args.kisa_prompt else SISTEM_PROMPT)
         if not llm.saglikli():
             print(f'llama-server\'a ulaşılamadı: {args.llm}', file=sys.stderr)
             return 1

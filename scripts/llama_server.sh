@@ -3,9 +3,10 @@
 #   ./scripts/llama_server.sh                       # varsayilan: qwen3-0.6b
 #   MODEL=qwen3-1.7b-q4_k_m.gguf ./scripts/llama_server.sh
 #   NGL=0 ./scripts/llama_server.sh                 # GPU'yu kullanma
+#   MODEL=$FT_MODEL CTX=1024 ./scripts/llama_server.sh   # Faz 4 fine-tune'lu model (kisa prompt)
 #
-# -c 2048: Faz 2'nin few-shot sistem prompt'u ~800 token. Faz 4'te kisa prompt'lu
-#          fine-tune'lu modelde 1024'e indirilebilir.
+# -c 2048: Faz 2'nin few-shot sistem prompt'u ~800 token. Faz 4'un kisa prompt'lu
+#          fine-tune'lu modelinde 1024 yeter (hepsini_baslat.sh FT=1 bunu yapar).
 # -np 1  : tek slot -> sistem prompt'u KV-cache'te tekrar kullanilir (cache_prompt).
 # --jinja: modelin kendi sohbet sablonu (enable_thinking=false icin gerekli).
 set -euo pipefail

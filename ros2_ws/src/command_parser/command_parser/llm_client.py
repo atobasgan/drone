@@ -1,7 +1,7 @@
 """llama-server HTTP istemcisi (OpenAI uyumlu /v1/chat/completions).
 
 Hiz icin (MIMARI.txt 3.7, 9.2):
-  - temperature=0, max_tokens=64   -> deterministik, sinirli gecikme
+  - temperature=0, max_tokens=128  -> deterministik, sinirli gecikme (en uzun cevap ~90 token)
   - response_format json_schema    -> cikti %100 semaya uygun JSON
   - cache_prompt=true              -> sistem prompt'u KV-cache'te kalir
   - dusunme modu kapali (/no_think + enable_thinking=false)
@@ -29,6 +29,12 @@ class LLMSonuc:
         return self.adimlar is not None
 
 
+def tekrar_dongusu_mu(adimlar):
+    """Kucuk modeller bazen ayni adimi tekrarlayip durur: "kalk, kalk, kalk, ...".
+    Ayni adim 3+ kez art arda gelirse cevap gecersiz sayilir (komut uretilmez)."""
+    return any(adimlar[i] == adimlar[i + 1] == adimlar[i + 2] for i in range(len(adimlar) - 2))
+
+
 def _json_ayikla(metin):
     """Olasi <think></think> artigini ya da onekleri atlayip ilk JSON nesnesini alir."""
     bas = metin.find('{')
@@ -41,7 +47,7 @@ def _json_ayikla(metin):
 class LLMIstemcisi:
 
     def __init__(self, url='http://127.0.0.1:8080', model='yerel', zaman_asimi=5.0,
-                 max_tokens=64, sistem_prompt=SISTEM_PROMPT, sema=KOMUT_SEMASI,
+                 max_tokens=128, sistem_prompt=SISTEM_PROMPT, sema=KOMUT_SEMASI,
                  oturum=None):
         self.url = url.rstrip('/')
         self.model = model
@@ -83,6 +89,8 @@ class LLMIstemcisi:
             adimlar = dogrula(_json_ayikla(ham))
         except (ValueError, SemaHatasi) as e:
             return LLMSonuc(ham=ham, sure_ms=sure, hata=f'gecersiz cevap: {e}')
+        if tekrar_dongusu_mu(adimlar):
+            return LLMSonuc(ham=ham, sure_ms=sure, hata='gecersiz cevap: tekrar dongusu')
         return LLMSonuc(adimlar=adimlar, ham=ham, sure_ms=sure)
 
     def saglikli(self):

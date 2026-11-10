@@ -45,7 +45,7 @@ def cozucu(cevaplar=None):
 def test_istek_ayarlari():
     govde = LLMIstemcisi(oturum=SahteOturum({})).istek_govdesi('kalk')
     assert govde['temperature'] == 0
-    assert govde['max_tokens'] == 64
+    assert govde['max_tokens'] == 128          # Faz 4: 3 adimli koordinat cevabi ~90 token
     assert govde['cache_prompt'] is True
     assert govde['response_format']['type'] == 'json_schema'
     assert govde['chat_template_kwargs'] == {'enable_thinking': False}
@@ -102,3 +102,13 @@ def test_llm_yoksa_hizli_yol_calisir():
     c = KomutCozucu(llm=None)
     assert c.coz('kalk').komut_var
     assert not c.coz('önce kalk sonra in').komut_var
+
+
+def test_tekrar_dongusu_reddedilir():
+    """Kucuk model "kalk, kalk, kalk, ..." uretirse komut verilmez (Faz 4'te goruldu)."""
+    dongu = json.dumps({'adimlar': [{'komut': 'kalk'}] * 5})
+    iki_ayni = json.dumps({'adimlar': [{'komut': 'in'}, {'komut': 'in'}]})
+    c, _ = cozucu({'a': dongu, 'b': iki_ayni})
+    sonuc = c.coz('a')
+    assert not sonuc.komut_var and 'tekrar' in sonuc.hata
+    assert c.coz('b').adimlar == [{'komut': 'in'}, {'komut': 'in'}]      # ikili tekrar gecerli

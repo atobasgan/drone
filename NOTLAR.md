@@ -7,7 +7,7 @@ yaz (YOL_HARITASI.txt "Genel alışkanlıklar").
 
 `./scripts/surumleri_yaz.sh >> NOTLAR.md` çıktısını buraya ekle.
 
-## Görev durumu (Faz 0–3)
+## Görev durumu (Faz 0–4)
 
 Kod hazır = depoda; ✔ = birim testi / sahte simülasyonla doğrulandı;
 **Makinede** = Ubuntu 26.04 + PX4 SITL üzerinde KONTROL maddeleri sen çalıştırınca işaretlenecek.
@@ -37,6 +37,13 @@ Kod hazır = depoda; ✔ = birim testi / sahte simülasyonla doğrulandı;
 | 3.3 stt_node | sounddevice + Silero VAD (400 ms) + faster-whisper, dosya modu, ısınma, uydurma filtresi | ✔ VAD/STT gerçek modelle, node sahte rclpy ile; mikrofon **Makinede** |
 | 3.4 Uçtan uca ses | `all.launch.py` (stt dahil), `ses_test.launch.py`, `ses_testi` | Makinede |
 | 3.5 latency_monitor | yürütücü t3/t4/t5 damgalar, `/latency/olcum` → CSV, `ozet` (ort/p50/p95, en yavaş aşama) | ✔ sahte sim + pytest; ölçüm **Makinede** |
+| 4.1 Şablon üretici | `finetune/data_gen/{sablonlar,parametreler,doldur,uret}.py`: komut başına 8-21 şablon, göreli/mutlak ayrımı, çok adım (bağlaç + ulaç) | ✔ 50 örnek gözle kontrol, `dogrula` |
+| 4.2 Çeşitlendirme | `cesitleme.py` (günlük/devrik/kibar/dolgulu), `llm_cesitle.py` (LLM'den iste + otomatik doğrula) | ✔ cesitleme; llm_cesitle yalnız küçük yerel modelle mekanizma testi |
+| 4.3 STT gürültüsü, negatif, bölme | `stt_gurultusu.py` (Faz 3'te ölçülen gerçek hatalar), `stt_ciktisi.py` (Piper→Whisper), `negatifler.py`, şablon bazında bölme | ✔ 5474 örnek, negatif %13, sızıntı yok |
+| 4.4 Baseline | `finetune/eval/olc.py` (+ parametre doğruluğu, hata türleri), `model_olc.sh` | ✔ 0.6B / 1.7B ölçüldü (aşağıda) |
+| 4.5 İlk fine-tune | `finetune/train/egit.py` (LoRA, CPU/GPU), `dene.py`, `birlestir.py`, `disa_aktar.sh` (GGUF Q4_K_M + Q8_0) | ✔ bulutta CPU'da eğitildi |
+| 4.6 Değerlendir, yinele | hata türleri `finetune/eval/hatalar/`, ikinci tur `ek_sablonlar.py`, Q4/Q8 kıyası | ✔ 2 tur (aşağıda); FunctionGemma lisans onayı ister, 1.7B FT GPU'da yapılmalı |
+| 4.7 Devreye al | `parser_ft.yaml`, `ft:=true` launch argümanı, `FT=1 ./scripts/hepsini_baslat.sh`, `stt_karsilastir --kisa-prompt` | ✔ uçtan uca sentetik sesle; ROS + PX4 ile **Makinede** |
 
 ## Tasarım kararları (MIMARI.txt'ten sapmalar / ayrıntılar)
 
@@ -121,6 +128,30 @@ betiklerin gerçek modellerle çalıştığını görmek. Gerçek tablo insan ka
 - Whisper büyük "İ" yerine "I" yazabiliyor ("Ileri" → normalize "ıleri"); gerçek kayıtlarda
   sık görülürse normalizasyona eklenmeli.
 - Kısa komutlar ("sağa dön" → "Saadun") en çok bozulanlar; Faz 4 STT gürültüsü listesine.
+
+### Faz 4 fine-tune (Görev 4.4 - 4.7) — 2026-11-10
+
+Ayrıntı ve tüm satırlar: [finetune/README.md](finetune/README.md), [finetune/eval/sonuclar.md](finetune/eval/sonuclar.md).
+Bulut CPU, 4 çekirdek, GPU yok; llama.cpp `-t 4`. Veri: 5474 örnek (train 3966 / val 717 / test 791),
+negatif %13, şablon bazında bölme. Eğitim: LoRA r=16, alpha=16, lr 2e-4, 2 epoch, CPU'da ~2 saat.
+
+| model | quant | prompt | sentetik tam % | sentetik yanlış kabul % | cumleler tam % (tam hat) | LLM ort ms |
+|---|---|---|---|---|---|---|
+| Qwen3 0.6B | Q4_K_M | few-shot | 52.8 | 60.4 | 88.8 | 1390 |
+| Qwen3 1.7B | Q4_K_M | few-shot | 69.0 | 52.1 | 94.4 | 2289 |
+| drone-0.6b tur 1 | Q4_K_M | kısa | 88.9 | 11.5 | 98.1 | 688 |
+| drone-0.6b tur 2 | Q4_K_M | kısa | 93.6 | 2.1 | 99.1 | 684 |
+| **drone-0.6b tur 2** | **Q8_0** | kısa | **94.3** | **0.0** | **99.1** | **526** |
+
+Uçtan uca (sentetik ses → Whisper small → hızlı yol + LLM, 321 klip): komut tam doğru
+%78.5 (hazır 0.6B) → **%86.6** (drone-0.6b tur 2).
+
+- "sentetik" = eğitimde görülmemiş şablonlar; "cumleler" = elle yazılmış 107 cümle (eğitime girmedi).
+- Fine-tune'lu 0.6B, hazır 1.7B'yi her ölçütte geçiyor, 3-4 kat hızlı. En büyük kazanç yanlış kabulde.
+- Tur 2 (Görev 4.6): ilk modelin hata türlerine göre `ek_sablonlar.py`; test seti md5 ile aynı.
+- Bu fazda normalize'da düzeltilenler: "ondan sonra" (10'dan değil), "meter", "bir elli metre",
+  dakika→saniye, km/saat→m/s; `llm_max_tokens` 64→128; LLM tekrar döngüsü reddi.
+- Gerçek ses kayıtlarıyla (Görev 3.1) doğrulanmadı.
 
 ### Drone sözlüğü (initial_prompt) — sentetik ses — 2026-11-09
 

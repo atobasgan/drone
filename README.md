@@ -9,14 +9,16 @@ Gazebo Jetty + ROS 2 Lyrical + PX4 (SITL) + yerel küçük LLM.
 | [KAVRAMLAR.txt](KAVRAMLAR.txt) | gereken kavramlar |
 | [LLM_API_SENARYOSU.txt](LLM_API_SENARYOSU.txt) | LLM bize hazır verilirse: API + few-shot ile Faz 2 |
 | [DRONE_SOZLUGU.txt](DRONE_SOZLUGU.txt) | Whisper `initial_prompt` sözlüğü: tasarım, ölçümler, uydurma filtresi |
+| [finetune/README.md](finetune/README.md) | Faz 4: veri üretimi, LoRA fine-tune, değerlendirme, devreye alma, sonuçlar |
 | [NOTLAR.md](NOTLAR.md) | sürümler, ölçümler, görev durumu |
 
 ## Durum
 
-**Faz 0–3 kodu hazır** (kurulum betikleri, `drone_interfaces`, `mission_executor`,
-`command_parser`, `voice_input`, `latency_monitor`, `drone_bringup`). Faz 3'te kayıtların
-alınması ve ölçümler sırada; Faz 4 (veri + fine-tune) sonra. Hangi görevin makinede
-doğrulanması gerektiği [NOTLAR.md](NOTLAR.md)'de.
+**Faz 0–4 kodu hazır** (kurulum betikleri, `drone_interfaces`, `mission_executor`,
+`command_parser`, `voice_input`, `latency_monitor`, `drone_bringup`, `finetune`). Faz 4'te
+kendi fine-tune'lu modelimiz eğitildi ve ölçüldü ([finetune/README.md](finetune/README.md)).
+Faz 3'ün insan ses kayıtları sırada. Hangi görevin makinede doğrulanması gerektiği
+[NOTLAR.md](NOTLAR.md)'de.
 
 ## Akış
 
@@ -43,7 +45,8 @@ ros2_ws/src/
   voice_input/             vad.py, stt.py, stt_sozlugu.py, stt_node.py, kayit_al.py, stt_karsilastir.py,
                            sentetik_set.py, ses_testi.py
   latency_monitor/         monitor_node.py (CSV), ozet.py (ort / p50 / p95)
-  drone_bringup/           launch/ + config/guvenlik.yaml, config/parser.yaml
+  drone_bringup/           launch/ + config/guvenlik.yaml, config/parser.yaml, config/parser_ft.yaml
+finetune/                  Faz 4: data_gen/ (veri üretimi), data/, train/ (LoRA), eval/ (ölçüm, sonuçlar)
 recordings/                cumleler.jsonl (okunacak 107 cümle), *.wav + etiketler.csv
 araclar/sahte_sim/         ROS'suz uçtan uca test (sahte rclpy + basit araç modeli)
 ```
@@ -122,6 +125,18 @@ ros2 run latency_monitor ozet ~/llm_drone_gecikme/gecikme_*.csv --tablo NOTLAR_s
 ```
 
 STT / VAD ayarları `ros2_ws/src/drone_bringup/config/ses.yaml`'da.
+
+## Faz 4 — kendi fine-tune'lu modelin
+
+Ayrıntı, kararlar ve sonuçlar: [finetune/README.md](finetune/README.md).
+
+```bash
+pip install torch transformers peft accelerate
+python3 -m finetune.data_gen.uret --ek-veri finetune/data/stt_ciktilari.jsonl   # veri (git'te de var)
+python3 -m finetune.train.egit                     # LoRA, Qwen3 0.6B (GPU'da dakikalar, CPU'da ~2 saat)
+finetune/train/disa_aktar.sh drone-0.6b            # -> finetune/models/drone-0.6b/*.gguf
+FT=1 ./scripts/hepsini_baslat.sh                   # fine-tune'lu model + kısa prompt (parser_ft.yaml)
+```
 
 ## Testler (ROS gerektirmez)
 

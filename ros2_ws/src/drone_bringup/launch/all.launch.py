@@ -6,6 +6,7 @@ PX4 SITL, MicroXRCEAgent ve llama-server ayri surecler olarak calisir
     ros2 launch drone_bringup all.launch.py                    # mikrofonla
     ros2 launch drone_bringup all.launch.py stt_mod:=ikisi     # + kayitli WAV testi
     ros2 launch drone_bringup all.launch.py ses_acik:=false    # Faz 2 gibi (yalnizca metin)
+    ros2 launch drone_bringup all.launch.py ft:=true           # Faz 4 fine-tune'lu model
 """
 import os
 
@@ -28,8 +29,9 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument('ses_acik', default_value='true'),
         DeclareLaunchArgument('stt_mod', default_value='mikrofon', description='mikrofon | dosya | ikisi'),
+        DeclareLaunchArgument('ft', default_value='false', description='Faz 4 fine-tune\'lu model'),
         dahil('executor.launch.py'),
-        dahil('parser.launch.py'),
+        dahil('parser.launch.py', ft=LaunchConfiguration('ft')),
         dahil('ses.launch.py', IfCondition(LaunchConfiguration('ses_acik')),
               mod=LaunchConfiguration('stt_mod')),
         dahil('gecikme.launch.py'),

@@ -1,0 +1,399 @@
+{"metin": "Ya şey bir 30 metre alçasana.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 30}]}, "okunan": "ya şey bi 30 metre alçalsana", "kosul": "temiz"}
+{"metin": "Hadi Sağa dön daha sonra bir 25 metreye kadar kalsana. Sonra şimdi iniş yapalım.", "beklenen": {"adimlar": [{"komut": "don", "yon": "sag", "derece": 90}, {"komut": "kalk", "irtifa_m": 25}, {"komut": "in"}]}, "okunan": "hadi sağa dön daha sonra bir yirmi beş metreye kadar kalksana sonra şimdi iniş yapalım", "kosul": "hizli_gurultu"}
+{"metin": "Yüz kut dur. Dört metreye kal.", "beklenen": {"adimlar": [{"komut": "kalk", "irtifa_m": 144}]}, "okunan": "yüz kırk dört metreye kalk", "kosul": "telefon"}
+{"metin": "Sağa dönüş yap.", "beklenen": {"adimlar": [{"komut": "don", "yon": "sag", "derece": 90}]}, "okunan": "sağa dönüş yap", "kosul": "temiz"}
+{"metin": "İrtifa yıkık 45 metreye getir.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 45}]}, "okunan": "irtifayı kırk beş metreye getir", "kosul": "hizli_gurultu"}
+{"metin": "Aksiyon stüdyo alılamdı. Tamam.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "kışın sütüyle alalandı tamam mı", "kosul": "telefon"}
+{"metin": "Kızı 15 metre bölü saniye yap.", "beklenen": {"adimlar": [{"komut": "hiz_ayarla", "mps": 15}]}, "okunan": "hızı 15 metre bölü saniye yap", "kosul": "temiz"}
+{"metin": "Artık eve dön sonrasında yere kon.", "beklenen": {"adimlar": [{"komut": "eve_don"}, {"komut": "in"}]}, "okunan": "artık eve dön sonrasında yere kon", "kosul": "hizli_gurultu"}
+{"metin": "470 metre alçal.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 477}]}, "okunan": "477 metre alçalt", "kosul": "telefon"}
+{"metin": "Peki video kaydet.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "peki video kaydet", "kosul": "temiz"}
+{"metin": "Yüksekliği 1000 metre artır.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 1000}]}, "okunan": "yüksekliği bin metre artır", "kosul": "hizli_gurultu"}
+{"metin": "Sol tarafa doğru 270 derece çerideyiz.", "beklenen": {"adimlar": [{"komut": "don", "yon": "sol", "derece": 270}]}, "okunan": "sol tarafa doğru 270 derece çevril", "kosul": "telefon"}
+{"metin": "Tamam 15 metre aşağı in sonrasında 5 metre yukarı ondan sonra sağ 120 derece.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 15}, {"komut": "yuksel", "metre": 5}, {"komut": "don", "yon": "sag", "derece": 120}]}, "okunan": "tamam 15 metre aşağı in sonrasında beş metre yukarı ondan sonra sağa 120 derece", "kosul": "temiz"}
+{"metin": "Tamam havada bekle.", "beklenen": {"adimlar": [{"komut": "dur"}]}, "okunan": "tamam havada bekle", "kosul": "hizli_gurultu"}
+{"metin": "İniş yapar mısın artık?", "beklenen": {"adimlar": [{"komut": "in"}]}, "okunan": "iniş yapar mısın artık", "kosul": "telefon"}
+{"metin": "Hadi 90 metre in.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 90}]}, "okunan": "hadi doksan metreye in", "kosul": "temiz"}
+{"metin": "Şimdi inebilirsin.", "beklenen": {"adimlar": [{"komut": "in"}]}, "okunan": "şimdi inebilirsin", "kosul": "hizli_gurultu"}
+{"metin": "Aşağı 542 metre.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 542}]}, "okunan": "aşağı 542 metre", "kosul": "telefon"}
+{"metin": "140 metre in.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 140}]}, "okunan": "yüz kırk metreye in", "kosul": "temiz"}
+{"metin": "En yakın parka gider misin ondan sonra yere in artık.", "beklenen": {"adimlar": [{"komut": "yakin_yere_git", "tur": "park"}, {"komut": "in"}]}, "okunan": "en yakın parka gider misin ondan sonra yere in artık", "kosul": "hizli_gurultu"}
+{"metin": "Lütfen dur bakalım.", "beklenen": {"adimlar": [{"komut": "dur"}]}, "okunan": "lütfen dur bakalım", "kosul": "telefon"}
+{"metin": "270 derece sola çevri.", "beklenen": {"adimlar": [{"komut": "don", "yon": "sol", "derece": 270}]}, "okunan": "iki yüz yetmiş derece sola çevril", "kosul": "temiz"}
+{"metin": "Şekil çiz şimdi.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "şekil çiz şimdi", "kosul": "hizli_gurultu"}
+{"metin": "Kalkış tamamlı.", "beklenen": {"adimlar": [{"komut": "kalk"}]}, "okunan": "kalkış tamam mı", "kosul": "telefon"}
+{"metin": "Tamam şimdi sonra.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "tamam şimdi sonra", "kosul": "temiz"}
+{"metin": "15 saniye havada bekle.", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 15}]}, "okunan": "15 saniye havada bekle", "kosul": "hizli_gurultu"}
+{"metin": "Kuzeye doğru 15 metre git. Sonra gel. Lin yere geri dön. Ardından burnunu 60 derece çevir.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "kuzey", "metre": 15}, {"komut": "eve_don"}, {"komut": "don", "yon": "sag", "derece": 60}]}, "okunan": "kuzeye doğru on beş metre git sonra geldiğin yere geri dön ardından burnunu sağa altmış derece çevir", "kosul": "telefon"}
+{"metin": "Lütfen 45 saniye bekle.", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 45}]}, "okunan": "lütfen kırk beş saniye bekle", "kosul": "temiz"}
+{"metin": "Hızını 10 metre saniye yap. Ardından 120 metre alçal.", "beklenen": {"adimlar": [{"komut": "hiz_ayarla", "mps": 10}, {"komut": "irtifaya_cik", "metre": 120}]}, "okunan": "hızını on metre saniye yap ardından yüz yirmi metreye alçal", "kosul": "hizli_gurultu"}
+{"metin": "50 metre alçal.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 50}]}, "okunan": "50 metreye alçal", "kosul": "telefon"}
+{"metin": "Kalkış yapar mısın? Lütfen bakalım.", "beklenen": {"adimlar": [{"komut": "kalk"}]}, "okunan": "kalkış yapar mısın lütfen bakalım", "kosul": "temiz"}
+{"metin": "Fotoğraf çek şimdi.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "fotoğraf çek şimdi", "kosul": "hizli_gurultu"}
+{"metin": "Yukarı çık. Yüz kırk üç metre.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 143}]}, "okunan": "yukarı çık yüz kırk üç metre", "kosul": "telefon"}
+{"metin": "Biraz daha yüksel 20 metre, daha sonra hızını 1,5 metre saniye yap.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 20}, {"komut": "hiz_ayarla", "mps": 1.5}]}, "okunan": "biraz daha yüksel yirmi metre daha sonra hızını 1,5 metre saniye yap", "kosul": "temiz"}
+{"metin": "Duranı hemen orada dur.", "beklenen": {"adimlar": [{"komut": "dur"}]}, "okunan": "drone hemen orada dur", "kosul": "hizli_gurultu"}
+{"metin": "Önce şimdi eve dönelim sonra bir 15 metreye kadar kalsana.", "beklenen": {"adimlar": [{"komut": "eve_don"}, {"komut": "kalk", "irtifa_m": 15}]}, "okunan": "önce şimdi eve dönelim sonra bir 15 metreye kadar kalksana", "kosul": "telefon"}
+{"metin": "Et haklı art.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "ee takla at", "kosul": "temiz"}
+{"metin": "Hızı 9 metre bölü saniye yap.", "beklenen": {"adimlar": [{"komut": "hiz_ayarla", "mps": 9}]}, "okunan": "hızı dokuz metre bölü saniye yap", "kosul": "hizli_gurultu"}
+{"metin": "Şimdi kapıyı kilitle.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "şimdi kapıyı kilitle", "kosul": "telefon"}
+{"metin": "Buç geri 10 metre.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "geri", "metre": 10}]}, "okunan": "uç geri 10 metre", "kosul": "temiz"}
+{"metin": "75 metre kadar yükselir misin?", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 75}]}, "okunan": "75 metre kadar yükselir misin", "kosul": "hizli_gurultu"}
+{"metin": "Lütfen, Sağ 120 metre git. Ardından biraz daha alçal 10 metre ardından en yakın okula git.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "sag", "metre": 120}, {"komut": "alcal", "metre": 10}, {"komut": "yakin_yere_git", "tur": "okul"}]}, "okunan": "lütfen sağa yüz yirmi metre git ardından biraz daha alçal 10 metre ardından en yakın okula git", "kosul": "telefon"}
+{"metin": "Peki koordinata git.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "peki koordinata git", "kosul": "temiz"}
+{"metin": "120 metre geri git.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "geri", "metre": 120}]}, "okunan": "120 metre geri git", "kosul": "hizli_gurultu"}
+{"metin": "Lütfen 5 saniye bekle.", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 5}]}, "okunan": "lütfen 5 saniye bekle", "kosul": "telefon"}
+{"metin": "5 dakika bekler misin?", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 300}]}, "okunan": "5 dakika bekler misin", "kosul": "temiz"}
+{"metin": "Sola 3,5 metre hareket et.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "sol", "metre": 3.5}]}, "okunan": "sola üç buçuk metre hareket et", "kosul": "hizli_gurultu"}
+{"metin": "Dağı alçak.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "daha alçağa", "kosul": "telefon"}
+{"metin": "1,5 metre alçal, sonra geri dön ve eve git arkasından 70 metre yükselir misin lütfen.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 1.5}, {"komut": "eve_don"}, {"komut": "yuksel", "metre": 70}]}, "okunan": "bir buçuk metre alçal sonra geri dön ve eve git arkasından yetmiş metre yükselir misin lütfen", "kosul": "temiz"}
+{"metin": "Sola doğru 45 derece dön.", "beklenen": {"adimlar": [{"komut": "don", "yon": "sol", "derece": 45}]}, "okunan": "sola doğru 45 derece dön", "kosul": "hizli_gurultu"}
+{"metin": "Hızını 5 metre saniye yap. Ardından irtifayı 100 metreye indir.", "beklenen": {"adimlar": [{"komut": "hiz_ayarla", "mps": 5}, {"komut": "irtifaya_cik", "metre": 100}]}, "okunan": "hızını beş metre saniye yap ardından irtifayı yüz metreye indir", "kosul": "telefon"}
+{"metin": "En yakın karakola git.", "beklenen": {"adimlar": [{"komut": "yakin_yere_git", "tur": "polis"}]}, "okunan": "en yakın karakola git", "kosul": "temiz"}
+{"metin": "Şimdi de hemen dur.", "beklenen": {"adimlar": [{"komut": "dur"}]}, "okunan": "şimdi de hemen dur", "kosul": "hizli_gurultu"}
+{"metin": "Sağa dön.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "sağ ol hemen", "kosul": "telefon"}
+{"metin": "Enlem 3418 boylam 35.60747 noktasına git.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "enlem": 39.418, "boylam": 35.60747}]}, "okunan": "enlem 39.418 boylam 35.60747 noktasına git", "kosul": "temiz"}
+{"metin": "Enem 36.4789 boylam 44.211.993 noktasına 70 metre irtifada git.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "irtifa_m": 70, "enlem": 36.4789, "boylam": 44.211993}]}, "okunan": "enlem 36.4789 boylam 44.211993 noktasına 70 metre irtifada git", "kosul": "hizli_gurultu"}
+{"metin": "30 metre alçal.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 30}]}, "okunan": "30 metre alçalt", "kosul": "telefon"}
+{"metin": "Eve dönüş yap. Ardından 40 metre sağ ve lütfen 40 metre alçal.", "beklenen": {"adimlar": [{"komut": "eve_don"}, {"komut": "git_yon", "yon": "sag", "metre": 40}, {"komut": "alcal", "metre": 40}]}, "okunan": "eve dönüş yap ardından 40 metre sağa ve lütfen kırk metre alçal", "kosul": "temiz"}
+{"metin": "60 metre daha yüksel.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 60}]}, "okunan": "60 metre daha yüksel", "kosul": "hizli_gurultu"}
+{"metin": "Yavaşta 1.5 metre saniye.", "beklenen": {"adimlar": [{"komut": "hiz_ayarla", "mps": 1.5}]}, "okunan": "yavaşla bir buçuk metre saniyeye", "kosul": "telefon"}
+{"metin": "5 metre daha alçal.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 5}]}, "okunan": "beş metre daha alçal", "kosul": "temiz"}
+{"metin": "Şimdi 7 metre alçal.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 7}]}, "okunan": "şimdi 7 metreye alçal", "kosul": "hizli_gurultu"}
+{"metin": "Geri dön. Ve weg git.", "beklenen": {"adimlar": [{"komut": "eve_don"}]}, "okunan": "geri dön ve eve git lütfen", "kosul": "telefon"}
+{"metin": "Şimdi 150 metre yukarı çık.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 150}]}, "okunan": "şimdi yüz elli metre yukarı çık", "kosul": "temiz"}
+{"metin": "Aşağı in ve yere kondaha sonra güneyi 250 metre ilerle.", "beklenen": {"adimlar": [{"komut": "in"}, {"komut": "git_yon", "yon": "guney", "metre": 250}]}, "okunan": "aşağıya in ve yere kon daha sonra güneye 250 metre ilerle", "kosul": "hizli_gurultu"}
+{"metin": "Bu ne kadar iyi bir şey tamam mı?", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "bu ne kadar iyi bir şey tamam mı", "kosul": "telefon"}
+{"metin": "Kalk ve 50 metreye çık.", "beklenen": {"adimlar": [{"komut": "kalk", "irtifa_m": 50}]}, "okunan": "kalk ve elli metreye çık", "kosul": "temiz"}
+{"metin": "Hadi iniş yapar mısın?", "beklenen": {"adimlar": [{"komut": "in"}]}, "okunan": "hadi iniş yapar mısın", "kosul": "hizli_gurultu"}
+{"metin": "Şu konuma uç enlem 39.5.429 boylam 36.6.024.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "enlem": 39.52429, "boylam": 36.6024}]}, "okunan": "şu konuma uç enlem 39.52429 boylam 36.6024", "kosul": "telefon"}
+{"metin": "Lütfen 200 metre alçal.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 200}]}, "okunan": "lütfen 200 metre alçal", "kosul": "temiz"}
+{"metin": "Yüksek değil, 80-83 metre yap.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 83}]}, "okunan": "yüksekliği 83 metre yap", "kosul": "hizli_gurultu"}
+{"metin": "126 metre yüksel.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 126}]}, "okunan": "126 metreye yüksel", "kosul": "telefon"}
+{"metin": "Peki vazgeç.", "beklenen": {"adimlar": [{"komut": "dur"}]}, "okunan": "peki vazgeç", "kosul": "temiz"}
+{"metin": "Eve geri dön şimdi.", "beklenen": {"adimlar": [{"komut": "eve_don"}]}, "okunan": "eve geri dön şimdi", "kosul": "hizli_gurultu"}
+{"metin": "3 ordunata git. Enlem 36.0. 54.7. Uç koydam. 35.157. 894 arkasından geri 82 metre uç ardından yüksek 20 metreye getir.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "enlem": 36.05473, "boylam": 35.157894}, {"komut": "git_yon", "yon": "geri", "metre": 82}, {"komut": "irtifaya_cik", "metre": 20}]}, "okunan": "şu koordinata git enlem 36.05473 boylam 35.157894 arkasından geri 82 metre uç ardından yüksekliğini yirmi metreye getir", "kosul": "telefon"}
+{"metin": "10 dakika boyunca bekle.", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 600}]}, "okunan": "on dakika boyunca bekle", "kosul": "temiz"}
+{"metin": "110 saniye hovar yap.", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 111}]}, "okunan": "111 saniye hover yap", "kosul": "hizli_gurultu"}
+{"metin": "Kanca güvenlik bir şekilde in. Enlem 40 nokta 483 250 bir boydam 30 nokta 6475 noktasına 80 metre irtifada git.", "beklenen": {"adimlar": [{"komut": "in"}, {"komut": "git_koordinat", "irtifa_m": 80, "enlem": 40.483251, "boylam": 30.6475}]}, "okunan": "önce güvenli bir şekilde in sonra enlem 40.483251 boylam 30.6475 noktasına 80 metre irtifada git", "kosul": "telefon"}
+{"metin": "En yakın benziniye götür.", "beklenen": {"adimlar": [{"komut": "yakin_yere_git", "tur": "benzinlik"}]}, "okunan": "en yakın benzinliğe götür", "kosul": "temiz"}
+{"metin": "Kendi etrafında sağ 197 derece dön.", "beklenen": {"adimlar": [{"komut": "don", "yon": "sag", "derece": 197}]}, "okunan": "kendi etrafında sağa yüz doksan yedi derece dön", "kosul": "hizli_gurultu"}
+{"metin": "70 metreye çık.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 70}]}, "okunan": "70 metreye kadar çık", "kosul": "telefon"}
+{"metin": "Bülçü saniye kadar bekle.", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 300}]}, "okunan": "300 saniye kadar bekle", "kosul": "temiz"}
+{"metin": "Kalkış yap tamam mı?", "beklenen": {"adimlar": [{"komut": "kalk"}]}, "okunan": "kalkış yap tamam mı", "kosul": "hizli_gurultu"}
+{"metin": "İrtifa et.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 8}]}, "okunan": "irtifayı 8 metre yap", "kosul": "telefon"}
+{"metin": "135 derece sola dön.", "beklenen": {"adimlar": [{"komut": "don", "yon": "sol", "derece": 135}]}, "okunan": "135 derece sola dön", "kosul": "temiz"}
+{"metin": "Eve döner misin? Hadi.", "beklenen": {"adimlar": [{"komut": "eve_don"}]}, "okunan": "eve döner misin hadi", "kosul": "hizli_gurultu"}
+{"metin": "Yüksek değil. 5 metre artır.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 5}]}, "okunan": "yüksekliği 5 metre artır", "kosul": "telefon"}
+{"metin": "Şu konuma uç. Ennam 39.5673 boylam 33.4275.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "enlem": 39.5673, "boylam": 33.42755}]}, "okunan": "şu konuma uç enlem 39.5673 boylam 33.42755", "kosul": "temiz"}
+{"metin": "Yere 30 metre git.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "geri", "metre": 30}]}, "okunan": "geri otuz metre git", "kosul": "hizli_gurultu"}
+{"metin": "60 metre yüksel. Havala.", "beklenen": {"adimlar": [{"komut": "kalk", "irtifa_m": 60}]}, "okunan": "60 metre yükseğe havalan", "kosul": "telefon"}
+{"metin": "Alçal 405 metre.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 405}]}, "okunan": "alçal 405 metre", "kosul": "temiz"}
+{"metin": "20 derece sola döner misin?", "beklenen": {"adimlar": [{"komut": "don", "yon": "sol", "derece": 20}]}, "okunan": "yirmi derece sola döner misin", "kosul": "hizli_gurultu"}
+{"metin": "Burnunu sağ çevir.", "beklenen": {"adimlar": [{"komut": "don", "yon": "sag", "derece": 90}]}, "okunan": "burnunu sağa çevir", "kosul": "telefon"}
+{"metin": "İrtifa 25 metreye getir.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 25}]}, "okunan": "irtifayı 25 metreye getir", "kosul": "temiz"}
+{"metin": "En yakın okula götür sonra geri dön ve eve git.", "beklenen": {"adimlar": [{"komut": "yakin_yere_git", "tur": "okul"}, {"komut": "eve_don"}]}, "okunan": "en yakın okula götür sonra geri dön ve eve git", "kosul": "hizli_gurultu"}
+{"metin": "Görev bitti. Eve dön.", "beklenen": {"adimlar": [{"komut": "eve_don"}]}, "okunan": "görev bitti eve dön", "kosul": "telefon"}
+{"metin": "Hızını 10 kilometre saat yap.", "beklenen": {"adimlar": [{"komut": "hiz_ayarla", "mps": 2.78}]}, "okunan": "hızını 10 kilometre saat yap", "kosul": "temiz"}
+{"metin": "Alçal 20 metre.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 20}]}, "okunan": "alçal 20 metre", "kosul": "hizli_gurultu"}
+{"metin": "Edeğe kaçma.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "ee kaç metre yüksekteyiz", "kosul": "telefon"}
+{"metin": "Hadi yere in artık.", "beklenen": {"adimlar": [{"komut": "in"}]}, "okunan": "hadi yere in artık", "kosul": "temiz"}
+{"metin": "Şimdi de iner misin?", "beklenen": {"adimlar": [{"komut": "in"}]}, "okunan": "şimdi de iner misin", "kosul": "hizli_gurultu"}
+{"metin": "30 metre git.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "geri", "metre": 30}]}, "okunan": "rica etsem geri 30 metre git", "kosul": "telefon"}
+{"metin": "Şimdi eve dönelim bakalım.", "beklenen": {"adimlar": [{"komut": "eve_don"}]}, "okunan": "şimdi eve dönelim bakalım", "kosul": "temiz"}
+{"metin": "Şimdi de aşağıya. İn de yere koy.", "beklenen": {"adimlar": [{"komut": "in"}]}, "okunan": "şimdi de aşağıya in ve yere kon", "kosul": "hizli_gurultu"}
+{"metin": "Biraz daha yüksel. Yüzeyini neyse.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 150}]}, "okunan": "biraz daha yüksel 150 metre", "kosul": "telefon"}
+{"metin": "Bakalım ne diyecektim.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "bakalım ne diyecektim", "kosul": "temiz"}
+{"metin": "Hastaneye randevu almam gerek.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "hastaneye randevu almam gerek", "kosul": "hizli_gurultu"}
+{"metin": "Önce 485 metre yukarı çıktığına sonra, lütfen kuze 15 metre saniye yap. 419 metre alçal.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 485}, {"komut": "hiz_ayarla", "mps": 15}, {"komut": "alcal", "metre": 419}]}, "okunan": "önce dört yüz seksen beş metre yukarı çıksana sonra lütfen hızı on beş metre saniye yap sonra 419 metre alçal", "kosul": "telefon"}
+{"metin": "Enlem 41 noktaya 23417 boylam 38 nokta 0444 noktasına git.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "enlem": 41.23417, "boylam": 38.04144}]}, "okunan": "enlem 41.23417 boylam 38.04144 noktasına git", "kosul": "temiz"}
+{"metin": "Koordinat 308.4541 42.295 git.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "enlem": 38.05031, "boylam": 42.1295}]}, "okunan": "koordinat 38.05031 42.1295 git", "kosul": "hizli_gurultu"}
+{"metin": "15 metre sola git saniye.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "sol", "metre": 15}]}, "okunan": "15 metre sola gitsene", "kosul": "telefon"}
+{"metin": "270 2 metre alçal.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 272}]}, "okunan": "iki yüz yetmiş iki metre alçalt", "kosul": "temiz"}
+{"metin": "Biraz daha yüksel 151 metre.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 151}]}, "okunan": "biraz daha yüksel 151 metre", "kosul": "hizli_gurultu"}
+{"metin": "Batıya 222 metre hareket et.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "bati", "metre": 222}]}, "okunan": "batıya 222 metre hareket et", "kosul": "telefon"}
+{"metin": "En yakın markete gidip 146 metreye yukarıya çık.", "beklenen": {"adimlar": [{"komut": "yakin_yere_git", "tur": "market"}, {"komut": "yuksel", "metre": 146}]}, "okunan": "en yakın markete gidip 146 metre yukarıya çık", "kosul": "temiz"}
+{"metin": "59 saniye havada kal.", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 59}]}, "okunan": "59 saniye havada kal", "kosul": "hizli_gurultu"}
+{"metin": "Güneye tarafa doğru 1000 metre gel.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "guney", "metre": 1000}]}, "okunan": "güney tarafa doğru bin metre gel", "kosul": "telefon"}
+{"metin": "Hızını saniyede 8 metreye ayarladığı sonra irtifa 32 metre olacak şekilde ayarlı arkasından lütfen 15 metreye çık.", "beklenen": {"adimlar": [{"komut": "hiz_ayarla", "mps": 8}, {"komut": "irtifaya_cik", "metre": 32}, {"komut": "irtifaya_cik", "metre": 15}]}, "okunan": "hızını saniyede sekiz metreye ayarla daha sonra irtifa otuz iki metre olacak şekilde ayarla arkasından lütfen on beş metreye çık", "kosul": "temiz"}
+{"metin": "20 metre yukarı tırman.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 20}]}, "okunan": "yirmi metre yukarı tırman", "kosul": "hizli_gurultu"}
+{"metin": "İlarle sola 150 metre.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "sol", "metre": 150}]}, "okunan": "ilerle sola 150 metre", "kosul": "telefon"}
+{"metin": "Peki aşağıda insanlar var.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "peki aşağıda insanlar var", "kosul": "temiz"}
+{"metin": "Bekle bakalım 245 saniye.", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 245}]}, "okunan": "bekle bakalım iki yüz kırk beş saniye", "kosul": "hizli_gurultu"}
+{"metin": "Dur. Önce kahvaltı yapalım.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "drone önce kahvaltı yapalım", "kosul": "telefon"}
+{"metin": "Lütfen 5 metre irtifaya havalan ve tamam şimdi sola dön.", "beklenen": {"adimlar": [{"komut": "kalk", "irtifa_m": 5}, {"komut": "don", "yon": "sol", "derece": 90}]}, "okunan": "lütfen beş metre irtifaya havalan ve tamam şimdi sola dön", "kosul": "temiz"}
+{"metin": "Şey, gülüşmeler.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "şey gülüşmeler", "kosul": "hizli_gurultu"}
+{"metin": "Üsse dön.", "beklenen": {"adimlar": [{"komut": "eve_don"}]}, "okunan": "üsse dön", "kosul": "telefon"}
+{"metin": "Kalk Kalk Kadi.", "beklenen": {"adimlar": [{"komut": "kalk"}]}, "okunan": "kalk hadi", "kosul": "temiz"}
+{"metin": "379 metre aşağı inip şimdi de sağ dön.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 379}, {"komut": "don", "yon": "sag", "derece": 90}]}, "okunan": "379 metre aşağı inip şimdi de sağa dön", "kosul": "hizli_gurultu"}
+{"metin": "10 saniye, havada kal. Ondan sonra yakınlardaki hastaneye uç.", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 10}, {"komut": "yakin_yere_git", "tur": "hastane"}]}, "okunan": "10 saniye havada kal ondan sonra yakınlardaki hastaneye uç", "kosul": "telefon"}
+{"metin": "Hareket etme. Orada kal artık.", "beklenen": {"adimlar": [{"komut": "dur"}]}, "okunan": "hareket etme orada kal artık", "kosul": "temiz"}
+{"metin": "Saat de 18 kilometre hızla uç daha sonra enleme 307.454.796 boyla 305.60.179 noktasına git.", "beklenen": {"adimlar": [{"komut": "hiz_ayarla", "mps": 5}, {"komut": "git_koordinat", "enlem": 37.454796, "boylam": 35.60179}]}, "okunan": "saatte 18 kilometre hızla uç daha sonra enlem 37.454796 boylam 35.60179 noktasına git", "kosul": "hizli_gurultu"}
+{"metin": "Şimdi 500 metre yukarı çık.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 550}]}, "okunan": "şimdi beş yüz elli metre yukarı çık", "kosul": "telefon"}
+{"metin": "Sola döner misin, sonra kalkış noktasına geri dön.", "beklenen": {"adimlar": [{"komut": "don", "yon": "sol", "derece": 90}, {"komut": "eve_don"}]}, "okunan": "sola döner misin sonra kalkış noktasına geri dön", "kosul": "temiz"}
+{"metin": "İrtifayı 101 metreye çıkar.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 101}]}, "okunan": "irtifayı 101 metreye çıkar", "kosul": "hizli_gurultu"}
+{"metin": "İleri 584 metreye kadar git.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "ileri", "metre": 584}]}, "okunan": "ileri beş yüz seksen dört metre kadar git", "kosul": "telefon"}
+{"metin": "Şey olduğun yeri in.", "beklenen": {"adimlar": [{"komut": "in"}]}, "okunan": "şey olduğun yere in", "kosul": "temiz"}
+{"metin": "Şimdi iniş yapalım hemen.", "beklenen": {"adimlar": [{"komut": "in"}]}, "okunan": "şimdi iniş yapalım hemen", "kosul": "hizli_gurultu"}
+{"metin": "İlarleyileri 579 metre.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "ileri", "metre": 579}]}, "okunan": "ilerle ileri beş yüz yetmiş dokuz metre", "kosul": "telefon"}
+{"metin": "Üsse dön lütfen.", "beklenen": {"adimlar": [{"komut": "eve_don"}]}, "okunan": "üsse dön lütfen", "kosul": "temiz"}
+{"metin": "Bu ne?", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "bu ne", "kosul": "hizli_gurultu"}
+{"metin": "80 metre alçal sonrasında halin.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 80}, {"komut": "in"}]}, "okunan": "seksen metreye alçal sonrasında hadi in", "kosul": "telefon"}
+{"metin": "Düane kalksın ve hızını 1.5 metre saniye yap.", "beklenen": {"adimlar": [{"komut": "kalk"}, {"komut": "hiz_ayarla", "mps": 1.5}]}, "okunan": "drone kalksın ve hızını 1.5 metre saniye yap", "kosul": "temiz"}
+{"metin": "Tamam şimdi Sağa dön arkasından lütfen 86 metre yüksel, daha sonra eve dönüş yap.", "beklenen": {"adimlar": [{"komut": "don", "yon": "sag", "derece": 90}, {"komut": "yuksel", "metre": 86}, {"komut": "eve_don"}]}, "okunan": "tamam şimdi sağa dön arkasından lütfen 86 metre yüksel daha sonra eve dönüş yap", "kosul": "hizli_gurultu"}
+{"metin": "Hızı 2,5 metre bölü saniye yap.", "beklenen": {"adimlar": [{"komut": "hiz_ayarla", "mps": 2.5}]}, "okunan": "hızı iki buçuk metre bölü saniye yap", "kosul": "telefon"}
+{"metin": "Yukarı 362 metre.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 362}]}, "okunan": "yukarı 362 metre", "kosul": "temiz"}
+{"metin": "60 derece sola çevreyin.", "beklenen": {"adimlar": [{"komut": "don", "yon": "sol", "derece": 60}]}, "okunan": "60 derece sola çevril", "kosul": "hizli_gurultu"}
+{"metin": "Artık in tamam mı?", "beklenen": {"adimlar": [{"komut": "in"}]}, "okunan": "artık in tamam mı", "kosul": "telefon"}
+{"metin": "Şu konumu oçlenmem 37.830 ile 1873 boylam 34.200.802.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "enlem": 37.832873, "boylam": 34.200802}]}, "okunan": "şu konuma uç enlem 37.832873 boylam 34.200802", "kosul": "temiz"}
+{"metin": "120 metre yüksel.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 120}]}, "okunan": "yüz yirmi metreye yüksel", "kosul": "hizli_gurultu"}
+{"metin": "Yukarı 79 metre.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 79}]}, "okunan": "yukarı 79 metre", "kosul": "telefon"}
+{"metin": "Batı yönünde 70 metre ilerle.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "bati", "metre": 70}]}, "okunan": "batı yönünde yetmiş metre kadar ilerle", "kosul": "temiz"}
+{"metin": "Yüksekliği 79 metreye ayarlar mısın?", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 79}]}, "okunan": "yüksekliği yetmiş dokuz metreye ayarlar mısın", "kosul": "hizli_gurultu"}
+{"metin": "Hızı 5 metre saniye ayarlar mısın?", "beklenen": {"adimlar": [{"komut": "hiz_ayarla", "mps": 5}]}, "okunan": "hızını beş metre saniyeye ayarlar mısın", "kosul": "telefon"}
+{"metin": "75 metre daha alçal.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 75}]}, "okunan": "75 metre daha alçal", "kosul": "temiz"}
+{"metin": "Evet lütfen in.", "beklenen": {"adimlar": [{"komut": "in"}]}, "okunan": "evet lütfen iniş yap", "kosul": "hizli_gurultu"}
+{"metin": "İç.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "enlem": 37.538548, "boylam": 38.9762}]}, "okunan": "şu koordinata git enlem 37.538548 boylam 38.9762", "kosul": "telefon"}
+{"metin": "300 metre yukarıya çık.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 300}]}, "okunan": "300 metre yukarıya çık", "kosul": "temiz"}
+{"metin": "Bak, haber yap.", "beklenen": {"adimlar": [{"komut": "dur"}]}, "okunan": "bak hover yap", "kosul": "hizli_gurultu"}
+{"metin": "30 saniye havada asılı kal.", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 30}]}, "okunan": "otuz saniye havada asılı kal", "kosul": "telefon"}
+{"metin": "Biraz yüksel sene 250 metre kadar.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 250}]}, "okunan": "biraz yükselsene iki yüz elli metre kadar", "kosul": "temiz"}
+{"metin": "Hızlan 10 metre saniye.", "beklenen": {"adimlar": [{"komut": "hiz_ayarla", "mps": 10}]}, "okunan": "hızlan 10 metre saniyeye", "kosul": "hizli_gurultu"}
+{"metin": "Kalk.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 544}]}, "okunan": "544 metre yukarı", "kosul": "telefon"}
+{"metin": "Yavaşça yere in şimdi.", "beklenen": {"adimlar": [{"komut": "in"}]}, "okunan": "yavaşça yere in şimdi", "kosul": "temiz"}
+{"metin": "O meşgul mu?", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "o meşgul mu", "kosul": "hizli_gurultu"}
+{"metin": "Kuzeye 40 metre al.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "kuzey", "metre": 40}]}, "okunan": "kuzeye kırk metre kadar git", "kosul": "telefon"}
+{"metin": "Dön sağ 270 derece.", "beklenen": {"adimlar": [{"komut": "don", "yon": "sag", "derece": 270}]}, "okunan": "dön sağa iki yüz yetmiş derece", "kosul": "temiz"}
+{"metin": "5 saniye havada asılı kal.", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 5}]}, "okunan": "beş saniye havada asılı kal", "kosul": "hizli_gurultu"}
+{"metin": "Kuzey tarafı 90 metre git.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "kuzey", "metre": 90}]}, "okunan": "kuzey tarafa 90 metre git", "kosul": "telefon"}
+{"metin": "Havalanabilirsin.", "beklenen": {"adimlar": [{"komut": "kalk"}]}, "okunan": "havalanabilirsin", "kosul": "temiz"}
+{"metin": "84 saniye kadar bekle. Ondan sonra hızın 4 metre saniye yap. Sonra Kalkış yap. İrtifa 20 metre.", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 84}, {"komut": "hiz_ayarla", "mps": 4}, {"komut": "kalk", "irtifa_m": 20}]}, "okunan": "84 saniye kadar bekle ondan sonra hızını dört metre saniye yap sonra kalkış yap irtifa yirmi metre", "kosul": "hizli_gurultu"}
+{"metin": "360 metre aşağı in.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 367}]}, "okunan": "367 metre aşağı insene", "kosul": "telefon"}
+{"metin": "Teşekkür ederim.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "teşekkür ederim", "kosul": "temiz"}
+{"metin": "111 saniye havada asılı kap.", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 111}]}, "okunan": "yüz on bir saniye havada asılı kal", "kosul": "hizli_gurultu"}
+{"metin": "Altı yüz metre yukarı çık.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 600}]}, "okunan": "600 metre yukarı çık", "kosul": "telefon"}
+{"metin": "Koordinat 38.525 35.93 837 git.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "enlem": 38.5527, "boylam": 35.93837}]}, "okunan": "koordinat 38.5527 35.93837 git", "kosul": "hizli_gurultu"}
+{"metin": "139 metre, düş arkasından ileri 428 metre sonra tamam şimdi havalar.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 139}, {"komut": "git_yon", "yon": "ileri", "metre": 428}, {"komut": "kalk"}]}, "okunan": "yüz otuz dokuz metre düş arkasından ileri 428 metre sonra tamam şimdi havalan", "kosul": "telefon"}
+{"metin": "Önce git bineye 462 metre, sonra yere 10 sonra 146 metre yüksekliğe çıksana.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "guney", "metre": 462}, {"komut": "in"}, {"komut": "irtifaya_cik", "metre": 146}]}, "okunan": "önce git güneye dört yüz altmış iki metre sonra yere kon sonra 146 metre yüksekliğe çıksana", "kosul": "temiz"}
+{"metin": "İrtifayı 250 metre azalt.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 250}]}, "okunan": "irtifayı iki yüz elli metre azalt", "kosul": "hizli_gurultu"}
+{"metin": "250 metre güneye git.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "guney", "metre": 250}]}, "okunan": "250 metre güneye git", "kosul": "telefon"}
+{"metin": "Güç saniye kadar orada bekle.", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 3}]}, "okunan": "üç saniye kadar orada bekle", "kosul": "temiz"}
+{"metin": "Aşağı 400 metre in.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 400}]}, "okunan": "aşağı 400 metre in", "kosul": "hizli_gurultu"}
+{"metin": "Şimdi eve.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "şimdi evet", "kosul": "telefon"}
+{"metin": "Biraz alçak.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "biraz alçal", "kosul": "temiz"}
+{"metin": "80 metre alçadır mısın? Lütfen ardından 40 metre alçal ardından kuzey önünde 75 metre ilerle.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 80}, {"komut": "irtifaya_cik", "metre": 40}, {"komut": "git_yon", "yon": "kuzey", "metre": 75}]}, "okunan": "80 metre alçalır mısın lütfen ardından 40 metreye alçal ardından kuzey yönünde yetmiş beş metre kadar ilerle", "kosul": "hizli_gurultu"}
+{"metin": "Güneye 400 metre uç, sonra 20 metre daha alçal.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "guney", "metre": 400}, {"komut": "alcal", "metre": 20}]}, "okunan": "güney tarafına 400 metre kadar uç daha sonra bir yirmi metre daha alçal", "kosul": "telefon"}
+{"metin": "İrtifanı 10 metre yüksel.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 10}]}, "okunan": "irtifanı 10 metre yükselt", "kosul": "temiz"}
+{"metin": "Kaç dakika uçabilirsin.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "kaç dakika uçabilirsin", "kosul": "hizli_gurultu"}
+{"metin": "Şey, akşam niye yiyelim?", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "şey akşam ne yiyelim", "kosul": "telefon"}
+{"metin": "112 metreye alçal.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 112}]}, "okunan": "yüz on iki metreye alçal", "kosul": "temiz"}
+{"metin": "1.5 metre kadar alçalır mısın?", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 1.5}]}, "okunan": "1.5 metre kadar alçalır mısın", "kosul": "hizli_gurultu"}
+{"metin": "Şu konumu uç. Enlem 36.3365 boylam 40.817.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "enlem": 36.3365, "boylam": 40.8017}]}, "okunan": "şu konuma uç enlem 36.3365 boylam 40.8017", "kosul": "telefon"}
+{"metin": "Tamam şimdi lütfen iniş yap.", "beklenen": {"adimlar": [{"komut": "in"}]}, "okunan": "tamam şimdi lütfen iniş yap", "kosul": "temiz"}
+{"metin": "Daha açar şimdi.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "daha alçağa şimdi", "kosul": "hizli_gurultu"}
+{"metin": "Lütfen 50 metre yüksel.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 50}]}, "okunan": "lütfen elli metre yüksel", "kosul": "telefon"}
+{"metin": "İrtifanı 450 metre yüksel.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 450}]}, "okunan": "irtifanı 450 metre yükselt", "kosul": "temiz"}
+{"metin": "Sola 60 derece.", "beklenen": {"adimlar": [{"komut": "don", "yon": "sol", "derece": 60}]}, "okunan": "sola 60 derece", "kosul": "hizli_gurultu"}
+{"metin": "Batıya önünde binmeyecek kadar ilerle.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "bati", "metre": 1000}]}, "okunan": "batı yönünde bin metre kadar ilerle", "kosul": "telefon"}
+{"metin": "120 metreye kadar kalkış yap.", "beklenen": {"adimlar": [{"komut": "kalk", "irtifa_m": 120}]}, "okunan": "120 metreye kadar kalkış yap", "kosul": "temiz"}
+{"metin": "Yüksekliği 74 metre yap.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 74}]}, "okunan": "yüksekliği 74 metre yap", "kosul": "hizli_gurultu"}
+{"metin": "Lütfen 63 metre alçal ve sola dönüş yap.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 63}, {"komut": "don", "yon": "sol", "derece": 90}]}, "okunan": "lütfen altmış üç metre alçal ve sola dönüş yap", "kosul": "telefon"}
+{"metin": "Duran'a kalksın.", "beklenen": {"adimlar": [{"komut": "kalk"}]}, "okunan": "drone kalksın", "kosul": "temiz"}
+{"metin": "150 metre yükseye havalan.", "beklenen": {"adimlar": [{"komut": "kalk", "irtifa_m": 150}]}, "okunan": "yüz elli metre yükseğe havalan", "kosul": "hizli_gurultu"}
+{"metin": "94 metreye çıkar mısın?", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 94}]}, "okunan": "94 metreye çıkar mısın", "kosul": "telefon"}
+{"metin": "Kahve ister misin?", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "kahve ister misin", "kosul": "temiz"}
+{"metin": "Tamam bu açam maç var mı?", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "tamam bu akşam maç var mı", "kosul": "hizli_gurultu"}
+{"metin": "Kalktığın yeri dön sonra 100 metre aşığı insana.", "beklenen": {"adimlar": [{"komut": "eve_don"}, {"komut": "alcal", "metre": 100}]}, "okunan": "kalktığın yere dön sonra yüz metre aşağı insene", "kosul": "telefon"}
+{"metin": "Tekalı hadye eve dön.", "beklenen": {"adimlar": [{"komut": "eve_don"}]}, "okunan": "pekala hadi eve dön", "kosul": "temiz"}
+{"metin": "Kuzeye doğru 348 metreye git.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "kuzey", "metre": 348}]}, "okunan": "kuzeye doğru üç yüz kırk sekiz metre git", "kosul": "hizli_gurultu"}
+{"metin": "75 metre. Doğuya doğru uç.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "dogu", "metre": 75}]}, "okunan": "yetmiş beş metre doğuya doğru uç", "kosul": "telefon"}
+{"metin": "Hızını saniyede 1.5 metreye ayarla sonrasında yüksekliği 25 metre artır.", "beklenen": {"adimlar": [{"komut": "hiz_ayarla", "mps": 1.5}, {"komut": "yuksel", "metre": 25}]}, "okunan": "hızını saniyede 1.5 metreye ayarla sonrasında yüksekliği yirmi beş metre artır", "kosul": "temiz"}
+{"metin": "Lütfen sola 424 metre git.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "sol", "metre": 424}]}, "okunan": "lütfen sola 424 metre git", "kosul": "hizli_gurultu"}
+{"metin": "Yüzümü tane.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "yüzümü tanı", "kosul": "telefon"}
+{"metin": "Ennam 39.450.167 boylam 41.14847 noktasına git.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "enlem": 39.452067, "boylam": 41.14847}]}, "okunan": "enlem 39.452067 boylam 41.14847 noktasına git", "kosul": "temiz"}
+{"metin": "Hızı saniye de 10 metreye ayarla.", "beklenen": {"adimlar": [{"komut": "hiz_ayarla", "mps": 10}]}, "okunan": "hızını saniyede on metreye ayarla", "kosul": "hizli_gurultu"}
+{"metin": "Dur.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "ve", "kosul": "telefon"}
+{"metin": "361 metre aşağı inip 12 metre saniye hızlı oluş.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 361}, {"komut": "hiz_ayarla", "mps": 12}]}, "okunan": "361 metre aşağı inip 12 metre saniye hızla uç", "kosul": "temiz"}
+{"metin": "Güneye 5 metre gider misin?", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "guney", "metre": 5}]}, "okunan": "güneye beş metre kadar gider misin", "kosul": "hizli_gurultu"}
+{"metin": "4.366.630. İyimi altı nokta 662.154 koordinatına git.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "enlem": 41.366632, "boylam": 26.662154}]}, "okunan": "41.366632 26.662154 koordinatına git", "kosul": "telefon"}
+{"metin": "Yükseltliği 127 metre azalp.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 122}]}, "okunan": "yüksekliği 122 metre azalt", "kosul": "temiz"}
+{"metin": "Hemen kapırdama.", "beklenen": {"adimlar": [{"komut": "dur"}]}, "okunan": "hemen kıpırdama", "kosul": "hizli_gurultu"}
+{"metin": "Şimdi tamam. Şimdi havalar.", "beklenen": {"adimlar": [{"komut": "kalk"}]}, "okunan": "şimdi tamam şimdi havalan", "kosul": "telefon"}
+{"metin": "İrtifa 114 metre. İndir daha sonra kalkar mısın?", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 114}, {"komut": "kalk"}]}, "okunan": "irtifayı 114 metreye indir daha sonra kalkar mısın", "kosul": "temiz"}
+{"metin": "Yüksel geri dön.", "beklenen": {"adimlar": [{"komut": "eve_don"}]}, "okunan": "üsse geri dön", "kosul": "hizli_gurultu"}
+{"metin": "75 metre daha yüksel.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 75}]}, "okunan": "75 metre daha yüksel", "kosul": "telefon"}
+{"metin": "Evine dön haldi.", "beklenen": {"adimlar": [{"komut": "eve_don"}]}, "okunan": "evine dön hadi", "kosul": "temiz"}
+{"metin": "Önce güneye 75 metre ilerle sonra başladığın yere dön sonra biraz daha alçal 70 metre.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "guney", "metre": 75}, {"komut": "eve_don"}, {"komut": "alcal", "metre": 70}]}, "okunan": "önce güneye 75 metre ilerle sonra başladığın yere dön sonra biraz daha alçal 70 metre", "kosul": "hizli_gurultu"}
+{"metin": "Lütfen 90 metre yüksel.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 90}]}, "okunan": "lütfen 90 metre yüksel", "kosul": "telefon"}
+{"metin": "Doğu tarafına doğru 30 metre git.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "dogu", "metre": 30}]}, "okunan": "doğu tarafına doğru 30 metre git", "kosul": "temiz"}
+{"metin": "Haydi yeter dur.", "beklenen": {"adimlar": [{"komut": "dur"}]}, "okunan": "haydi yeter dur", "kosul": "hizli_gurultu"}
+{"metin": "80 metre yükselir misin? Lütfen sonrasında irtifa 120 metre olacak şekilde ayarla.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 80}, {"komut": "irtifaya_cik", "metre": 120}]}, "okunan": "80 metre yükselir misin lütfen sonrasında irtifa 120 metre olacak şekilde ayarla", "kosul": "telefon"}
+{"metin": "Şu koordinata git. Vennem 39.508.699 boylam 29.53.281.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "enlem": 39.508699, "boylam": 29.53281}]}, "okunan": "şu koordinata git enlem 39.508699 boylam 29.53281", "kosul": "temiz"}
+{"metin": "37.584.42.788 koordinatına git.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "enlem": 37.587, "boylam": 44.42788}]}, "okunan": "37.587 44.42788 koordinatına git", "kosul": "hizli_gurultu"}
+{"metin": "29 metre yüksek diye çık.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 29}]}, "okunan": "29 metre yüksekliğe çık", "kosul": "telefon"}
+{"metin": "270 derece sola döner misin?", "beklenen": {"adimlar": [{"komut": "don", "yon": "sol", "derece": 270}]}, "okunan": "iki yüz yetmiş derece sola döner misin", "kosul": "temiz"}
+{"metin": "Şu koordinata git. Vennem 307.76738 boylam 29.5629 ardından 10 metreye yüksel.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "enlem": 37.76738, "boylam": 29.5629}, {"komut": "irtifaya_cik", "metre": 10}]}, "okunan": "şu koordinata git enlem 37.76738 boylam 29.5629 ardından on metreye yüksel", "kosul": "hizli_gurultu"}
+{"metin": "Alçal. Yeminle 10 metre.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 120}]}, "okunan": "biraz alçal 120 metre kadar", "kosul": "telefon"}
+{"metin": "Eve dönüş yap ve saate 50 kilometre hızla uç.", "beklenen": {"adimlar": [{"komut": "eve_don"}, {"komut": "hiz_ayarla", "mps": 13.89}]}, "okunan": "eve dönüş yap ve saatte 50 kilometre hızla uç", "kosul": "temiz"}
+{"metin": "Hemen ipta.", "beklenen": {"adimlar": [{"komut": "dur"}]}, "okunan": "hemen iptal", "kosul": "hizli_gurultu"}
+{"metin": "E468 metre yüksel.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 468}]}, "okunan": "eee 468 metre yüksel", "kosul": "telefon"}
+{"metin": "Hızını 40 kilometre saat yap.", "beklenen": {"adimlar": [{"komut": "hiz_ayarla", "mps": 11.11}]}, "okunan": "hızını 40 kilometre saat yap", "kosul": "temiz"}
+{"metin": "İrtifayı 15 metreye getir.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 15}]}, "okunan": "irtifayı on beş metreye getir", "kosul": "hizli_gurultu"}
+{"metin": "Hızı 12 metre yap.", "beklenen": {"adimlar": [{"komut": "hiz_ayarla", "mps": 12}]}, "okunan": "hızı 12 m/s yap", "kosul": "telefon"}
+{"metin": "Doğuya 30 metre hareket et ardından 97 metre in.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "dogu", "metre": 30}, {"komut": "irtifaya_cik", "metre": 97}]}, "okunan": "doğuya otuz metre hareket et ardından doksan yedi metreye in", "kosul": "temiz"}
+{"metin": "Batıya binmekte hareket et.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "bati", "metre": 1000}]}, "okunan": "batıya 1000 metre hareket et", "kosul": "hizli_gurultu"}
+{"metin": "Hadi 138 saniye bekle.", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 138}]}, "okunan": "hadi 138 saniye bekle", "kosul": "telefon"}
+{"metin": "250 metre yukarı çık sana.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 250}]}, "okunan": "250 metre yukarı çıksana", "kosul": "temiz"}
+{"metin": "250 metre daha aşağı in.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 250}]}, "okunan": "250 metre daha aşağı in", "kosul": "hizli_gurultu"}
+{"metin": "120 metre ekcik kal.", "beklenen": {"adimlar": [{"komut": "kalk", "irtifa_m": 125}]}, "okunan": "yüz yirmi beş metreye kalk", "kosul": "telefon"}
+{"metin": "Hadi yere in tamam.", "beklenen": {"adimlar": [{"komut": "in"}]}, "okunan": "hadi yere in tamam mı", "kosul": "temiz"}
+{"metin": "Yere 10 ve 60 metre daha aşağı in.", "beklenen": {"adimlar": [{"komut": "in"}, {"komut": "alcal", "metre": 60}]}, "okunan": "yere kon ve 60 metre daha aşağı in", "kosul": "hizli_gurultu"}
+{"metin": "Enlem 37.42 78 boylam 36.21 1510 nevuç.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "enlem": 37.42278, "boylam": 36.21511}]}, "okunan": "enlem 37.42278 boylam 36.21511 konumuna uç", "kosul": "telefon"}
+{"metin": "Arabayı takip et.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "arabayı takip et", "kosul": "temiz"}
+{"metin": "10 metreye kadar kalkış yap sonra ilk 80 metre olacak şekilde ayarla.", "beklenen": {"adimlar": [{"komut": "kalk", "irtifa_m": 10}, {"komut": "irtifaya_cik", "metre": 80}]}, "okunan": "10 metreye kadar kalkış yap sonra irtifa seksen metre olacak şekilde ayarla", "kosul": "hizli_gurultu"}
+{"metin": "218 saniye bekle.", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 218}]}, "okunan": "218 saniye bekle", "kosul": "telefon"}
+{"metin": "Kaydı durdurma.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "kaydı durdurma", "kosul": "temiz"}
+{"metin": "Tamam bekle.", "beklenen": {"adimlar": [{"komut": "dur"}]}, "okunan": "tamam bekle", "kosul": "hizli_gurultu"}
+{"metin": "Şimdi 15 metre alçal ve irtifanı 10 metre yükselt. Arkasından geldiğin yere dön.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 15}, {"komut": "yuksel", "metre": 10}, {"komut": "eve_don"}]}, "okunan": "şimdi on beş metreye alçal ve irtifanı on metre yükselt arkasından geldiğin yere dön", "kosul": "telefon"}
+{"metin": "Anca lütfen en yakın markete git sonra sola 100 metre.", "beklenen": {"adimlar": [{"komut": "yakin_yere_git", "tur": "market"}, {"komut": "git_yon", "yon": "sol", "metre": 100}]}, "okunan": "önce lütfen en yakın markete git sonra sola yüz metre", "kosul": "temiz"}
+{"metin": "Şey tamam şimdi havalar.", "beklenen": {"adimlar": [{"komut": "kalk"}]}, "okunan": "şey tamam şimdi havalan", "kosul": "hizli_gurultu"}
+{"metin": "Aşığı 70 metre arkasından 60 metre aşığı in.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 70}, {"komut": "alcal", "metre": 60}]}, "okunan": "aşağı yetmiş metre arkasından 60 metre aşağı in", "kosul": "telefon"}
+{"metin": "Lütfen 150 metre irtifaya havalan.", "beklenen": {"adimlar": [{"komut": "kalk", "irtifa_m": 150}]}, "okunan": "lütfen 150 metre irtifaya havalan", "kosul": "temiz"}
+{"metin": "Hadi kuzeye 300 metre uç.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "kuzey", "metre": 300}]}, "okunan": "hadi kuzeye üç yüz metre uç", "kosul": "hizli_gurultu"}
+{"metin": "İrtifa 5 metre indir.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 5}]}, "okunan": "irtifayı beş metreye indir", "kosul": "telefon"}
+{"metin": "Altı meteyin.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 6}]}, "okunan": "6 metreye in", "kosul": "temiz"}
+{"metin": "Hızını değiştir.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "hızını değiştir", "kosul": "hizli_gurultu"}
+{"metin": "Sağa dön.", "beklenen": {"adimlar": [{"komut": "don", "yon": "sag", "derece": 90}]}, "okunan": "sağa döner misin", "kosul": "telefon"}
+{"metin": "Kuzey tarafına 70 metre kadar uç.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "kuzey", "metre": 70}]}, "okunan": "kuzey tarafına 70 metre kadar uç", "kosul": "temiz"}
+{"metin": "Koordinat 40.650. 1164. 30.66 1947.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "enlem": 40.652164, "boylam": 30.66947}]}, "okunan": "koordinat 40.652164 30.66947 git", "kosul": "hizli_gurultu"}
+{"metin": "Hadi. 202 saniye bekle.", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 202}]}, "okunan": "hadi iki yüz iki saniye bekle", "kosul": "telefon"}
+{"metin": "5 metre irtifaya yüksel.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 5}]}, "okunan": "5 metre irtifaya yüksel", "kosul": "temiz"}
+{"metin": "Hadi eve geri dön.", "beklenen": {"adimlar": [{"komut": "eve_don"}]}, "okunan": "haydi eve geri dön", "kosul": "hizli_gurultu"}
+{"metin": "Eve dön. Arın üstüne bakalım.", "beklenen": {"adimlar": [{"komut": "eve_don"}]}, "okunan": "eve döner misin bakalım", "kosul": "telefon"}
+{"metin": "232 metre kadar aşağı in.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 232}]}, "okunan": "232 metre kadar aşağı in", "kosul": "temiz"}
+{"metin": "Sola 538 metre.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "sol", "metre": 538}]}, "okunan": "sola 538 metre", "kosul": "hizli_gurultu"}
+{"metin": "Koordinat 40.500 3677 31.68.1573 git.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "enlem": 40.503677, "boylam": 31.68573}]}, "okunan": "koordinat 40.503677 31.68573 git", "kosul": "telefon"}
+{"metin": "Bulunduğun yere iniş yap.", "beklenen": {"adimlar": [{"komut": "in"}]}, "okunan": "bulunduğun yere iniş yap", "kosul": "temiz"}
+{"metin": "61 metre yüksek diye çık.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 61}]}, "okunan": "altmış bir metre yüksekliğe çık", "kosul": "hizli_gurultu"}
+{"metin": "Önce itifayı 80 metre artır sonra aşığı in ve yere kon sonra hadi yere in.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 80}, {"komut": "in"}, {"komut": "in"}]}, "okunan": "önce irtifayı seksen metre artır sonra aşağı in ve yere kon sonra hadi yere in", "kosul": "telefon"}
+{"metin": "Yukarı çık. 130 metre.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 130}]}, "okunan": "yukarı çık yüz otuz metre", "kosul": "temiz"}
+{"metin": "En yakın eczaneye gider misin?", "beklenen": {"adimlar": [{"komut": "yakin_yere_git", "tur": "eczane"}]}, "okunan": "en yakın eczaneye gider misin", "kosul": "hizli_gurultu"}
+{"metin": "80 metre in.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 50}]}, "okunan": "50 metreye in", "kosul": "telefon"}
+{"metin": "Sağ 180 derece.", "beklenen": {"adimlar": [{"komut": "don", "yon": "sag", "derece": 180}]}, "okunan": "sağa yüz seksen derece", "kosul": "temiz"}
+{"metin": "Kalkış yap. İrtifa 5 metre.", "beklenen": {"adimlar": [{"komut": "kalk", "irtifa_m": 5}]}, "okunan": "kalkış yap irtifa beş metre", "kosul": "hizli_gurultu"}
+{"metin": "Önce in 137 metreye sonra 25 metre alçal, sonra kalktığın yere dön.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 137}, {"komut": "alcal", "metre": 25}, {"komut": "eve_don"}]}, "okunan": "önce in 137 metreye sonra yirmi beş metre alçal sonra kalktığın yere dön", "kosul": "telefon"}
+{"metin": "Aşağı 20 metre in.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 20}]}, "okunan": "aşağı yirmi metre in", "kosul": "temiz"}
+{"metin": "Peki 20 yaşındayım.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "peki yirmi yaşındayım", "kosul": "hizli_gurultu"}
+{"metin": "20 saniye kadar orada bekle.", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 20}]}, "okunan": "20 saniye kadar orada bekle", "kosul": "telefon"}
+{"metin": "Dur.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "bu", "kosul": "temiz"}
+{"metin": "250 metre kadar aşağı in.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 250}]}, "okunan": "250 metre kadar aşağı in", "kosul": "hizli_gurultu"}
+{"metin": "Bugün günlerden ne?", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "bugün günlerden ne", "kosul": "telefon"}
+{"metin": "Haydi geri dön ve eve git.", "beklenen": {"adimlar": [{"komut": "eve_don"}]}, "okunan": "haydi geri dön ve eve git", "kosul": "temiz"}
+{"metin": "Şu koordinata git. Enlem 41. 16 892 boylam 30. 80 gibi 236 ardından sola altmış derecelik dönüş yap ve yüksekliği 533 metre artır.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "enlem": 41.16892, "boylam": 30.82236}, {"komut": "don", "yon": "sol", "derece": 60}, {"komut": "yuksel", "metre": 533}]}, "okunan": "şu koordinata git enlem 41.16892 boylam 30.82236 ardından sola altmış derecelik dönüş yap ve yüksekliği beş yüz otuz üç metre artır", "kosul": "hizli_gurultu"}
+{"metin": "10 derece saat çevri.", "beklenen": {"adimlar": [{"komut": "don", "yon": "sag", "derece": 10}]}, "okunan": "on derece sağa çevril", "kosul": "telefon"}
+{"metin": "Bak teker koy.", "beklenen": {"adimlar": [{"komut": "in"}]}, "okunan": "bak teker koy", "kosul": "temiz"}
+{"metin": "En yakın akaryakıt istasyonuna götür.", "beklenen": {"adimlar": [{"komut": "yakin_yere_git", "tur": "benzinlik"}]}, "okunan": "en yakın akaryakıt istasyonuna götür", "kosul": "hizli_gurultu"}
+{"metin": "Lütfen 90 metre alçal.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 90}]}, "okunan": "lütfen 90 metre alçal", "kosul": "telefon"}
+{"metin": "E89 metre yüksel, sonrasında eve dön.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 89}, {"komut": "eve_don"}]}, "okunan": "eee 89 metre yüksel sonrasında eve dön", "kosul": "temiz"}
+{"metin": "Enlem 38 nokta 240 gibi 13 boylam 41 nokta 75212 noktasına 140 metre irtifada git.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "irtifa_m": 140, "enlem": 38.242013, "boylam": 41.75212}]}, "okunan": "enlem 38.242013 boylam 41.75212 noktasına 140 metre irtifada git", "kosul": "hizli_gurultu"}
+{"metin": "20 saniye kadar bekle.", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 20}]}, "okunan": "yirmi saniye kadar bekle", "kosul": "telefon"}
+{"metin": "İt sağ 5 metre.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "sag", "metre": 5}]}, "okunan": "git sağa 5 metre", "kosul": "temiz"}
+{"metin": "500 metre daha aşağı in.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 500}]}, "okunan": "beş yüz metre daha aşağı in", "kosul": "hizli_gurultu"}
+{"metin": "200 metre alçal.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 200}]}, "okunan": "200 metre alçal", "kosul": "telefon"}
+{"metin": "Yukarı 200 metre.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 200}]}, "okunan": "yukarı iki yüz metre", "kosul": "temiz"}
+{"metin": "Hadi 500 metre yüksel.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 500}]}, "okunan": "hadi beş yüz metre yüksel", "kosul": "hizli_gurultu"}
+{"metin": "400 metre batıya git. Sonra eve kalk artık.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "bati", "metre": 400}, {"komut": "kalk"}]}, "okunan": "dört yüz metre batıya git sonra ee kalk artık", "kosul": "telefon"}
+{"metin": "Kalkış yaptığın yere dön.", "beklenen": {"adimlar": [{"komut": "eve_don"}]}, "okunan": "kalkış yaptığın yere dön", "kosul": "temiz"}
+{"metin": "Drona hareket etme. Orada kal.", "beklenen": {"adimlar": [{"komut": "dur"}]}, "okunan": "drone hareket etme orada kal", "kosul": "hizli_gurultu"}
+{"metin": "İrtifa yıkık metreye indir.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 40}]}, "okunan": "irtifayı 40 metreye indir", "kosul": "telefon"}
+{"metin": "22 metre irtifaya çık.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 22}]}, "okunan": "yirmi iki metre irtifaya çık", "kosul": "temiz"}
+{"metin": "400 metre alçalır mısın? Lütfen.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 400}]}, "okunan": "400 metre alçalır mısın lütfen", "kosul": "hizli_gurultu"}
+{"metin": "İrtifa al. 250 metre yüksel.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 250}]}, "okunan": "irtifanı iki yüz elli metre yükselt", "kosul": "telefon"}
+{"metin": "Sol tarafta bir ağaç var bakalım.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "sol tarafta bir ağaç var bakalım", "kosul": "temiz"}
+{"metin": "Ennen 40 nokta 0-4 boylam 40 nokta 1764 noktasını 20 metre irtifada git.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "irtifa_m": 20, "enlem": 40.04, "boylam": 40.1764}]}, "okunan": "enlem 40.04 boylam 40.1764 noktasına 20 metre irtifada git", "kosul": "hizli_gurultu"}
+{"metin": "Burnunu sağa 90 derece çevir.", "beklenen": {"adimlar": [{"komut": "don", "yon": "sag", "derece": 90}]}, "okunan": "burnunu sağa 90 derece çevir", "kosul": "telefon"}
+{"metin": "Havalan 70 metreye.", "beklenen": {"adimlar": [{"komut": "kalk", "irtifa_m": 70}]}, "okunan": "havalan yetmiş metreye", "kosul": "temiz"}
+{"metin": "15 metreye çıkart.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 15}]}, "okunan": "15 metreye çıkar mısın", "kosul": "hizli_gurultu"}
+{"metin": "Tamam, şimdi olduğun yerde dur.", "beklenen": {"adimlar": [{"komut": "dur"}]}, "okunan": "tamam şimdi olduğun yerde dur", "kosul": "telefon"}
+{"metin": "Bekle bakalım 286 saniye.", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 286}]}, "okunan": "bekle bakalım iki yüz seksen altı saniye", "kosul": "temiz"}
+{"metin": "İzlediğimiz için teşekkürler artık.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "izlediğiniz için teşekkürler artık", "kosul": "hizli_gurultu"}
+{"metin": "400 metreye kadar alçaların mısın?", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 400}]}, "okunan": "dört yüz metre kadar alçalır mısın", "kosul": "telefon"}
+{"metin": "En yakın okula götür.", "beklenen": {"adimlar": [{"komut": "yakin_yere_git", "tur": "okul"}]}, "okunan": "en yakın okula götür", "kosul": "temiz"}
+{"metin": "Batı tarafına doğru 80 metre git.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "bati", "metre": 80}]}, "okunan": "batı tarafına doğru seksen metre git", "kosul": "hizli_gurultu"}
+{"metin": "Eve kalktığım yere dön.", "beklenen": {"adimlar": [{"komut": "eve_don"}]}, "okunan": "ee kalktığın yere dön", "kosul": "telefon"}
+{"metin": "5 metre irtifa al.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 5}]}, "okunan": "beş metre irtifa al", "kosul": "temiz"}
+{"metin": "En yakın ita, yiyiz. Taslumla doğru uç.", "beklenen": {"adimlar": [{"komut": "yakin_yere_git", "tur": "itfaiye"}]}, "okunan": "en yakın itfaiye istasyonuna doğru uç", "kosul": "hizli_gurultu"}
+{"metin": "Solu 320 derecelik dönüş yap.", "beklenen": {"adimlar": [{"komut": "don", "yon": "sol", "derece": 320}]}, "okunan": "sola üç yüz yirmi derecelik dönüş yap", "kosul": "telefon"}
+{"metin": "İrtifanı 30 metre yüksel.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 30}]}, "okunan": "irtifanı 30 metre yükselt", "kosul": "temiz"}
+{"metin": "Hicah etsam batıya 400 metre git.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "bati", "metre": 400}]}, "okunan": "rica etsem batıya dört yüz metre git", "kosul": "hizli_gurultu"}
+{"metin": "Yüksel. 287 metre.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 287}]}, "okunan": "yüksekliği iki yüz seksen yedi metre azalt", "kosul": "telefon"}
+{"metin": "2 saniye havada bekle.", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 2}]}, "okunan": "2 saniye havada bekle", "kosul": "temiz"}
+{"metin": "45 saniye hıvar yap.", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 45}]}, "okunan": "kırk beş saniye hover yap", "kosul": "hizli_gurultu"}
+{"metin": "Yavaş 10 metre saniye, ardından 121 metre daha yüksel.", "beklenen": {"adimlar": [{"komut": "hiz_ayarla", "mps": 10}, {"komut": "yuksel", "metre": 121}]}, "okunan": "yavaşla on metre saniyeye ardından 121 metre daha yüksel", "kosul": "telefon"}
+{"metin": "Bu ne kadar iyi bir şey.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "bu ne kadar iyi bir şey", "kosul": "temiz"}
+{"metin": "Hadi. Hadi.", "beklenen": {"adimlar": [{"komut": "in"}]}, "okunan": "hadi hadi in", "kosul": "hizli_gurultu"}
+{"metin": "Şeye olduğun yerde dur.", "beklenen": {"adimlar": [{"komut": "dur"}]}, "okunan": "şey olduğun yerde dur", "kosul": "telefon"}
+{"metin": "80 metreye kadar kalkış yap sonrasında 166 metre yukarı.", "beklenen": {"adimlar": [{"komut": "kalk", "irtifa_m": 80}, {"komut": "yuksel", "metre": 166}]}, "okunan": "80 metreye kadar kalkış yap sonrasında yüz altmış altı metre yukarı", "kosul": "temiz"}
+{"metin": "Pekala inar mısın?", "beklenen": {"adimlar": [{"komut": "in"}]}, "okunan": "pekala iner misin", "kosul": "hizli_gurultu"}
+{"metin": "Yüksek diye 50 metreye ayarlı.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 50}]}, "okunan": "yüksekliği elli metreye ayarla", "kosul": "telefon"}
+{"metin": "Büneği yönünde 80 metre uç.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "guney", "metre": 80}]}, "okunan": "güney yönünde 80 metre uç", "kosul": "temiz"}
+{"metin": "Aşağıda insanlar var.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "aşağıda insanlar var", "kosul": "hizli_gurultu"}
+{"metin": "Kalkış yap. İrtifa 150 metre.", "beklenen": {"adimlar": [{"komut": "kalk", "irtifa_m": 150}]}, "okunan": "kalkış yap irtifa yüz elli metre", "kosul": "telefon"}
+{"metin": "Bir yüz metreye kadar kalksana.", "beklenen": {"adimlar": [{"komut": "kalk", "irtifa_m": 100}]}, "okunan": "bir 100 metreye kadar kalksana", "kosul": "temiz"}
+{"metin": "Hızı 1.5 metre bölü saniye yap.", "beklenen": {"adimlar": [{"komut": "hiz_ayarla", "mps": 1.5}]}, "okunan": "hızı 1.5 metre bölü saniye yap", "kosul": "hizli_gurultu"}
+{"metin": "63 metre alçalıp, irtifayı 500 metre artır.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 63}, {"komut": "yuksel", "metre": 500}]}, "okunan": "63 metre alçalıp irtifayı 500 metre artır", "kosul": "telefon"}
+{"metin": "İniş yapabilirsin. Ondan sonra 57 metreye çıkar mısın?", "beklenen": {"adimlar": [{"komut": "in"}, {"komut": "irtifaya_cik", "metre": 57}]}, "okunan": "iniş yapabilirsin ondan sonra 57 metreye çıkar mısın", "kosul": "temiz"}
+{"metin": "90 saniye kadar bekle.", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 90}]}, "okunan": "doksan saniye kadar bekle", "kosul": "hizli_gurultu"}
+{"metin": "Kuzey Karafı'na doğru 496 metre git.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "kuzey", "metre": 496}]}, "okunan": "kuzey tarafına doğru dört yüz doksan altı metre git", "kosul": "telefon"}
+{"metin": "36.4069 42.3840 seris koordinatına git.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "enlem": 36.4069, "boylam": 42.3848}]}, "okunan": "36.4069 42.3848 koordinatına git", "kosul": "temiz"}
+{"metin": "Hemen 2 saat sonra görüşürüz.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "hemen iki saat sonra görüşürüz", "kosul": "hizli_gurultu"}
+{"metin": "İrtifa 149 metre yap.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 149}]}, "okunan": "irtifayı yüz kırk dokuz metre yap", "kosul": "telefon"}
+{"metin": "10 metre yüksekliye çık sana.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 10}]}, "okunan": "10 metre yüksekliğe çıksana", "kosul": "temiz"}
+{"metin": "Biraz daha yüksel 392 metre.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 392}]}, "okunan": "biraz daha yüksel üç yüz doksan iki metre", "kosul": "hizli_gurultu"}
+{"metin": "Aşol ve şimdiki.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 5}]}, "okunan": "aşağı beş metre in", "kosul": "telefon"}
+{"metin": "Büneye 40 metre.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "guney", "metre": 40}]}, "okunan": "güneye kırk metre", "kosul": "temiz"}
+{"metin": "Tamam 80 metreye irtifaya çık.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 80}]}, "okunan": "tamam seksen metre irtifaya çık", "kosul": "hizli_gurultu"}
+{"metin": "İniş yapar mısın şimdi?", "beklenen": {"adimlar": [{"komut": "in"}]}, "okunan": "iniş yapar mısın şimdi", "kosul": "telefon"}
+{"metin": "Doğuya 50 metre uç.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "dogu", "metre": 50}]}, "okunan": "doğuya 50 metre uç", "kosul": "temiz"}
+{"metin": "Hadi yere in sonrasında en yakın okula git arkasından yere in iş yap.", "beklenen": {"adimlar": [{"komut": "in"}, {"komut": "yakin_yere_git", "tur": "okul"}, {"komut": "in"}]}, "okunan": "hadi yere in sonrasında en yakın okula git arkasından yere iniş yap", "kosul": "hizli_gurultu"}
+{"metin": "60 metre yüksel, hava alakalı.", "beklenen": {"adimlar": [{"komut": "kalk", "irtifa_m": 87}]}, "okunan": "87 metre yükseğe havalan", "kosul": "telefon"}
+{"metin": "İç.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "enlem": 39.26821, "boylam": 44.938601}]}, "okunan": "şu koordinata git enlem 39.26821 boylam 44.938601", "kosul": "temiz"}
+{"metin": "Tamam şimdi kalkar mısın?", "beklenen": {"adimlar": [{"komut": "kalk"}]}, "okunan": "tamam şimdi kalkar mısın", "kosul": "hizli_gurultu"}
+{"metin": "Yer.", "beklenen": {"adimlar": [{"komut": "don", "yon": "sol", "derece": 15}, {"komut": "bekle", "saniye": 60}]}, "okunan": "sola on beş derece dönüp bekle 60 saniye", "kosul": "telefon"}
+{"metin": "Şey yukarıya.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "şey yukarıya", "kosul": "temiz"}
+{"metin": "Şu koordinata git. Enlem 39.26730ci boylam 27.716604.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "enlem": 39.26732, "boylam": 27.716604}]}, "okunan": "şu koordinata git enlem 39.26732 boylam 27.716604", "kosul": "hizli_gurultu"}
+{"metin": "İleri 374 metre kadar gider misin?", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "ileri", "metre": 374}]}, "okunan": "ileri üç yüz yetmiş dört metre kadar gider misin", "kosul": "telefon"}
+{"metin": "Hızını biraz düşür. 15 metre saniye yap ve hızı 2 metre bölü saniye yap.", "beklenen": {"adimlar": [{"komut": "hiz_ayarla", "mps": 15}, {"komut": "hiz_ayarla", "mps": 2}]}, "okunan": "hızını biraz düşür on beş metre saniye yap ve hızı 2 metre bölü saniye yap", "kosul": "temiz"}
+{"metin": "443 metre yukarı çık.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 443}]}, "okunan": "dört yüz kırk üç metre yukarı çık", "kosul": "hizli_gurultu"}
+{"metin": "Altı metre saniye hızlı olmuş.", "beklenen": {"adimlar": [{"komut": "hiz_ayarla", "mps": 6}]}, "okunan": "6 metre saniye hızla uç", "kosul": "telefon"}
+{"metin": "Kendi etrafımda sağ dön.", "beklenen": {"adimlar": [{"komut": "don", "yon": "sag", "derece": 90}]}, "okunan": "kendi etrafında sağa dön", "kosul": "temiz"}
+{"metin": "40 metre iltva alçık.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 40}]}, "okunan": "kırk metre irtifaya çık", "kosul": "hizli_gurultu"}
+{"metin": "37.158.842.5936 koordinatına git.", "beklenen": {"adimlar": [{"komut": "git_koordinat", "enlem": 37.158008, "boylam": 42.5936}]}, "okunan": "37.158008 42.5936 koordinatına git", "kosul": "telefon"}
+{"metin": "45 derece sola döner misin?", "beklenen": {"adimlar": [{"komut": "don", "yon": "sol", "derece": 45}]}, "okunan": "45 derece sola döner misin", "kosul": "temiz"}
+{"metin": "Alçal 80 metre.", "beklenen": {"adimlar": [{"komut": "alcal", "metre": 80}]}, "okunan": "alçal seksen metre", "kosul": "hizli_gurultu"}
+{"metin": "Şimdi de hoparlörden anons yap.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "şimdi de hoparlörden anons yap", "kosul": "telefon"}
+{"metin": "Alt yazım E ke artık.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "altyazı m k artık", "kosul": "temiz"}
+{"metin": "Ebet aşağı in bir as.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "evet aşağı in biraz", "kosul": "hizli_gurultu"}
+{"metin": "8 metre. İrtifa yürüsak.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 80}]}, "okunan": "seksen metre irtifaya yüksel", "kosul": "telefon"}
+{"metin": "Bunun sağı 140 derece çevir.", "beklenen": {"adimlar": [{"komut": "don", "yon": "sag", "derece": 141}]}, "okunan": "burnunu sağa yüz kırk bir derece çevir", "kosul": "temiz"}
+{"metin": "Hemen bulunduğun yere iniş yap.", "beklenen": {"adimlar": [{"komut": "in"}]}, "okunan": "hemen bulunduğun yere iniş yap", "kosul": "hizli_gurultu"}
+{"metin": "Bence burnunu sağ 11 derece çevir, sonra ilerle sağ 262 metre.", "beklenen": {"adimlar": [{"komut": "don", "yon": "sag", "derece": 111}, {"komut": "git_yon", "yon": "sag", "metre": 262}]}, "okunan": "önce burnunu sağa 111 derece çevir sonra ilerle sağa iki yüz altmış iki metre", "kosul": "telefon"}
+{"metin": "Lütfen hızı 4 metre saniye yap.", "beklenen": {"adimlar": [{"komut": "hiz_ayarla", "mps": 4}]}, "okunan": "lütfen hızı dört metre saniye yap", "kosul": "temiz"}
+{"metin": "Kuk metreye kal.", "beklenen": {"adimlar": [{"komut": "kalk", "irtifa_m": 40}]}, "okunan": "kırk metreye kalk", "kosul": "hizli_gurultu"}
+{"metin": "Hadi, hadi.", "beklenen": {"adimlar": [{"komut": "in"}]}, "okunan": "haydi hadi in", "kosul": "telefon"}
+{"metin": "En yakın İtveye stasyonuna git.", "beklenen": {"adimlar": [{"komut": "yakin_yere_git", "tur": "itfaiye"}]}, "okunan": "en yakın itfaiye istasyonuna git", "kosul": "temiz"}
+{"metin": "Enlem 40 nokta 3287 boylam 36.8.536 noktasına gider misin?", "beklenen": {"adimlar": [{"komut": "git_koordinat", "enlem": 40.3287, "boylam": 36.8536}]}, "okunan": "enlem 40.3287 boylam 36.8536 noktasına gider misin", "kosul": "hizli_gurultu"}
+{"metin": "Otuz metre. Sağdur.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "sag", "metre": 30}]}, "okunan": "30 metre sağa doğru uç", "kosul": "telefon"}
+{"metin": "Şimdi 30 metre yukarı çık.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 30}]}, "okunan": "şimdi otuz metre yukarı çık", "kosul": "temiz"}
+{"metin": "Hadi korkma teyit.", "beklenen": {"adimlar": [{"komut": "irtifaya_cik", "metre": 40}]}, "okunan": "hadi kırk metreye in", "kosul": "hizli_gurultu"}
+{"metin": "En yakın parka kadar uydur.", "beklenen": {"adimlar": [{"komut": "yakin_yere_git", "tur": "park"}]}, "okunan": "en yakın parka kadar uç", "kosul": "telefon"}
+{"metin": "Tamam o zaman sabit ka.", "beklenen": {"adimlar": [{"komut": "dur"}]}, "okunan": "tamam o zaman sabit kal", "kosul": "temiz"}
+{"metin": "Hızın 18 kemi saat yapar mısın?", "beklenen": {"adimlar": [{"komut": "hiz_ayarla", "mps": 5}]}, "okunan": "hızını 18 km/saat yapar mısın", "kosul": "hizli_gurultu"}
+{"metin": "Hemen sol tarafta bir ağaç var.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "hemen sol tarafta bir ağaç var", "kosul": "telefon"}
+{"metin": "Kuzey tarafı doğru 60 metre gel.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "kuzey", "metre": 60}]}, "okunan": "kuzey tarafa doğru 60 metre gel", "kosul": "temiz"}
+{"metin": "Önce 10 dakika bekler misin, sonra hız 8 metre saniye.", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 600}, {"komut": "hiz_ayarla", "mps": 8}]}, "okunan": "önce 10 dakika bekler misin sonra hız 8 metre saniye", "kosul": "hizli_gurultu"}
+{"metin": "86 metreye kadar yükselir misin? Sonrasında doğu tarafına doğru 40 metre git.", "beklenen": {"adimlar": [{"komut": "yuksel", "metre": 86}, {"komut": "git_yon", "yon": "dogu", "metre": 40}]}, "okunan": "seksen altı metre kadar yükselir misin sonrasında doğu tarafına doğru 40 metre git", "kosul": "telefon"}
+{"metin": "Tamam o zaman yüzümü tanı.", "beklenen": {"adimlar": [{"komut": "bilinmiyor"}]}, "okunan": "tamam o zaman yüzümü tanı", "kosul": "temiz"}
+{"metin": "120 saniye bekle.", "beklenen": {"adimlar": [{"komut": "bekle", "saniye": 120}]}, "okunan": "yüz yirmi saniye bekle", "kosul": "hizli_gurultu"}
+{"metin": "Kuzeye 90 metre al.", "beklenen": {"adimlar": [{"komut": "git_yon", "yon": "kuzey", "metre": 90}]}, "okunan": "kuzeye doksan metre kadar git", "kosul": "telefon"}
+{"metin": "Kalkış yapıp, sayöhüne 96 derece dön.", "beklenen": {"adimlar": [{"komut": "kalk"}, {"komut": "don", "yon": "sag", "derece": 96}]}, "okunan": "kalkış yapıp sağ yöne 96 derece dön", "kosul": "temiz"}

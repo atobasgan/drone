@@ -7,6 +7,10 @@ export PX4_DIR="${PX4_DIR:-$HOME/PX4-Autopilot}"
 export XRCE_AGENT_DIR="${XRCE_AGENT_DIR:-$HOME/Micro-XRCE-DDS-Agent}"
 export LLAMA_CPP_DIR="${LLAMA_CPP_DIR:-$HOME/llama.cpp}"
 export MODEL_DIR="${MODEL_DIR:-$LLM_DRONE_DIR/models}"
+# Faz 4: kendi fine-tune'lu modelin (finetune/README.md). FT=1 ile hepsini_baslat.sh bunu kullanir.
+# Q8_0: olcumde Q4_K_M kadar dogru, yanlis kabulu daha dusuk ve bu CPU'da daha hizliydi.
+# GPU'lu makinede ikisini finetune/eval/model_olc.sh ile olc; esitse kucuk olani (q4_k_m) sec.
+export FT_MODEL="${FT_MODEL:-$LLM_DRONE_DIR/finetune/models/drone-0.6b/drone-0.6b-q8_0.gguf}"
 
 # Simulasyonun gercek koordinatta baslamasi (Gorev 0.6): Ankara, Kizilay
 export PX4_HOME_LAT="${PX4_HOME_LAT:-39.9208}"

@@ -45,7 +45,7 @@ class ParserNode(Node):
                 url=url,
                 model=p('llm_model', 'yerel').value,
                 zaman_asimi=float(p('llm_zaman_asimi_s', 5.0).value),
-                max_tokens=int(p('llm_max_tokens', 64).value),
+                max_tokens=int(p('llm_max_tokens', 128).value),
                 sistem_prompt=KISA_SISTEM_PROMPT if kisa_prompt else SISTEM_PROMPT,
             )
         self.llm = llm

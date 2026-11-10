@@ -3,6 +3,7 @@
 #   ./scripts/hepsini_baslat.sh          # sim + agent + llm + ros node'lari
 #   ./scripts/hepsini_baslat.sh faz1     # sim + agent + sadece executor
 #   HEADLESS=1 ./scripts/hepsini_baslat.sh   # Gazebo penceresiz
+#   FT=1 ./scripts/hepsini_baslat.sh         # Faz 4: fine-tune'lu model + kisa prompt
 # Kapatmak: tmux kill-session -t drone
 set -euo pipefail
 source "$(dirname "$0")/ortam.sh"
@@ -21,8 +22,16 @@ tmux new-window -t $OTURUM -n agent "MicroXRCEAgent udp4 -p 8888; bash"
 if [ "$MOD" = "faz1" ]; then
   tmux new-window -t $OTURUM -n ros "$ROS_SRC && sleep 8 && ros2 launch drone_bringup executor.launch.py; bash"
 else
-  tmux new-window -t $OTURUM -n llm "$LLM_DRONE_DIR/scripts/llama_server.sh; bash"
-  tmux new-window -t $OTURUM -n ros "$ROS_SRC && sleep 8 && ros2 launch drone_bringup all.launch.py; bash"
+  if [ -n "${FT:-}" ]; then
+    # kisa prompt ~30 token: 1024'luk baglam yeter, bellek ve ilk yukleme kisalir
+    LLM_KOMUT="MODEL=$FT_MODEL CTX=1024 $LLM_DRONE_DIR/scripts/llama_server.sh"
+    FT_ARG="ft:=true"
+  else
+    LLM_KOMUT="$LLM_DRONE_DIR/scripts/llama_server.sh"
+    FT_ARG=""
+  fi
+  tmux new-window -t $OTURUM -n llm "$LLM_KOMUT; bash"
+  tmux new-window -t $OTURUM -n ros "$ROS_SRC && sleep 8 && ros2 launch drone_bringup all.launch.py $FT_ARG; bash"
 fi
 tmux new-window -t $OTURUM -n terminal "$ROS_SRC && bash"
 tmux attach -t $OTURUM

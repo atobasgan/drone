@@ -49,6 +49,26 @@ ORNEKLER = [
     ('90° sağa dön', '90 ° sağa dön'),
     ('kırk beş dereceye dön', '45 ° dön'),
     ('5 sn bekle', '5 saniye bekle'),
+    # zaman ve hiz: carpma/bolme LLM'e birakilmaz (Faz 4)
+    ('bir dakika bekle', '60 saniye bekle'),
+    # "bir elli metre" = "bi elli": yaklasik 50, 51 DEGIL (51 = "elli bir")
+    ('bir elli metre yüksel', 'bir 50 m yüksel'),
+    ('bir yirmiye çık', "bir 20'ye çık"),
+    ('elli bir metre', '51 m'),
+    # "ondan sonra" baglactir, 10'dan sonra degil; Whisper'in "meter" yazimi da birimdir
+    ('ondan sonra on metre alçal', 'ondan sonra 10 m alçal'),
+    ('onda bekle', 'onda bekle'),
+    ('on metreden sonra', "10 m'den sonra"),
+    ('elli meter yüksel', '50 m yüksel'),
+    ('50 metve git', '50 m git'),
+    ('mete bey geldi', 'mete bey geldi'),
+    ('bir metre', '1 m'),
+    ('iki buçuk dakika bekle', '150 saniye bekle'),
+    ('yarım dakika bekle', '30 saniye bekle'),
+    ('hızı 36 km/saat yap', 'hızı 10 m s yap'),
+    ('saatte 18 kilometre ile git', '5 m s ile git'),
+    ('hızını beş metre bölü saniye yap', 'hızını 5 m saniye yap'),
+    ('bir saat sonra', 'bir saat sonra'),
     ('20 metro yüksel', '20 m yüksel'),
     ('metro istasyonu', 'metro istasyonu'),
     # harf ve noktalama
