@@ -1,79 +1,186 @@
 import 'package:flutter/material.dart';
 
 import '../bilesenler/acil_dur_dugmesi.dart';
+import '../bilesenler/konusma_karti.dart';
 import '../bilesenler/ptt_dugmesi.dart';
+import '../bilesenler/telemetri_seridi.dart';
 import '../durum/modeller.dart';
+import '../durum/telsiz_kontrolcusu.dart';
+import 'ayarlar_ekrani.dart';
 
-/// Faz 1: Telsiz ekranının iskeleti.
-///
-/// Henüz bağlantı, mikrofon ya da yer istasyonu yok. Tuşa basıp bırakınca
-/// ne kadar basılı tutulduğu listeye yazılır; böylece bas-konuş tuşunun
-/// "dokunduğun anda" tepki verdiğini görebilirsin.
+/// Hızlı tuşlar da METİN olarak gider ve command_parser'dan geçer:
+/// telefon komutu kendisi yorumlamaz, güvenlik katmanı her zaman çalışır.
+const hizliKomutlar = ['kalk', 'in', 'eve dön', '10 metre yüksel', 'sağa dön', '5 saniye bekle'];
+
+/// Faz 5: Komut kartları, hızlı tuşlar ve yazılı komut. Faz 6: ACİL DUR.
+/// Faz 7: bas-konuş (telefonda tanıma). Faz 8: ham ses (yer STT).
+/// Faz 10: telemetri şeridi ve ayarlar ekranı.
 class TelsizEkrani extends StatefulWidget {
-  const TelsizEkrani({super.key});
+  const TelsizEkrani({super.key, required this.kontrolcu});
+
+  final TelsizKontrolcusu kontrolcu;
 
   @override
   State<TelsizEkrani> createState() => _TelsizEkraniState();
 }
 
 class _TelsizEkraniState extends State<TelsizEkrani> {
-  PttDurumu _ptt = PttDurumu.bos;
-  DateTime? _basma;
-  final List<String> _gecmis = [];
+  final _metin = TextEditingController();
 
-  void _basildi() {
-    setState(() {
-      _ptt = PttDurumu.dinliyor;
-      _basma = DateTime.now();
-    });
+  @override
+  void dispose() {
+    _metin.dispose();
+    super.dispose();
   }
 
-  void _birakildi() {
-    final sure = DateTime.now().difference(_basma ?? DateTime.now()).inMilliseconds;
-    setState(() {
-      _ptt = PttDurumu.bos;
-      _gecmis.insert(0, 'Konuşma ${_gecmis.length + 1}: $sure ms basılı tutuldu');
-    });
-  }
-
-  void _iptal() => setState(() => _ptt = PttDurumu.bos);
-
-  void _acilDur() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('ACİL DUR — yer istasyonu bağlantısı Faz 6\'da gelecek')),
-    );
+  void _gonder() {
+    widget.kontrolcu.metinGonder(_metin.text);
+    _metin.clear();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Drone Telsizi'),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: AcilDurDugmesi(onBasildi: _acilDur),
-          ),
-        ],
+    final k = widget.kontrolcu;
+    return ListenableBuilder(
+      listenable: k,
+      builder: (context, _) => Scaffold(
+        appBar: AppBar(
+          titleSpacing: 12,
+          title: BaglantiBasligi(k: k),
+          actions: [
+            IconButton(
+              tooltip: 'Ayarlar',
+              icon: const Icon(Icons.tune),
+              // Navigator: ekran yığını. push = yeni ekranı üste koy; geri tuşu pop eder.
+              onPressed: () =>
+                  Navigator.of(context).push(MaterialPageRoute(builder: (_) => AyarlarEkrani(kontrolcu: k))),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: AcilDurDugmesi(onBasildi: k.acilDur, etkin: k.bagli),
+            ),
+          ],
+        ),
+        body: Column(
+          children: [
+            TelemetriSeridi(telemetri: k.telemetri),
+            if (k.bildirim != null)
+              MaterialBanner(
+                content: Text(k.bildirim!),
+                backgroundColor: Theme.of(context).colorScheme.errorContainer,
+                actions: [TextButton(onPressed: k.bildirimiKapat, child: const Text('Tamam'))],
+              ),
+            Expanded(
+              child: k.kartlar.isEmpty
+                  ? const Center(
+                      child: Padding(
+                        padding: EdgeInsets.all(24),
+                        child: Text(
+                          'Tuşa basılı tut, konuş, bırak. Ya da yaz / hızlı tuşa bas.\nÖrnek: "önce 20 metre yüksel sonra kuzeye 50 metre git"',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    )
+                  : ListView.builder(
+                      padding: const EdgeInsets.only(top: 6, bottom: 12),
+                      itemCount: k.kartlar.length,
+                      itemBuilder: (_, i) => KonusmaKartiGorunumu(kart: k.kartlar[i]),
+                    ),
+            ),
+            SizedBox(
+              height: 44,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                children: [
+                  for (final komut in hizliKomutlar)
+                    Padding(
+                      padding: const EdgeInsets.only(right: 6),
+                      child: ActionChip(
+                        label: Text(komut),
+                        onPressed: k.komutVerebilir ? () => k.metinGonder(komut, giris: 'hizli_tus') : null,
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(12, 4, 12, 0),
+              child: TextField(
+                controller: _metin,
+                enabled: k.komutVerebilir,
+                textInputAction: TextInputAction.send,
+                onSubmitted: (_) => _gonder(),
+                decoration: InputDecoration(
+                  hintText: 'komut yaz (ör. 50 metreye çık)',
+                  suffixIcon: IconButton(icon: const Icon(Icons.send), onPressed: _gonder),
+                ),
+              ),
+            ),
+            // Konuşurken telefonun tanıyıcısının ara sonucu (canlı altyazı gibi)
+            if (k.kismiMetin != null && k.kismiMetin!.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                child: Text('"${k.kismiMetin}"', style: Theme.of(context).textTheme.titleMedium),
+              ),
+            SafeArea(
+              top: false,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(width: 72),
+                  PttDugmesi(
+                    durum: k.ptt,
+                    seviye: k.seviye, // mikrofon seviyesi: halka kalınlığı
+                    etkin: k.komutVerebilir,
+                    basildi: k.pttBasla,
+                    birakildi: k.pttBirak,
+                    iptal: k.pttIptal,
+                  ),
+                  // Hangi modda tanınıyor? (Faz 8: otomatik seçim)
+                  SizedBox(
+                    width: 72,
+                    child: Text(
+                      k.etkinMod == SttModu.yer ? 'yer\nSTT' : 'telefon\nSTT',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
-      body: Column(children: [
-        Expanded(
-          child: _gecmis.isEmpty
-              ? const Center(child: Text('Tuşa basılı tut, sonra bırak.'))
-              : ListView(children: [for (final satir in _gecmis) ListTile(title: Text(satir))]),
-        ),
-        SafeArea(
-          top: false,
-          child: PttDugmesi(
-            durum: _ptt,
-            seviye: 0,
-            etkin: true,
-            basildi: _basildi,
-            birakildi: _birakildi,
-            iptal: _iptal,
-          ),
-        ),
-      ]),
+    );
+  }
+}
+
+/// Bağlantı rozeti: renkli nokta + rol + ping.
+class BaglantiBasligi extends StatelessWidget {
+  const BaglantiBasligi({super.key, required this.k});
+
+  final TelsizKontrolcusu k;
+
+  @override
+  Widget build(BuildContext context) {
+    final (renk, yazi) = switch (k.baglantiDurumu) {
+      BaglantiDurumu.bagli => (const Color(0xFF00C853), k.rol == 'operator' ? 'OPERATÖR' : 'İZLEYİCİ'),
+      BaglantiDurumu.baglaniyor => (Colors.amber, 'BAĞLANIYOR'),
+      BaglantiDurumu.hata => (Colors.red, 'BAĞLANTI KOPTU'),
+      BaglantiDurumu.kopuk => (Colors.grey, 'KOPUK'),
+    };
+    final ping = k.baglanti.pingMs;
+    return Row(
+      children: [
+        Icon(Icons.circle, size: 12, color: renk),
+        const SizedBox(width: 6),
+        Flexible(child: Text(yazi, overflow: TextOverflow.ellipsis)),
+        if (ping != null) ...[
+          const SizedBox(width: 8),
+          Text('$ping ms', style: Theme.of(context).textTheme.labelMedium),
+        ],
+      ],
     );
   }
 }
