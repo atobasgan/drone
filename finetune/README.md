@@ -208,3 +208,28 @@ gürültüsü). Kalan tavanı artık STT belirliyor.
   --ad drone-gemma`. Bu ortamda denenmedi.
 - Qwen3 1.7B'nin fine-tune'u aynı betikle (`--taban Qwen/Qwen3-1.7B`) yapılır; CPU'da ~6 saat
   süreceği için GPU'da yapılmalı. 0.6B zaten 1.7B'yi geçtiği için öncelikli değil.
+
+## Faz 5 — `yere_git` (Görev 5.4)
+
+```bash
+python3 -m finetune.data_gen.uret_harita --dogrula              # -> data_faz5/ (Faz 4 verisi + yere_git)
+python3 -m finetune.train.egit --ad drone-0.6b-faz5 --veri finetune/data_faz5
+finetune/train/disa_aktar.sh drone-0.6b-faz5
+python3 -m finetune.eval.olc_harita --etiket drone-0.6b-faz5 --kisa-prompt --arka-uc Q8_0
+# llama.cpp yoksa: python3 -m finetune.eval.hf_sunucu --ad drone-0.6b-faz5 &  (+ --arka-uc hf-fp32)
+```
+
+`data/`, `uret.py`, `olc.py` değişmedi; Faz 5 kodu yeni dosyalarda (`harita_sablonlari.py`,
+`uret_harita.py`, `dogrula_harita.py`, `olc_harita.py`, `hf_sunucu.py`).
+
+Sonuç (2026-11-23, transformers fp32, şema kısıtı yok, CPU 4 çekirdek, eğitim 134 dk):
+
+| test seti | n | tam % | komut % | parametre % | yanlış kabul % |
+|---|---|---|---|---|---|
+| sentetik (Faz 4 testi) | 791 | 95.7 | 95.7 | 100.0 | 0.0 |
+| cumleler | 107 | 99.1 | 99.1 | 100.0 | 0.0 |
+| harita (`yere_git`) | 173 | 73.4 | 93.6 | 77.6 | 0.0 |
+
+Eski setlerde gerileme yok. `yere_git` komutu öğrenildi; yer adını kopyalamak zayıf (birleşik adı
+kısaltma, eki yanlış kesme). Faz 4 sayıları llama.cpp + şema kısıtıyla ölçüldüğü için kıyas birebir
+değil. Ayrıntı ve hata örnekleri: NOTLAR.md, `eval/sonuclar_faz5.md`.

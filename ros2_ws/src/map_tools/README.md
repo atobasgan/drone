@@ -129,7 +129,11 @@ python3 -m finetune.eval.olc_harita --etiket drone-0.6b-faz5 --kisa-prompt   # l
   böylece eski test setinde gerileme ölçülebiliyor.
 - Etiket kuralı: `ad` = cümledeki yer adının yalın hali ("kızılay meydanı'na uç" → `kızılay meydanı`).
   Testteki yer adları eğitimde hiç geçmiyor: model ezber değil kopyalamayı öğrenmeli.
-- Sonuçlar: `finetune/eval/sonuclar_faz5.md` ve NOTLAR.md.
+- Sonuçlar (2026-11-23, transformers fp32, şema kısıtı yok): eski testlerde gerileme yok
+  (sentetik %95.7, cumleler %99.1 tam; yanlış kabul %0). `yere_git` testinde komut %93.6,
+  tam %73.4: model komutu öğrendi ama yer adını kopyalarken birleşik adları kısaltıyor
+  ("belgrad ormanı" → "belgrad") ya da eki yanlış kesiyor ("armada'ya" → "arma").
+  Ayrıntı: `finetune/eval/sonuclar_faz5.md`, NOTLAR.md.
 
 ## Bu depoda doğrulanamayanlar
 

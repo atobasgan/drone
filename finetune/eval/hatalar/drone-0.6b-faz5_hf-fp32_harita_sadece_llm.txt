@@ -1,0 +1,138 @@
+[yer_adi] belgrad ormanına götür
+    beklenen: [{"komut": "yere_git", "ad": "belgrad ormanı"}]
+    üretilen: [{"komut": "yere_git", "ad": "belgrad"}] 
+[adim_sayisi] kampüse varınca 30 saniye bekle
+    beklenen: [{"komut": "yere_git", "ad": "kampüs"}, {"komut": "bekle", "saniye": 30}]
+    üretilen: [{"komut": "yere_git", "ad": "kampü"}] 
+[yer_adi] şey kavaklıdereye doğru git
+    beklenen: [{"komut": "yere_git", "ad": "kavaklıdere"}]
+    üretilen: [{"komut": "yere_git", "ad": "kavaklıdereye"}] 
+[komutu_kacirdi] önce 80 m'ye kalk sonra ankaparka doğru git
+    beklenen: [{"komut": "kalk", "irtifa_m": 80}, {"komut": "yere_git", "ad": "ankapark"}]
+    üretilen: [] gecersiz cevap: git_yon.yon gecersiz: 'ankaparka'
+[yer_adi] odtü'ye gitmeni istiyorum
+    beklenen: [{"komut": "yere_git", "ad": "odtü"}]
+    üretilen: [{"komut": "yere_git", "ad": "odTÜ"}] 
+[yer_adi] saat kulesi'ne götür arkasından 45 saniye bekle
+    beklenen: [{"komut": "yere_git", "ad": "saat kulesi"}, {"komut": "bekle", "saniye": 45}]
+    üretilen: [{"komut": "yere_git", "ad": "sagluk"}, {"komut": "bekle", "saniye": 45.0}] 
+[yer_adi] armada'ya gitmeni istiyorum
+    beklenen: [{"komut": "yere_git", "ad": "armada"}]
+    üretilen: [{"komut": "yere_git", "ad": "arma"}] 
+[yer_adi] spor salonu'na bir uç
+    beklenen: [{"komut": "yere_git", "ad": "spor salonu"}]
+    üretilen: [{"komut": "yere_git", "ad": "sport salonu"}] 
+[yer_adi] saat kulesi'ne götür
+    beklenen: [{"komut": "yere_git", "ad": "saat kulesi"}]
+    üretilen: [{"komut": "yere_git", "ad": "saglik kulesi"}] 
+[yer_adi] odtüye gitmeni istiyorum
+    beklenen: [{"komut": "yere_git", "ad": "odtü"}]
+    üretilen: [{"komut": "yere_git", "ad": "odTÜ"}] 
+[komutu_kacirdi] tamam ankaparka git lütfen
+    beklenen: [{"komut": "yere_git", "ad": "ankapark"}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[yer_adi] belgrad ormanı'na gitmeni istiyorum
+    beklenen: [{"komut": "yere_git", "ad": "belgrad ormanı"}]
+    üretilen: [{"komut": "yere_git", "ad": "belgrad"}] 
+[yer_adi] kampüse git lütfen
+    beklenen: [{"komut": "yere_git", "ad": "kampüs"}]
+    üretilen: [{"komut": "yere_git", "ad": "kampü"}] 
+[yer_adi] armada'ya bir uç
+    beklenen: [{"komut": "yere_git", "ad": "armada"}]
+    üretilen: [{"komut": "yere_git", "ad": "arma"}] 
+[komutu_kacirdi] odtüye uçup 40 m'ye kadar çık
+    beklenen: [{"komut": "yere_git", "ad": "odtü"}, {"komut": "irtifaya_cik", "metre": 40}]
+    üretilen: [] gecersiz cevap: Expecting ',' delimiter: line 1 column 45 (char 44)
+[yer_adi] saat kulesine gitmeni istiyorum
+    beklenen: [{"komut": "yere_git", "ad": "saat kulesi"}]
+    üretilen: [{"komut": "yere_git", "ad": "kules"}] 
+[komutu_kacirdi] önce bulunduğun yere iniş yap sonra çamlıca tepesine götür
+    beklenen: [{"komut": "in"}, {"komut": "yere_git", "ad": "çamlıca tepesi"}]
+    üretilen: [] gecersiz cevap: bilinmeyen komut: {'komut': 'yere_in'}
+[yer_adi] armada'ya git lütfen
+    beklenen: [{"komut": "yere_git", "ad": "armada"}]
+    üretilen: [{"komut": "yere_git", "ad": "arma"}] 
+[yer_adi] saat kulesi'ne git lütfen
+    beklenen: [{"komut": "yere_git", "ad": "saat kulesi"}]
+    üretilen: [{"komut": "yere_git", "ad": "sakin kulesi"}] 
+[yer_adi] belgrad ormanı'na götür
+    beklenen: [{"komut": "yere_git", "ad": "belgrad ormanı"}]
+    üretilen: [{"komut": "yere_git", "ad": "belgrad"}] 
+[yer_adi] saat kulesine götür arkasından 45 saniye bekle
+    beklenen: [{"komut": "yere_git", "ad": "saat kulesi"}, {"komut": "bekle", "saniye": 45}]
+    üretilen: [{"komut": "yere_git", "ad": "kulesi"}, {"komut": "bekle", "saniye": 45.0}] 
+[yer_adi] ankaparka gitmeni istiyorum
+    beklenen: [{"komut": "yere_git", "ad": "ankapark"}]
+    üretilen: [{"komut": "yere_git", "ad": "ankapar"}] 
+[yer_adi] odtü'ye git
+    beklenen: [{"komut": "yere_git", "ad": "odtü"}]
+    üretilen: [{"komut": "yere_git", "ad": "odTÜ"}] 
+[yer_adi] belgrad ormanı'na git
+    beklenen: [{"komut": "yere_git", "ad": "belgrad ormanı"}]
+    üretilen: [{"komut": "yere_git", "ad": "belgrad"}] 
+[komutu_kacirdi] tamam o zaman odtüye git
+    beklenen: [{"komut": "yere_git", "ad": "odtü"}]
+    üretilen: [] gecersiz cevap: Expecting ',' delimiter: line 1 column 44 (char 43)
+[yer_adi] önce 80 m'ye kalk sonra ankapark'a doğru git
+    beklenen: [{"komut": "kalk", "irtifa_m": 80}, {"komut": "yere_git", "ad": "ankapark"}]
+    üretilen: [{"komut": "kalk", "irtifa_m": 80.0}, {"komut": "yere_git", "ad": "ankaparak"}] 
+[yer_adi] pekala çamlıca tepesi'ne git
+    beklenen: [{"komut": "yere_git", "ad": "çamlıca tepesi"}]
+    üretilen: [{"komut": "yere_git", "ad": "pekala çamlıca tepesi"}] 
+[yer_adi] tamam o zaman bostanlıya bir uç
+    beklenen: [{"komut": "yere_git", "ad": "bostanlı"}]
+    üretilen: [{"komut": "yere_git", "ad": "bostan"}] 
+[yer_adi] odtü'ye götür tamam mı
+    beklenen: [{"komut": "yere_git", "ad": "odtü"}]
+    üretilen: [{"komut": "yere_git", "ad": "odTÜ"}] 
+[yer_adi] evet saat kulesi'ne git lütfen
+    beklenen: [{"komut": "yere_git", "ad": "saat kulesi"}]
+    üretilen: [{"komut": "yere_git", "ad": "kules"}] 
+[yer_adi] bak saat kulesi'ne gitmeni istiyorum
+    beklenen: [{"komut": "yere_git", "ad": "saat kulesi"}]
+    üretilen: [{"komut": "yere_git", "ad": "sakin kulesi"}] 
+[yer_adi] saat kulesi'ne bir uç
+    beklenen: [{"komut": "yere_git", "ad": "saat kulesi"}]
+    üretilen: [{"komut": "yere_git", "ad": "saglik kulesi"}] 
+[yer_adi] saat kulesi'ne git artık
+    beklenen: [{"komut": "yere_git", "ad": "saat kulesi"}]
+    üretilen: [{"komut": "yere_git", "ad": "saglik kulesi"}] 
+[yer_adi] odtü'ye bir uç
+    beklenen: [{"komut": "yere_git", "ad": "odtü"}]
+    üretilen: [{"komut": "yere_git", "ad": "odTÜ"}] 
+[yer_adi] tamam o zaman odtü'ye git
+    beklenen: [{"komut": "yere_git", "ad": "odtü"}]
+    üretilen: [{"komut": "yere_git", "ad": "odTÜ"}] 
+[yer_adi] belgrad ormanı'na bir uç
+    beklenen: [{"komut": "yere_git", "ad": "belgrad ormanı"}]
+    üretilen: [{"komut": "yere_git", "ad": "belgrad"}] 
+[komutu_kacirdi] armadaya bir uç
+    beklenen: [{"komut": "yere_git", "ad": "armada"}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[yer_adi] saat kulesine git artık
+    beklenen: [{"komut": "yere_git", "ad": "saat kulesi"}]
+    üretilen: [{"komut": "yere_git", "ad": "kules"}] 
+[yer_adi] spor salonu'na varınca 49 m'ye kadar kalkış yap
+    beklenen: [{"komut": "yere_git", "ad": "spor salonu"}, {"komut": "kalk", "irtifa_m": 49}]
+    üretilen: [{"komut": "yere_git", "ad": "sport salonu"}, {"komut": "kalk", "irtifa_m": 49.0}] 
+[yer_adi] armada'ya götür tamam mı
+    beklenen: [{"komut": "yere_git", "ad": "armada"}]
+    üretilen: [{"komut": "yere_git", "ad": "arma"}] 
+[adim_sayisi] odtü'ye uçup 40 m'ye kadar çık
+    beklenen: [{"komut": "yere_git", "ad": "odtü"}, {"komut": "irtifaya_cik", "metre": 40}]
+    üretilen: [{"komut": "yere_git", "ad": "odTÜ"}] 
+[komutu_kacirdi] odtüye git
+    beklenen: [{"komut": "yere_git", "ad": "odtü"}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[yer_adi] kampüse git lütfen bakalım
+    beklenen: [{"komut": "yere_git", "ad": "kampüs"}]
+    üretilen: [{"komut": "yere_git", "ad": "kampü"}] 
+[yer_adi] saat kulesi'ne gitmeni istiyorum
+    beklenen: [{"komut": "yere_git", "ad": "saat kulesi"}]
+    üretilen: [{"komut": "yere_git", "ad": "saglik kulesi"}] 
+[komutu_kacirdi] tamam ankapark'a git lütfen
+    beklenen: [{"komut": "yere_git", "ad": "ankapark"}]
+    üretilen: [] anlaşılmadı (bilinmiyor)
+[komutu_kacirdi] armadaya git lütfen
+    beklenen: [{"komut": "yere_git", "ad": "armada"}]
+    üretilen: [] anlaşılmadı (bilinmiyor)

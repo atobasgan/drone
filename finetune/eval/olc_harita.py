@@ -12,13 +12,14 @@ ve ucuncu test seti. Sonuc: finetune/eval/sonuclar_faz5.md (Faz 4 tablosuna doku
 import argparse
 from collections import Counter
 import datetime
+import json
 import os
 import re
 import sys
 
 from ..ortak import FINETUNE, KOK
 from .hata_turleri import hata_turu
-from .olc import BASLIK, hatalari_yaz
+from .olc import BASLIK
 
 from command_parser.degerlendir import degerlendir, veri_oku  # noqa: E402
 from command_parser.harita_komutlari import HaritaKomutCozucu, HaritaLLMIstemcisi  # noqa: E402
@@ -42,6 +43,16 @@ def harita_hata_turu(beklenen, uretilen):
 
 def ozet(hatalar):
     return Counter(harita_hata_turu(b, u) or 'diger' for _, _, b, u, _, _ in hatalar)
+
+
+def harita_hatalari_yaz(yol, hatalar):
+    """olc.hatalari_yaz'in aynisi; etiket harita_hata_turu'ndan (yanlis yer adi 'sayi' gorunmesin)."""
+    os.makedirs(os.path.dirname(yol), exist_ok=True)
+    with open(yol, 'w', encoding='utf-8') as f:
+        for metin, norm, beklenen, uretilen, kaynak, hata in hatalar:
+            f.write(f'[{harita_hata_turu(beklenen, uretilen) or "diger"}] {metin}\n'
+                    f'    beklenen: {json.dumps(beklenen, ensure_ascii=False)}\n'
+                    f'    üretilen: {json.dumps(uretilen, ensure_ascii=False)} {hata}\n')
 
 
 def tabloya_yaz(satir):
@@ -86,7 +97,7 @@ def main(argv=None):
                         f'| {set_adi} | {mod} | {s["n"]} | {oranlar} | {s["llm_ort_ms"]:.0f} '
                         f'| {s["llm_p95_ms"]:.0f} | {turler} |\n')
             dosya = re.sub(r'[^\w.-]+', '_', f'{args.etiket} {args.arka_uc} {set_adi} {mod}').strip('_')
-            hatalari_yaz(os.path.join(FINETUNE, 'eval', 'hatalar', f'{dosya}.txt'), s['hatalar'])
+            harita_hatalari_yaz(os.path.join(FINETUNE, 'eval', 'hatalar', f'{dosya}.txt'), s['hatalar'])
     return 0
 
 

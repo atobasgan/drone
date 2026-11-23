@@ -172,6 +172,35 @@ Uçtan uca (sentetik ses → Whisper small → hızlı yol + LLM, 321 klip): kom
   dakika→saniye, km/saat→m/s; `llm_max_tokens` 64→128; LLM tekrar döngüsü reddi.
 - Gerçek ses kayıtlarıyla (Görev 3.1) doğrulanmadı.
 
+### Faz 5 fine-tune (Görev 5.4) — 2026-11-23
+
+Ayrıntı: [finetune/eval/sonuclar_faz5.md](finetune/eval/sonuclar_faz5.md), hatalar: `finetune/eval/hatalar/drone-0.6b-faz5_*`.
+Veri `data_faz5/`: Faz 4 verisi aynen + 920 `yere_git` / harita negatifi örneği (train 4629 / val 805 / test 964).
+Eğitim Faz 4 ile aynı ayarlar (LoRA r=16, 2 epoch, 580 adım), bulut CPU 4 çekirdek, 134 dk,
+en iyi doğrulama kaybı 0.0173.
+
+| test seti | n | tam % | komut % | parametre % | yanlış kabul % | Faz 4 tur 2 Q8_0 tam % |
+|---|---|---|---|---|---|---|
+| sentetik (Faz 4 testi) | 791 | 95.7 | 95.7 | 100.0 | 0.0 | 94.3 |
+| cumleler (107 elle yazılmış) | 107 | 99.1 | 99.1 | 100.0 | 0.0 | 99.1 |
+| harita (`yere_git`, yer adları eğitimde yok) | 173 | 73.4 | 93.6 | 77.6 | 0.0 | — |
+
+- **Ölçüm farkı:** burada llama.cpp yok; model `hf_sunucu` ile transformers fp32, **JSON şema kısıtı
+  olmadan** ölçüldü. Faz 4 satırı llama.cpp Q8_0 + şema kısıtıyla. Kıyas birebir değil, yön
+  gösterir. Süreler (ort ~3 sn) fp32 / transformers'a ait; llama.cpp ile ~0.5 sn beklenir.
+- **Gerileme yok:** eski iki sette sonuçlar aynı ya da daha iyi; yanlış kabul yine %0.
+- **yere_git komutu öğrenildi** (komut %93.6), **yer adını kopyalamak zayıf** (35 `yer_adi` hatası):
+  - birleşik adı kısaltma: "belgrad ormanı" → "belgrad", "saat kulesi" → "kulesi"
+  - eki yanlış kesme: "armada'ya" → "arma", "kampüse" → "kampü", "bostanlıya" → "bostan"
+  - uydurma: "saat kulesi" → "saglik kulesi"
+  - yalnız büyük/küçük harf: "odtü" → "odTÜ" (6 hata; harita servisi için zararsız)
+- 9 `komutu_kacirdi`: şema kısıtı olmadığı için bozuk JSON ve "yere_in" gibi uydurma komutlar.
+  Bunları yürütücü zaten reddeder (drone kıpırdamaz); llama.cpp'nin şema kısıtı bu sınıfı kapatır.
+- Test setinde 17 farklı yer var, hatalar birkaç ada toplanıyor (saat kulesi, odtü, belgrad ormanı,
+  armada); sayı yer seçimine duyarlı.
+- **Makinede yapılacak:** `disa_aktar.sh drone-0.6b-faz5` → Q8_0 GGUF ile `olc_harita` (şema kısıtlı).
+  Yer adı hâlâ zayıfsa: daha çok yer adı (özellikle ünlüyle biten ve birleşik adlar) ile tur 2.
+
 ### Drone sözlüğü (initial_prompt) — sentetik ses — 2026-11-09
 
 Ayrıntı: DRONE_SOZLUGU.txt. Piper tr_TR-dfki, 167 cümle x 3 koşul (temiz / hızlı+gürültü SNR 8 /
