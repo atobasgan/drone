@@ -11,3 +11,7 @@ echo "=== finetune (Faz 4 veri uretimi ve degerlendirme) ==="
 (cd "$kok" && python3 -m pytest -q finetune/test "$@")
 echo "=== sahte simulasyon (executor + parser, ROS'suz) ==="
 python3 "$kok/araclar/sahte_sim/sim.py" | tail -1
+echo "=== map_tools (Faz 5 harita komutlari) ==="
+(cd "$kok/ros2_ws/src/map_tools" && python3 -m pytest -q "$@")
+echo "=== sahte simulasyon (Faz 5: parser + harita_node + executor) ==="
+python3 "$kok/araclar/sahte_sim/sim_harita.py" | tail -1

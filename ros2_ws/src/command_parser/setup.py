@@ -24,6 +24,7 @@ setup(
         'console_scripts': [
             'parser_node = command_parser.parser_node:main',
             'degerlendir = command_parser.degerlendir:main',
+            'harita_parser_node = command_parser.harita_parser_node:main',
         ],
     },
 )

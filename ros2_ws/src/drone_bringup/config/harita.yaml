@@ -1,0 +1,23 @@
+# Faz 5: harita komutlari (map_tools). harita.launch.py yukler.
+#   saglayici: osm (anahtarsiz, Overpass + Nominatim) | google (GOOGLE_MAPS_API_KEY ortam degiskeni)
+harita_node:
+  ros__parameters:
+    saglayici: osm
+    zaman_asimi_s: 8.0
+    onbellek_s: 600.0              # ayni sorgu (~50 m icinde) 10 dk servise gitmez; 0 = kapali
+    arama_yaricapi_m: 3000.0       # bu yaricap icinde aranir
+    en_uzak_m: 1000.0              # daha uzaktaki yere gidilmez (guvenlik.yaml max_adim_mesafe ile ayni)
+    seyir_irtifasi_m: 30.0         # Gorev 5.1: binalarin ustunden gitmek icin once bu irtifaya cik
+    git_koordinata_seyir: true     # LLM'in dogrudan verdigi git_koordinat'a da seyir irtifasi uygula
+    varsayilan_enlem: 39.9208      # GPS yoksa arama merkezi (PX4_HOME ile ayni tutun)
+    varsayilan_boylam: 32.8541
+    px4_on_ek: /fmu
+    giris_topic: /drone/command
+    cikis_topic: /drone/command_harita
+
+places_node:
+  ros__parameters:
+    saglayici: osm
+    zaman_asimi_s: 8.0
+    onbellek_s: 600.0
+    arama_yaricapi_m: 3000.0

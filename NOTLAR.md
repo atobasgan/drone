@@ -7,7 +7,7 @@ yaz (YOL_HARITASI.txt "Genel alışkanlıklar").
 
 `./scripts/surumleri_yaz.sh >> NOTLAR.md` çıktısını buraya ekle.
 
-## Görev durumu (Faz 0–4)
+## Görev durumu (Faz 0–5)
 
 Kod hazır = depoda; ✔ = birim testi / sahte simülasyonla doğrulandı;
 **Makinede** = Ubuntu 26.04 + PX4 SITL üzerinde KONTROL maddeleri sen çalıştırınca işaretlenecek.
@@ -44,6 +44,10 @@ Kod hazır = depoda; ✔ = birim testi / sahte simülasyonla doğrulandı;
 | 4.5 İlk fine-tune | `finetune/train/egit.py` (LoRA, CPU/GPU), `dene.py`, `birlestir.py`, `disa_aktar.sh` (GGUF Q4_K_M + Q8_0) | ✔ bulutta CPU'da eğitildi |
 | 4.6 Değerlendir, yinele | hata türleri `finetune/eval/hatalar/`, ikinci tur `ek_sablonlar.py`, Q4/Q8 kıyası | ✔ 2 tur (aşağıda); FunctionGemma lisans onayı ister, 1.7B FT GPU'da yapılmalı |
 | 4.7 Devreye al | `parser_ft.yaml`, `ft:=true` launch argümanı, `FT=1 ./scripts/hepsini_baslat.sh`, `stt_karsilastir --kisa-prompt` | ✔ uçtan uca sentetik sesle; ROS + PX4 ile **Makinede** |
+| 5.1 git_koordinat | `yer_cozucu`: harita hedefinden ve LLM'in `git_koordinat`'ından önce seyir irtifası (30 m, alçalmaz); enlem/boylam→NED `geo.py` (Faz 1) | ✔ sahte sim (önce tırmanış, sonra hedefte ±1 m); QGC ile **Makinede** |
+| 5.2 map_tools | `places_node` `/map/find_nearest` (`FindNearest.srv`), `turler.py` (8 tür), `osm.py` (Overpass + haversine), zaman aşımı/hata cevabı, `onbellek.py` | ✔ sahte HTTP cevaplarıyla pytest; canlı OSM bu ortamda engelli → **Makinede** |
+| 5.3 yakin_yere_git | `harita_node` (yürütücüye remap ile, kodu değişmeden), feedback "850 m uzaktaki X için yola çıkıyorum", uzak/bulunamadı reddi, hızlı yol "en yakın {tür}e git", dur/ACİL DUR iptali | ✔ `sim_harita.py` + pytest; sesle **Makinede** |
+| 5.4 Google + yere_git | `google_places.py` (Nearby + Text Search, `GOOGLE_MAPS_API_KEY`), `saglayici: osm\|google`, `yere_git {ad}` (şema + prompt + `harita_node`), `data_faz5/`, `drone-0.6b-faz5` | ✔ sahte HTTP ile; fine-tune ve ölçüm aşağıda; canlı Google **Makinede** (anahtar + kota uyarısı) |
 
 ## Tasarım kararları (MIMARI.txt'ten sapmalar / ayrıntılar)
 
@@ -62,6 +66,21 @@ Kod hazır = depoda; ✔ = birim testi / sahte simülasyonla doğrulandı;
   isteklerde `enable_thinking=false` ve `/no_think`.
 - **Normalizasyon**: "2 km" → "2000 m" (LLM/hızlı yol tek birim görsün). "bir"/"yarım" yalnızca
   arkasından birim gelirse sayıdır ("bir şey" sayı değil). "ona git" sayı değil.
+
+### Faz 5
+
+- **Faz 0–4 fonksiyonlarına dokunulmadı.** Harita işi yeni `harita_node`'da; yürütücü
+  `harita.launch.py`'de `SetRemap` ile `/drone/command_harita`'yı dinler. Parser'a yeni davranış
+  alt sınıflarla eklendi (`HaritaParserNode`, `HaritaLLMIstemcisi`, `HaritaKomutCozucu`).
+  Mevcut dosyalara yalnızca ekleme yapıldı: `DroneCommand.msg` (+`ad`), `drone_interfaces/CMakeLists.txt`
+  (+`FindNearest.srv`), `command_parser/setup.py` (+`harita_parser_node`), `drone_bringup/package.xml`
+  (+`map_tools`), `testleri_calistir.sh` (+2 satır grubu). `all.launch.py` eskisi gibi çalışır.
+- **Arama sürerken tırmanılmaz**: "sonuç yoksa drone hareket etmiyor" KONTROL'ü için. Tırmanış,
+  sonuç gelince listenin ilk adımı.
+- **Sıra korunur**: arama beklerken gelen komut onu sollamaz; "dur" / ACİL DUR beklemez ve
+  bekleyen aramaları iptal eder (nesil sayacı).
+- **en_uzak_m = 1000** (`max_adim_mesafe` ile aynı): daha uzak yer sebebiyle reddedilir.
+- **yere_git etiketi**: cümledeki yalın ad, küçük harf (normalize çıktısı); servis büyük/küçük harfe bakmaz.
 
 ### Faz 3
 

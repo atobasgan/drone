@@ -11,6 +11,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/Feedback.msg"
   "msg/VoiceText.msg"
   "msg/LatencySample.msg"
+  "srv/FindNearest.srv"
   DEPENDENCIES builtin_interfaces
 )
 

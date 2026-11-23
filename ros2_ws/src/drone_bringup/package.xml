@@ -13,6 +13,7 @@
   <exec_depend>command_parser</exec_depend>
   <exec_depend>voice_input</exec_depend>
   <exec_depend>latency_monitor</exec_depend>
+  <exec_depend>map_tools</exec_depend>
 
   <export>
     <build_type>ament_python</build_type>

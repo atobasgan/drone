@@ -10,6 +10,7 @@ Gazebo Jetty + ROS 2 Lyrical + PX4 (SITL) + yerel küçük LLM.
 | [LLM_API_SENARYOSU.txt](LLM_API_SENARYOSU.txt) | LLM bize hazır verilirse: API + few-shot ile Faz 2 |
 | [DRONE_SOZLUGU.txt](DRONE_SOZLUGU.txt) | Whisper `initial_prompt` sözlüğü: tasarım, ölçümler, uydurma filtresi |
 | [finetune/README.md](finetune/README.md) | Faz 4: veri üretimi, LoRA fine-tune, değerlendirme, devreye alma, sonuçlar |
+| [ros2_ws/src/map_tools/README.md](ros2_ws/src/map_tools/README.md) | Faz 5: harita komutları ("en yakın hastaneye git", "Anıtkabir'e git"), OSM / Google Places |
 | [NOTLAR.md](NOTLAR.md) | sürümler, ölçümler, görev durumu |
 
 ## Durum
@@ -17,7 +18,8 @@ Gazebo Jetty + ROS 2 Lyrical + PX4 (SITL) + yerel küçük LLM.
 **Faz 0–4 kodu hazır** (kurulum betikleri, `drone_interfaces`, `mission_executor`,
 `command_parser`, `voice_input`, `latency_monitor`, `drone_bringup`, `finetune`). Faz 4'te
 kendi fine-tune'lu modelimiz eğitildi ve ölçüldü ([finetune/README.md](finetune/README.md)).
-Faz 3'ün insan ses kayıtları sırada. Hangi görevin makinede doğrulanması gerektiği
+Faz 5'te harita komutları eklendi: yeni `map_tools` paketi, Faz 0–4 fonksiyonlarına dokunmadan
+([map_tools/README.md](ros2_ws/src/map_tools/README.md)). Faz 3'ün insan ses kayıtları sırada. Hangi görevin makinede doğrulanması gerektiği
 [NOTLAR.md](NOTLAR.md)'de.
 
 ## Akış
@@ -45,8 +47,10 @@ ros2_ws/src/
   voice_input/             vad.py, stt.py, stt_sozlugu.py, stt_node.py, kayit_al.py, stt_karsilastir.py,
                            sentetik_set.py, ses_testi.py
   latency_monitor/         monitor_node.py (CSV), ozet.py (ort / p50 / p95)
-  drone_bringup/           launch/ + config/guvenlik.yaml, config/parser.yaml, config/parser_ft.yaml
+  drone_bringup/           launch/ + config/guvenlik.yaml, config/parser.yaml, config/parser_ft.yaml, config/harita.yaml
+  map_tools/               Faz 5: osm.py, google_places.py, onbellek.py, yer_cozucu.py, harita_node.py, places_node.py
 finetune/                  Faz 4: data_gen/ (veri üretimi), data/, train/ (LoRA), eval/ (ölçüm, sonuçlar)
+                           Faz 5: data_gen/uret_harita.py -> data_faz5/, eval/olc_harita.py, eval/hf_sunucu.py
 recordings/                cumleler.jsonl (okunacak 107 cümle), *.wav + etiketler.csv
 araclar/sahte_sim/         ROS'suz uçtan uca test (sahte rclpy + basit araç modeli)
 ```
@@ -136,6 +140,23 @@ python3 -m finetune.data_gen.uret --ek-veri finetune/data/stt_ciktilari.jsonl   
 python3 -m finetune.train.egit                     # LoRA, Qwen3 0.6B (GPU'da dakikalar, CPU'da ~2 saat)
 finetune/train/disa_aktar.sh drone-0.6b            # -> finetune/models/drone-0.6b/*.gguf
 FT=1 ./scripts/hepsini_baslat.sh                   # fine-tune'lu model + kısa prompt (parser_ft.yaml)
+```
+
+## Faz 5 — harita komutları
+
+Ayrıntı, kurallar ve KONTROL komutları: [ros2_ws/src/map_tools/README.md](ros2_ws/src/map_tools/README.md).
+
+```
+/voice/text -> harita_parser_node -/drone/command-> harita_node -/drone/command_harita-> mission_executor
+                                                    (yakin_yere_git / yere_git -> irtifaya_cik 30 m + git_koordinat)
+```
+
+```bash
+./scripts/derle.sh
+ros2 launch drone_bringup harita.launch.py              # ya da: FT=1 ./scripts/harita_baslat.sh
+./scripts/metin_gonder.sh "en yakın hastaneye git"
+ros2 service call /map/find_nearest drone_interfaces/srv/FindNearest "{tur: hastane, enlem: 39.9208, boylam: 32.8541}"
+python3 araclar/sahte_sim/sim_harita.py                 # ROS'suz uçtan uca (sahte harita)
 ```
 
 ## Testler (ROS gerektirmez)

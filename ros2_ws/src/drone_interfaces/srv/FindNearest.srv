@@ -1,0 +1,16 @@
+# /map/find_nearest (map_tools/places_node, Faz 5). Tur VEYA ad verilir.
+#   ros2 service call /map/find_nearest drone_interfaces/srv/FindNearest \
+#     "{tur: hastane, enlem: 39.9208, boylam: 32.8541, yaricap_m: 3000.0}"
+string tur          # hastane|eczane|benzinlik|polis|itfaiye|okul|park|market (en yakin)
+string ad           # isimle arama: "Anıtkabir" (tur bos ise kullanilir)
+float64 enlem       # aramanin merkezi (genelde drone'un konumu)
+float64 boylam
+float32 yaricap_m   # 0 = varsayilan (places_node parametresi)
+---
+bool bulundu
+string yer_adi
+float64 enlem
+float64 boylam
+float32 mesafe_m
+string kaynak       # osm | google
+string hata         # bulunamadi / servis hatasi aciklamasi

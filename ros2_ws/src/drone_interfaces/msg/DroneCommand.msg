@@ -2,7 +2,7 @@
 # Kullanilmayan alanlar 0 / bos birakilir. Komut listesi icin MIMARI.txt Bolum 4.
 #
 # komut: kalk, in, yuksel, alcal, irtifaya_cik, git_yon, don, git_koordinat,
-#        yakin_yere_git, bekle, hiz_ayarla, eve_don, dur
+#        yakin_yere_git, yere_git, bekle, hiz_ayarla, eve_don, dur
 string komut
 
 float32 metre      # yuksel/alcal/irtifaya_cik/git_yon mesafesi; kalk ve
@@ -13,5 +13,6 @@ string yon         # git_yon: ileri|geri|sag|sol|kuzey|guney|dogu|bati
 float64 enlem      # git_koordinat
 float64 boylam     # git_koordinat
 string tur         # yakin_yere_git: hastane|eczane|benzinlik|...
+string ad          # yere_git (Faz 5): yer adi, ornek "Anıtkabir" -> harita servisi koordinat bulur
 float32 saniye     # bekle
 float32 mps        # hiz_ayarla (m/s)
